@@ -33,5 +33,3 @@ CREATE TABLE IF NOT EXISTS UsersEvents (
     FOREIGN KEY (event_id) REFERENCES Events(id),
     PRIMARY KEY (user_id, event_id)
 );
-
-CREATE TABLE IF NOT EXISTS 
