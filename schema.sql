@@ -2,7 +2,9 @@
 
 CREATE TABLE IF NOT EXISTS Users (
     user_id INTEGER AUTOINCREMENT PRIMARY KEY,
-    user_name VARCHAR(50) UNIQUE NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    user_password VARCHAR(20) NOT NULL,
+    user_salt INT NOT NULL,
     user_email VARCHAR(50) UNIQUE NOT NULL,
     first_name VARCHAR(40) NOT NULL,
     last_name VARCHAR(40) NOT NULL
