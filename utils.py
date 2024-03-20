@@ -8,13 +8,23 @@ from typing import Callable
 
 def login_required(f: Callable) -> Callable:
     """
-    Decorator for routes that should only be visited by users that are logged in, verifies that they're logged in via session context
+    Decorator for routes that  should only be visited by users that are logged in, verifies that they're logged in via session context
     """
     def decorated_function(*args, **kwargs):
         if session.get("user_id") is None:
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+#retrieve password hash for a given username from the database
+def get_password_hash(username: str):
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT password_hash FROM Users WHERE username=?", (username))
+        user = cursor.fetchone()
+        if user:
+            return user["password_hash"]
+    return None
 
 def db_setup(db_path: str):
     """
@@ -78,5 +88,4 @@ def validate_event(title, start_time, end_time):
     return True, None 
 
 """
-
 """

@@ -1,4 +1,4 @@
-from flask import Flask, g, Response, request, redirect, session
+from flask import Flask, g, Response, request, redirect, session, flash
 from flask_session import Session
 import tempfile
 import sqlite3
@@ -117,11 +117,11 @@ def login():
     if user and check_password_hash(user["password_hash"], password):
         #set username in session to update user logged in
         session["username"] = user["username"]
-        return redirect("/home_calendar", error = "Invalid username or password")
+        return redirect("/home_calendar")
 
     #if login fails then redirect to the same login page
     else:
-        return redirect("/login")         
+        flash(error = "Invalid username or password")         
     
 #implement the homecalendar page which will be the main user calendar
 #this calendar includes all saved and shared events user has
@@ -134,3 +134,40 @@ def homecalendar():
         place_holder
     else:
         return redirect("/login")      
+"""
+may not be needed
+@app.route("/user_settings", methods = ["GET", "POST"])
+@login_required
+def user_settings():
+    if request.method == "POST":
+        email
+"""
+
+#changing a user's password
+@app.route("/change_password", methods = ["GET", "POST"])
+@login_required
+def change_password():
+    #get the password from the user input & update password
+    if request.method == "POST":
+        current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_new_password = request.form.get("confirm_new_password")
+
+        #to change password you need to input correct current pw
+        username = session.get("username")
+        current_password_hash = generate_password_hash(username)
+        if check_password_hash(current_password_hash, current_password):
+            #check if new passwords match
+            if new_password == confirm_new_password:
+                new_password_hash = generate_password_hash(new_password, "sha256")
+                with app.app_context():
+                    cursor = db.cursor
+                    cursor.execute("UPDATE Users SET password_hash=? WHERE username=?", (new_password_hash, username))
+                    db.commit()
+                flash("password changed successfully!")
+            else:
+                flash("New password and confirm new password must match!\n")
+        else:
+            flash("Incorrect password, please enter current password")
+        return redirect("/user_settings")
+    
