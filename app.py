@@ -1,4 +1,4 @@
-from flask import Flask, g, Response, request, redirect
+from flask import Flask, g, Response, request, redirect, session
 from flask_session import Session
 import tempfile
 import sqlite3
@@ -97,7 +97,40 @@ def register_page() -> str:
     else:
         return "register page!" # TODO: assemble with frontend
 
-            
+    #we will implement the login page which is just used to
+    #get credentials and verify correct login
+    @app.route("/login", methods = ["GET", "POST"])
+    def login():
+        #validate user login info
+        if request.method == "POST":
+            username = request.form.get("username")
+            password = request.form.get("password")
+        
+        #Retreive hashed password from database but we can move this to
+        #the database funtions so that the devices dont get the hashed passwords
+        with app.app_context():
+            cursor = db.cursor()
+            cursor.execute("SELECT username, password_hash FROM Users WHERE username=?", (username,))
+            user = cursor.fetchone()
+        
+        #Check if user exists and verify password
+        if user and check_password_hash(user["password_hash"], password):
+            #set username in session to update user logged in
+            session["username"] = user["username"]
+            return redirect("/home_calendar", error = "Invalid username or password")
 
+        #if login fails then redirect to the same login page
+        else:
+            return redirect("/login")         
+    
+    #implement the homecalendar page which will be the main user calendar
+    #this calendar includes all saved and shared events user has
+    @app.route("/homecalendar", methods = ["POST"])
+    def homecalendar():
+        username = session.get("username")
+        if username:
+            #continue to the homecalendar
+        else:
+            return redirect("/login")
 
         
