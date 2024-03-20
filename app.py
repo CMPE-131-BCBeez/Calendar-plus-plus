@@ -130,7 +130,6 @@ def register_page() -> str:
         username = session.get("username")
         if username:
             #continue to the homecalendar
+            place_holder
         else:
-            return redirect("/login")
-
-        
+            return redirect("/login")      
