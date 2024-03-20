@@ -61,7 +61,7 @@ print("Converted datetime:", converted_dt_str)
 """
 #This will validate the event data when you are trying to create
 #a new event so that you dont create grabage
-def validate_event(title, start_time, end_time)
+def validate_event(title, start_time, end_time):
     #check if fields are filled
     if not title or not start_time or not end_time:
         return False, "Please enter all required fields.\n"
