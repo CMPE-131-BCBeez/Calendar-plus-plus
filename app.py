@@ -170,4 +170,23 @@ def change_password():
         else:
             flash("Incorrect password, please enter current password")
         return redirect("/user_settings")
-    
+
+@app.route("/data_management")
+@login_required
+def data_management():
+    #This will allow the user to download their data or delete/edit
+    return redirect("/user_settings")
+
+@app.route("/security_setting")
+@login_required
+def data_management():
+    #I would like to implement the option of 2 step verification
+    return redirect("/user_settings")
+
+@app.route("/social_setting")
+@login_required
+def data_management():
+    #this will allow the users to share whole schedules/calendars
+    #this will also allow them to block or unblock other users
+    #create calendar groups etc.
+    return redirect("/user_settings")
