@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS Events (
     description TEXT,
     start_timestamp DATETIME NOT NULL,
     end_timestamp DATETIME NOT NULL,
+    color VARCHAR(15) NOT NULL,
     type VARCHAR(8) CHECK (type IN ('EVENT', 'REMINDER')) NOT NULL,
     FOREIGN KEY (calendar_id) REFERENCES Calendars(id)
 );
