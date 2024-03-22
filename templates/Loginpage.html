@@ -4,27 +4,34 @@
         <meta charset="UTF-8">
         <title> Calender++ </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel = "stylesheet" href = "BCbeez\Calendar-plus-plus\static\style.css">
+        <link rel="stylesheet" href="../static/style.css">
     </head>
 <body> 
+    <div class="container">
+        <div class="centered-element">
+            <h1>
+                Login to Calender++
+            </h1>
 <form>
-    <div style="text-align: left;">
-        <label for = fname> First name: </label><br>
-        <input type = "text" placeholder = "First name" id = "fname" name="fname"><br>
-        <label for = lname> Last name: </label><br>
-        <input type = "text" placeholder = "Last name" id = "lname" name="lname"><br>
-    </div>
-    <input type = "reset"> <br>
-    <input type = "submit">
-    <br>
-    <!--Go to the sign in page-->
-    <a  href="signIn.html"
-    title ="goes to Sigin in page">
-    <button style="font-size:10px; background-color: #002df9;color:#FFFFFF; ">  <!-- border-radius: 10px;-->
-    Click here to sign up
-    </button>
-    </a>
+    <div class="form-container">
+        <div style="text-align: left;">
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname" class="input-field"><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname" class="input-field"><br>
+            <input type="submit" value="Login" class="BlackButton"><br>
+        </div>
+        
+        <a  href="New User Log In.html" title ="goes to Sigin in page" class="WhiteButton">
+            Go to Sign in Page<!--Go to the sign in page-->
+            </a><br>
+        <a  href="New User Log In.html" title ="goes to Sigin in page" class="WhiteButton">
+            Reset My Password<!--Go to the reset pasword page-->
+            </a>
+    </div>    
 </form>
+</div>
+</div>
 </body>
 </html>
 
