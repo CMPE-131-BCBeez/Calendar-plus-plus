@@ -95,6 +95,6 @@ label {
     cursor: pointer;
 }
 
-.submit-button:hover {
+.BlackButton:hover {
     background-color: #000000; /* Darker green on hover */
 }
