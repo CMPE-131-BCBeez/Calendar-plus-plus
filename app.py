@@ -1,4 +1,5 @@
 from flask import Flask, g, Response, request, redirect, session, flash
+
 from flask_session import Session
 import tempfile
 import sqlite3
@@ -97,6 +98,7 @@ def register_page() -> str:
     else:
         return "register page!" # TODO: assemble with frontend
 
+
 #we will implement the login page which is just used to
 #get credentials and verify correct login
 @app.route("/login", methods = ["GET", "POST"])
@@ -190,3 +192,4 @@ def data_management():
     #this will also allow them to block or unblock other users
     #create calendar groups etc.
     return redirect("/user_settings")
+

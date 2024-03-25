@@ -1,6 +1,7 @@
 from flask import redirect, session
 from datetime import datetime
 from pytz import timezone
+
 import sqlite3
 import os
 from typing import Callable
@@ -8,7 +9,8 @@ from typing import Callable
 
 def login_required(f: Callable) -> Callable:
     """
-    Decorator for routes that  should only be visited by users that are logged in, verifies that they're logged in via session context
+
+    Decorator for routes that should only be visited by users that are logged in, verifies that they're logged in via session context
     """
     def decorated_function(*args, **kwargs):
         if session.get("user_id") is None:
@@ -16,15 +18,6 @@ def login_required(f: Callable) -> Callable:
         return f(*args, **kwargs)
     return decorated_function
 
-#retrieve password hash for a given username from the database
-def get_password_hash(username: str):
-    with get_db() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT password_hash FROM Users WHERE username=?", (username))
-        user = cursor.fetchone()
-        if user:
-            return user["password_hash"]
-    return None
 
 def db_setup(db_path: str):
     """
@@ -40,6 +33,7 @@ def db_setup(db_path: str):
         cursor.executescript(sql_file.read())
     init_con.commit()
     init_con.close()
+
 
 #this will take care of the timezone 
 def convert_to_timezone(date_str, from_tz, to_tz):
@@ -87,5 +81,3 @@ def validate_event(title, start_time, end_time):
 #EVENT IS VALID
     return True, None 
 
-"""
-"""
