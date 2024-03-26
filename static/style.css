@@ -1,0 +1,100 @@
+@charset "UTF-8";
+@font-face {
+    font-family: "CaviarDreams";
+    src: url(../static/Font/CaviarDreams_Bold.ttf);
+}
+
+body{
+
+    font-family: "CaviarDreams", sans-serif;
+    font-size: 20px;
+    background-color: #FFFFFF; color:#000000;
+    
+}
+
+form{
+    font-family: "CaviarDreams", sans-serif;
+    font-size: 20px;
+    background-color: #FFFFFF; color:#000000;
+}
+
+h1{
+    font-family: "CaviarDreams", sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    color:#000000;
+}
+
+p{
+    font-size: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Optional: Set a specific height for the container */
+    
+}
+
+.centered-element {
+    margin-bottom: 20px; 
+}
+
+.input-field {
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    width: 100%; /* Ensure input fields take up full width */
+    margin-bottom: 20px;
+}
+
+.input-field:focus {
+    border-bottom: 2px solid black;
+}
+
+/* Optional: Adjust label styles */
+label {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.custom-label {
+    font-weight: bold; /* Make the label text bold */
+    color: #333; /* Change label text color */
+    font-size: 16px; /* Change label text size */
+    margin-bottom: 5px; /* Add space after each label */
+}
+
+.BlackButton{
+    font-family: "CaviarDreams", sans-serif;
+    background-color: #000000; /* Green */
+    border: none;
+    color: #ffffff;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 10px; /* Add space after the submit button */
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.WhiteButton{
+    font-family: "CaviarDreams", sans-serif;
+    background-color: #FFFFFF; /* Green */
+    border-bottom: 1px solid black;
+    color: #000000;
+    padding: 2px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 10px; /* Add space after the submit button */
+    cursor: pointer;
+}
+
+.BlackButton:hover {
+    background-color: #000000; /* Darker green on hover */
+}
