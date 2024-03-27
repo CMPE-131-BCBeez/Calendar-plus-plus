@@ -18,7 +18,7 @@ body, form{   /*the body and form tag style*/
 form input[type="text"],     /*the style of input text*/
 form input[type="password"], 
 form input[type="email"], 
-form input[type="number"],
+form input[type="tel"],
 form textarea {
     font-size: 23px; /*size of the user input font*/
     font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
