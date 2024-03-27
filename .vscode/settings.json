@@ -1,0 +1,8 @@
+{
+    "workbench.settings.useSplitJSON": true,
+    "editor.inlayHints.padding": true,
+    "workbench.settings.openDefaultSettings": true,
+    "editor.folding": false,
+    "editor.linkedEditing": true,
+    "notebook.output.wordWrap": false
+}
