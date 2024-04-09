@@ -141,7 +141,7 @@ def monthlycalendar():
 def weeklycalendar():
     username = session.get("username")
     if username:
-        
+        placeholder = 1
     else:
         return redirect("/login")
 """
