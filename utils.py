@@ -1,5 +1,5 @@
 from flask import redirect, session
-from datetime import datetime
+from datetime import *
 from pytz import timezone
 
 import sqlite3
@@ -80,4 +80,3 @@ def validate_event(title, start_time, end_time):
     
 #EVENT IS VALID
     return True, None 
-
