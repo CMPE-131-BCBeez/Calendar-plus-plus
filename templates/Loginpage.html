@@ -7,27 +7,25 @@
         <link rel="stylesheet" href="../static/style.css">
     </head>
     
-<body> 
-    <div class="container">
-        <div class="centered-element">
-            <h1>
-                Login to Calendar++
-            </h1>
-            <form action="../app.py" method="POST">
+    <body> 
+        <h1 class="customh1">
+            Login to Calendar++
+        </h1>
+        <div class="container">
+            <form action="/login" method="POST">
                 <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username" class="input-field"><br>
+                <input type="text" id="username" name="username" class="input-field" required><br>
                 <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" class="input-field"><br>
+                <input type="password" id="password" name="password" class="input-field" required><br>
                 <input type="submit" value="Login" class="BlackButton"><br>
-            </for>
-                <a  href="UserRegister.html" class="WhiteButton">
-                Establish a Fresh Account<!--Go to the sign in page-->
-                </a><br>
-                <a  href="ResetPassword.html" class="WhiteButton">
-                Reset My Password<!--Go to the reset pasword page-->
-                </a>   
+            </form>
+            <a  href="UserRegister.html" class="WhiteButton">
+            Establish a Fresh Account<!--Go to the sign in page-->
+            </a><br>
+            <a  href="ResetPassword.html" class="WhiteButton">
+            Reset My Password<!--Go to the reset pasword page-->
+            </a>   
         </div>
-    </div>
-</body>
+    </body>
 </html>
 
