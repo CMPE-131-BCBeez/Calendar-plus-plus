@@ -80,6 +80,47 @@ label {
     margin-bottom: 5px; /* Add space after each label */
 }
 
+.calenderTable{
+    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-weight: bold;
+    height: 100%;
+    margin: 0 auto;
+    border-collapse: collapse; /* セルの境界線を結合 */
+    margin-bottom: 5px;
+    margin-top: 0px;
+    border: 3px solid #000000;
+}
+
+.calenderTable thead th,
+.calenderTable thead td {
+    width: 170px; /*width of the cell*/
+    height: 30px; /*hight of the cell*/
+    text-align: center;   /*align the text to center*/
+    border: 3px solid #000000; /*the style of the borderline and the color*/
+ 
+}   
+
+.calenderTable tbody th,
+.calenderTable tbody td {
+    vertical-align: top; /* セル内のテキストを上揃えにする */
+    width: 170px; /*width of the cell*/
+    height: 120px; /*hight of the cell*/
+    text-align: center;   /*align the text to center*/
+    border: 1px solid #000000; /*the style of the borderline and the color*/
+  
+}
+
+.calenderTable caption{
+    height: 70px; /*hight of the cell*/
+    margin-bottom: 0px;
+    margin-top: 10px;
+    font-size: 30px;
+}
+.calenderTable h2 {
+    height: 10px; /*hight of the cell*/
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
 .BlackButton{   /*use this to make a black botton*/
     font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     background-color: #000000; /*background color*/
@@ -88,7 +129,7 @@ label {
     padding: 5px 15px;   /*adjust the margin in the box*/
     text-align: center; /*align the text to center*/
     text-decoration: none;  /*delete the underline of the link*/
-    display: inline-block;  /*put the element in the container class object in inline-box*/
+    display: inline-block;  /*put the element in the container class object in inline-box*  /
     font-size: 16px; /*font size*/
     margin-bottom: 10px; /* Add space after the submit button */
     cursor: pointer; /*change the mouse cursor to pointer to click the button*/
