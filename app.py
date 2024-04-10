@@ -1,4 +1,4 @@
-from flask import Flask, g, Response, request, redirect, session, flash
+from flask import Flask, g, Response, request, redirect, session, flash, render_template
 from datetime import *
 from flask_session import Session
 from flask_mail import Mail, Message
@@ -36,7 +36,7 @@ def get_db() -> sqlite3.Connection:
 db: sqlite3.Connection = LocalProxy(get_db)
 
 # Start flask app
-app = Flask(__name__)
+app: Flask = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -79,25 +79,27 @@ def register_page() -> str:
     if request.method == "POST":
         username = request.form.get('username')
         password_plaintext = request.form.get('password')
-        password_hash = generate_password_hash(password_plaintext, "sha256")
+        password_hash = generate_password_hash(password_plaintext, "scrypt")
         email = request.form.get('email')
         firstName = request.form.get('firstName')
         lastName = request.form.get('lastName')
 
         with app.app_context():
             cursor = db.cursor()
-            cursor.execute("SELECT username, email FROM Users")
+            cursor.execute("SELECT username, email FROM Users WHERE username = ? OR email = ?", (username, email))
             res = cursor.fetchone()
+            print(f"{res}")
             if (res):
-                return "User exists", 400 # TODO: change to template rendering once frontend decides how they want to handle errors
-            query = """INSERT INTO Users (username, password_hash, email, firstName, lastName) VALUES (?, ?, ?, ?, ?)"""
+                flash("This username already exists")
+                return render_template("UserRegister.html"), 400 # TODO: change to template rendering once frontend decides how they want to handle errors
+            query = """INSERT INTO Users (username, password_hash, email, first_name, last_name) VALUES (?, ?, ?, ?, ?)"""
             
             cursor.execute(query, (username, password_hash, email, firstName, lastName))
             db.commit()
         
         return redirect("/login")
     else:
-        return "register page!" # TODO: assemble with frontend
+        return render_template("UserRegister.html")
 
 
 #we will implement the login page which is just used to
@@ -109,51 +111,50 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
         
-    #Retreive hashed password from database but we can move this to
-    #the database funtions so that the devices dont get the hashed passwords
-    with app.app_context():
-        cursor = db.cursor()
-        cursor.execute("SELECT username, password_hash FROM Users WHERE username=?", (username,))
-        user = cursor.fetchone()
-        
-    #Check if user exists and verify password
-    if user and check_password_hash(user["password_hash"], password):
-        #set username in session to update user logged in
-        session["username"] = user["username"]
-        return redirect("/monthly_calendar")
+        #Retreive hashed password from database but we can move this to
+        #the database funtions so that the devices dont get the hashed passwords
+        with app.app_context():
+            cursor = db.cursor()
+            cursor.execute("SELECT username, password_hash FROM Users WHERE username=?", (username,))
+            user = cursor.fetchone()
+            
+        #Check if user exists and verify password
+        if user and check_password_hash(user["password_hash"], password):
+            #set username in session to update user logged in
+            session["username"] = user["username"]
+            print(f"session {session}")
+            return redirect("/monthly_calendar")
 
-    #if login fails then redirect to the same login page
-    else:
-        flash(error = "Invalid username or password")  
+        #if login fails then redirect to the same login page
+        else:
+            flash("Invalid username or password")
+    
+    return render_template("Loginpage.html")
     
 #implement the homecalendar page which will be the main user calendar
 #this calendar includes all saved and shared events user has
-@app.route("/monthly_calendar", methods = ["POST"])
+@app.route("/monthly_calendar", methods = ["GET"])
 @login_required
 def monthlycalendar():
-    username = session.get("username")
-    if username:
-        #continue to the homecalendar
-        place_holder = 1
-    else:
-        return redirect("/login")   
+    return render_template("MonthlyCalendar.html")    
+    
 
-@app.route("/weekly_calendar",methods =["POST"])
-@login_required
-def weeklycalendar():
-    username = session.get("username")
-    if username:
-        placeholder = 1
-    else:
-        return redirect("/login")
-"""
-may not be needed
-@app.route("/user_settings", methods = ["GET", "POST"])
-@login_required
-def user_settings():
-    if req9uest.method == "POST":
-        email
-"""
+# @app.route("/weekly_calendar",methods =["POST"])
+# @login_required
+# def weeklycalendar():
+#     username = session.get("username")
+#     if username:
+#         placeholder = 1
+#     else:
+#         return redirect("/login")
+
+# may not be needed
+# @app.route("/user_settings", methods = ["GET", "POST"])
+# @login_required
+# def user_settings():
+#     if req9uest.method == "POST":
+#         email
+
 @app.route("/forgotpassword", methods = ["GET", "POST"])
 @login_required
 def forgotpassword():
@@ -193,9 +194,11 @@ def forgotpassword():
 
         else: 
             flash("Please enter a username or email")
+    else:
+        return "Doesn't exist yet!"
         
 
-@app.route("/change_password_vc", methods = ["GET", "POST"])
+# @app.route("/change_password_vc", methods = ["GET", "POST"])
 
 #create new event!
 @app.route("/new_event", methods = ["GET","POST"])
@@ -215,7 +218,7 @@ def new_event():
 
         is_valid, error_message = validate_event(title, start_time, end_time)
         if not is_valid:
-            flash(error_message,"error")
+            flash(error_message)
             return redirect("/new_event")
         
         #insert event into database 
@@ -229,7 +232,7 @@ def new_event():
         
         flash("Event created successfully!")
         return redirect("/monthly_calendar")
-    return redirect("/new_event")
+    return render_template("new_event.html")
 
 #changing a user's password
 @app.route("/change_password_settings", methods = ["GET", "POST"])
@@ -267,13 +270,13 @@ def data_management():
 
 @app.route("/security_setting")
 @login_required
-def data_management():
+def security_setting():
     #I would like to implement the option of 2 step verification
     return redirect("/user_settings")
 
 @app.route("/social_setting")
 @login_required
-def data_management():
+def social_setting():
     #this will allow the users to share whole schedules/calendars
     #this will also allow them to block or unblock other users
     #create calendar groups etc.
