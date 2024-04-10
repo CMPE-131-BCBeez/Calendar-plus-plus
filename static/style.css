@@ -35,19 +35,11 @@ p{
     font-size: 20px;    /*font size*/
 }
 
-.header-container {
-    display: flex;
-    justify-content: center; /* Align header horizontally at center */
-    align-items: center; /* Align header vertically at center */
-    height: 50vh; /* Adjust the height as needed */
-    background-color: #ffffff; /* Optional: Add background color */
-}
-
 .container {    /*the container class style*/
     display: flex;      /*put the element in the container class object in flex box*/
     justify-content: center;    /*allign the content with the main axis(row by default)*/
     align-items: center;    /*allign the content with the closs axis(colmn by default)*/
-    height: 30vh;  /*hight of the content(changes with screen size)*/
+    height: 100vh;  /*hight of the content(changes with screen size)*/
 }
 
 .centered-element { /*the container-element class style*/
@@ -147,6 +139,7 @@ label {
     margin-bottom: 0px;
     margin-top: 0px;
 }
+
 .BlackButton{   /*use this to make a black botton*/
     font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     background-color: #000000; /*background color*/
@@ -155,7 +148,7 @@ label {
     padding: 5px 15px;   /*adjust the margin in the box*/
     text-align: center; /*align the text to center*/
     text-decoration: none;  /*delete the underline of the link*/
-    display: inline-block;  /*put the element in the container class object in inline-box*  /
+    display: inline-block;  /*put the element in the container class object in inline-box*/
     font-size: 16px; /*font size*/
     margin-bottom: 10px; /* Add space after the submit button */
     cursor: pointer; /*change the mouse cursor to pointer to click the button*/

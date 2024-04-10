@@ -1,4 +1,5 @@
-from flask import Flask, g, Response, request, redirect
+from flask import Flask, g, Response, request, redirect, session, flash
+
 from flask_session import Session
 import tempfile
 import sqlite3
@@ -97,7 +98,98 @@ def register_page() -> str:
     else:
         return "register page!" # TODO: assemble with frontend
 
-            
 
-
+#we will implement the login page which is just used to
+#get credentials and verify correct login
+@app.route("/login", methods = ["GET", "POST"])
+def login():
+    #validate user login info
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
         
+    #Retreive hashed password from database but we can move this to
+    #the database funtions so that the devices dont get the hashed passwords
+    with app.app_context():
+        cursor = db.cursor()
+        cursor.execute("SELECT username, password_hash FROM Users WHERE username=?", (username,))
+        user = cursor.fetchone()
+        
+    #Check if user exists and verify password
+    if user and check_password_hash(user["password_hash"], password):
+        #set username in session to update user logged in
+        session["username"] = user["username"]
+        return redirect("/home_calendar")
+
+    #if login fails then redirect to the same login page
+    else:
+        flash(error = "Invalid username or password")         
+    
+#implement the homecalendar page which will be the main user calendar
+#this calendar includes all saved and shared events user has
+@app.route("/homecalendar", methods = ["POST"])
+@login_required
+def homecalendar():
+    username = session.get("username")
+    if username:
+        #continue to the homecalendar
+        place_holder
+    else:
+        return redirect("/login")      
+"""
+may not be needed
+@app.route("/user_settings", methods = ["GET", "POST"])
+@login_required
+def user_settings():
+    if request.method == "POST":
+        email
+"""
+
+#changing a user's password
+@app.route("/change_password", methods = ["GET", "POST"])
+@login_required
+def change_password():
+    #get the password from the user input & update password
+    if request.method == "POST":
+        current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_new_password = request.form.get("confirm_new_password")
+
+        #to change password you need to input correct current pw
+        username = session.get("username")
+        current_password_hash = generate_password_hash(username)
+        if check_password_hash(current_password_hash, current_password):
+            #check if new passwords match
+            if new_password == confirm_new_password:
+                new_password_hash = generate_password_hash(new_password, "sha256")
+                with app.app_context():
+                    cursor = db.cursor
+                    cursor.execute("UPDATE Users SET password_hash=? WHERE username=?", (new_password_hash, username))
+                    db.commit()
+                flash("password changed successfully!")
+            else:
+                flash("New password and confirm new password must match!\n")
+        else:
+            flash("Incorrect password, please enter current password")
+        return redirect("/user_settings")
+
+@app.route("/data_management")
+@login_required
+def data_management():
+    #This will allow the user to download their data or delete/edit
+    return redirect("/user_settings")
+
+@app.route("/security_setting")
+@login_required
+def data_management():
+    #I would like to implement the option of 2 step verification
+    return redirect("/user_settings")
+
+@app.route("/social_setting")
+@login_required
+def data_management():
+    #this will allow the users to share whole schedules/calendars
+    #this will also allow them to block or unblock other users
+    #create calendar groups etc.
+    return redirect("/user_settings")
+
