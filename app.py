@@ -6,7 +6,6 @@ import sqlite3
 from werkzeug.local import LocalProxy
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
-from flask import Flask, render_template
 
 import utils
 
@@ -124,9 +123,7 @@ def login():
 
     #if login fails then redirect to the same login page
     else:
-        flash(error = "Invalid username or password")
-
-    return render_template("Loginpage.html")         
+        flash(error = "Invalid username or password")  
     
 #implement the homecalendar page which will be the main user calendar
 #this calendar includes all saved and shared events user has
