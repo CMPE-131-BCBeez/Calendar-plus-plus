@@ -1,17 +1,18 @@
 from flask import Flask, g, Response, request, redirect, session, flash
-
+from datetime import *
 from flask_session import Session
+from flask_mail import Mail, Message
 import tempfile
+import email
 import sqlite3
 from werkzeug.local import LocalProxy
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
-
-import utils
+from utils import *
 
 # Configure database
 DATABASE = "calendar.db"
-utils.db_setup(DATABASE)
+db_setup(DATABASE)
 
 def make_dicts(cursor: sqlite3.Cursor, row: sqlite3.Row) -> Dict[Any, Any]:
     """
@@ -80,8 +81,8 @@ def register_page() -> str:
         password_plaintext = request.form.get('password')
         password_hash = generate_password_hash(password_plaintext, "sha256")
         email = request.form.get('email')
-        first_name = request.form.get('first_name')
-        last_name = request.form.get('last_name')
+        firstName = request.form.get('firstName')
+        lastName = request.form.get('lastName')
 
         with app.app_context():
             cursor = db.cursor()
@@ -89,9 +90,9 @@ def register_page() -> str:
             res = cursor.fetchone()
             if (res):
                 return "User exists", 400 # TODO: change to template rendering once frontend decides how they want to handle errors
-            query = """INSERT INTO Users (username, password_hash, email, first_name, last_name) VALUES (?, ?, ?, ?, ?)"""
+            query = """INSERT INTO Users (username, password_hash, email, firstName, lastName) VALUES (?, ?, ?, ?, ?)"""
             
-            cursor.execute(query, (username, password_hash, email, first_name, last_name))
+            cursor.execute(query, (username, password_hash, email, firstName, lastName))
             db.commit()
         
         return redirect("/login")
@@ -119,34 +120,119 @@ def login():
     if user and check_password_hash(user["password_hash"], password):
         #set username in session to update user logged in
         session["username"] = user["username"]
-        return redirect("/home_calendar")
+        return redirect("/monthly_calendar")
 
     #if login fails then redirect to the same login page
     else:
-        flash(error = "Invalid username or password")         
+        flash(error = "Invalid username or password")  
     
 #implement the homecalendar page which will be the main user calendar
 #this calendar includes all saved and shared events user has
-@app.route("/homecalendar", methods = ["POST"])
+@app.route("/monthly_calendar", methods = ["POST"])
 @login_required
-def homecalendar():
+def monthlycalendar():
     username = session.get("username")
     if username:
         #continue to the homecalendar
-        place_holder
+        place_holder = 1
     else:
-        return redirect("/login")      
+        return redirect("/login")   
+
+@app.route("/weekly_calendar",methods =["POST"])
+@login_required
+def weeklycalendar():
+    username = session.get("username")
+    if username:
+        placeholder = 1
+    else:
+        return redirect("/login")
 """
 may not be needed
 @app.route("/user_settings", methods = ["GET", "POST"])
 @login_required
 def user_settings():
-    if request.method == "POST":
+    if req9uest.method == "POST":
         email
 """
+@app.route("/forgotpassword", methods = ["GET", "POST"])
+@login_required
+def forgotpassword():
+    if request.method=="POST":
+        #get username or email
+        username_or_email = request.form.get("username_or_email")
+
+        #now we will get the username from our database through either 
+        #username of email itself. we must verify if the user has an acc.
+        if username_or_email != None:
+            with app.app_context():
+                cursor = db.cursor()
+                cursor.execute("SELECT email FROM Users WHERE username=? OR email=?", (username_or_email, username_or_email))
+                useremail = cursor.fetchone()
+                eemail = cursor.fetchone()
+                #check if username exists
+                if useremail == None and eemail == None:
+                    flash("username or email does not exist! \n please try again.")
+                #now just verify if the user info match.
+                if useremail != None and eemail != None:
+                    if useremail != eemail:
+                        flash("Information does not match!")
+                    #lastly you succeed you will create a confirmation code and 
+                    #send it to the user's email
+                    else:
+                        #generate the confirmation code
+                        confirmation_code = generate_confirmation_code()
+                        #now send the confirmation code you generated
+                        send_confirmation_email(email, confirmation_code)
+                        #finally save it to your database
+                        with app.app_context():
+                            cursor = db.cursor
+                            cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, eemail, username))
+                            db.commit()
+                        flash("password changed successfully!")
+                        return redirect("/change_password_vc")
+
+        else: 
+            flash("Please enter a username or email")
+        
+
+@app.route("/change_password_vc", methods = ["GET", "POST"])
+
+#create new event!
+@app.route("/new_event", methods = ["GET","POST"])
+@login_required
+def new_event():
+    username = session.get("username")
+    if request.method == "POST":
+        #get event data from form
+        username = session
+        title = request.form.get("title")
+        description = request.form.get("description")
+        start_time = request.form.get("start_time")
+        end_time = request.form.get("end_time")
+        location = request.form.get("location")
+        color = request.form.get("color")
+        type = request.form.get("type")
+
+        is_valid, error_message = validate_event(title, start_time, end_time)
+        if not is_valid:
+            flash(error_message,"error")
+            return redirect("/new_event")
+        
+        #insert event into database 
+        with app.app_context():
+            cursor = db.cursor()
+            #input the data to events
+            query = """INSERT INTO Events (username, title, description, start_time, end_time, location, color, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"""
+            #we might need to modify this in the future
+            cursor.execute(query, (username, title, description, start_time, end_time, location, color, type))
+            db.commit()
+        
+        flash("Event created successfully!")
+        return redirect("/monthly_calendar")
+    return redirect("/new_event")
 
 #changing a user's password
-@app.route("/change_password", methods = ["GET", "POST"])
+@app.route("/change_password_settings", methods = ["GET", "POST"])
 @login_required
 def change_password():
     #get the password from the user input & update password

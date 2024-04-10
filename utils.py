@@ -1,6 +1,9 @@
 from flask import redirect, session
-from datetime import datetime
+from datetime import *
 from pytz import timezone
+import string
+import random
+from flask_mail import Mail, Message
 
 import sqlite3
 import os
@@ -18,6 +21,16 @@ def login_required(f: Callable) -> Callable:
         return f(*args, **kwargs)
     return decorated_function
 
+def generate_confirmation_code():
+    # Generate a random string of letters and digits
+    code_length = 10
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=code_length))
+
+def send_confirmation_email(email, confirmation_code):
+    subject = "Confirm Your Email Address"
+    body = f"Please click the following link to confirm your email address: /confirm_email?code={confirmation_code}"
+    msg = Message(subject, recipients=[email], body=body)
+    Mail.send(msg)
 
 def db_setup(db_path: str):
     """
@@ -81,4 +94,3 @@ def validate_event(title, start_time, end_time):
 #EVENT IS VALID
     return True, None 
 
-#this is a test

@@ -1,0 +1,40 @@
+<!-- new_event.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Event</title>
+</head>
+<body>
+    <h1>Create New Event</h1>
+    <form action="/new_event" method="POST">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description"></textarea><br>
+
+        <label for="start_time">Start Time:</label><br>
+        <input type="datetime-local" id="start_time" name="start_time" required><br>
+
+        <label for="end_time">End Time:</label><br>
+        <input type="datetime-local" id="end_time" name="end_time" required><br>
+
+        <label for="location">Location:</label><br>
+        <input type="text" id="location" name="location"><br>
+
+        <label for="color">Color:</label><br>
+        <input type="color" id="color" name="color" value="#000000"><br>
+
+        <label for="type">Type:</label><br>
+        <select id="type" name="type">
+            <option value="EVENT">Event</option>
+            <option value="REMINDER">Reminder</option>
+            <option value = "BIRTHDAY">Birthday</option>
+        </select><br>
+
+        <input type="submit" value="Create Event">
+    </form>
+</body>
+</html>

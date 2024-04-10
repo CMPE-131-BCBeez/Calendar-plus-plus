@@ -1,1 +1,115 @@
+@charset "UTF-8";
+@font-face {    /*Adding a font*/
+    font-family: "CaviarDreams";    /*the name of the font that will be used in the code*/
+    src: url(../static/Font/CaviarDreams_Bold.ttf);     /*path to the .ttf file*/
+}
+@font-face {    /*Adding a font*/
+    font-family: "SIMPLIFICA";    /*the name of the font that will be used in the code*/
+    src: url(../static/Font/SIMPLIFICA_Typeface.ttf);     /*path to the .ttf file*/
+}
 
+body, form{   /*the body and form tag style*/
+    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-size: 20px;     /*font size*/
+    background-color: #FFFFFF;   /*background color*/
+    color:#000000;  /*text color*/
+}
+
+form input[type="text"],     /*the style of input text*/
+form input[type="password"], 
+form input[type="email"], 
+form input[type="tel"],
+form textarea {
+    font-size: 23px; /*size of the user input font*/
+    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+}
+
+h1{  /*the h1(header 1) tag style*/
+    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-size: 50px;    /*font size*/
+    font-weight: bold;  /*font style*/
+    color:#000000;    /*text color*/
+}
+
+p{
+    font-size: 20px;    /*font size*/
+}
+
+.container {    /*the container class style*/
+    margin: 0 auto;
+    border-collapse: collapse; /* セルの境界線を結合 */
+    margin-top: 100px; 
+    width: 30%;
+    margin-bottom: 20px;    /*the bottom margin of the content*/
+    text-align: left;   /*align the text to left*/
+    font-weight: bold; /* Make the label text bold */
+}
+
+.customh1 {
+    margin: 0 auto;
+    margin-bottom: 20px;    /*the bottom margin of the content*/
+    margin-top: 150px; 
+    text-align: left;   /*align the text to left*/
+    width: 100%;
+    display: flex;      /*put the element in the container class object in flex box*/
+    justify-content: center;    /*allign the content with the main axis(row by default)*/
+    /* align-items: center;    allign the content with the closs axis(colmn by default) */
+
+   
+}
+
+
+
+.input-field {  /*the input-field class style(use it for element of the form)*/
+    border: none;   /* delete the border line of the form box*/
+    border-bottom: 1px solid black; /*leave the bottom border line of the form box*/
+    outline: none;  /* delete the border line of the form box*/
+    width: 100%; /* Ensure input fields take up full width */
+    margin-bottom: 20px;    /*the bottom margin of the content*/
+}
+
+.input-field:focus {    /*this will be used when the input-field is focused(clicked or selected)*/
+    border-bottom: 2px solid black; /*make the bottom border line bold*/
+}
+
+/* Optional: Adjust label styles */
+label {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.custom-label {
+    font-weight: bold; /* Make the label text bold */
+    color: #333; /* Change label text color */
+    font-size: 16px; /* Change label text size */
+    margin-bottom: 5px; /* Add space after each label */
+}
+
+.BlackButton{   /*use this to make a black botton*/
+    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    background-color: #000000; /*background color*/
+    border: none;   /* delete the border line of the form box*/
+    color: #ffffff; /*text color*/
+    padding: 5px 15px;   /*adjust the margin in the box*/
+    text-align: center; /*align the text to center*/
+    text-decoration: none;  /*delete the underline of the link*/
+    display: inline-block;  /*put the element in the container class object in inline-box*/
+    font-size: 16px; /*font size*/
+    margin-bottom: 10px; /* Add space after the submit button */
+    cursor: pointer; /*change the mouse cursor to pointer to click the button*/
+    border-radius: 5px; /*radius of the button*/
+}
+
+.WhiteButton{
+    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    background-color: #FFFFFF; /*background color*/
+    border-bottom: 1px solid black; /*leave the bottom border line of the form box*/
+    color: #000000; /*text color*/
+    padding: 0px 2px; /*adjust the margin in the box*/
+    text-align: center; /*align the text to center*/
+    text-decoration: none;  /*delete the underline of the link*/
+    display: inline-block;  /*put the element in the container class object in inline-box*/
+    font-size: 16px; /*font size*/
+    margin-bottom: 10px; /* Add space after the submit button */
+    cursor: pointer; /*change the mouse cursor to pointer to click the button*/
+}

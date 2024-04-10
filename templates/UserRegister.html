@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> Register </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+
+    <body>
+        <h1 class="customh1">
+            Register to Calendar++
+        </h1>
+        <div class="container">
+            <form action="/register" method="POST">
+                <div style="text-align: left">
+                <label for="firstName">First Name:</label><br>
+                <input type="text" id="firstName" name="firstName" class="input-field" required><br>
+
+                <label for="lastName">Last Name:</label><br>
+                <input type="text" id="lastName" name="lastName" class="input-field" required><br>
+
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" class="input-field" required><br>
+
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" class="input-field" 
+                required pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}" title="Password must contain at least 8 characters, including at least one number"><br> 
+
+                <label for="password">Confirm Password:</label><br>
+                <input type="password" id="password" name="password" class="input-field"required><br>
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" class="input-field"required><br>
+
+                <!-- <label for="number">Phone Number (Optional):</label><br> 
+                <input type="tel" id="number" name="number" class="input-field"><br> -->
+                        
+                <input type="submit" value="Register" class="BlackButton"><br>
+                        
+            </form>
+            <a  href="Loginpage.html" class="WhiteButton">
+                Login Page<!--Go to the sign in page-->
+            </a><br>
+        </div>
+    </body>
+</html>
