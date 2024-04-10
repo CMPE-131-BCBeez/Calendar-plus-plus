@@ -278,4 +278,3 @@ def data_management():
     #this will also allow them to block or unblock other users
     #create calendar groups etc.
     return redirect("/user_settings")
-
