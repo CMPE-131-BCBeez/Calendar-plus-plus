@@ -79,8 +79,8 @@ def register_page() -> str:
         password_plaintext = request.form.get('password')
         password_hash = generate_password_hash(password_plaintext, "sha256")
         email = request.form.get('email')
-        first_name = request.form.get('first_name')
-        last_name = request.form.get('last_name')
+        firstName = request.form.get('firstName')
+        lastName = request.form.get('lastName')
 
         with app.app_context():
             cursor = db.cursor()
@@ -88,9 +88,9 @@ def register_page() -> str:
             res = cursor.fetchone()
             if (res):
                 return "User exists", 400 # TODO: change to template rendering once frontend decides how they want to handle errors
-            query = """INSERT INTO Users (username, password_hash, email, first_name, last_name) VALUES (?, ?, ?, ?, ?)"""
+            query = """INSERT INTO Users (username, password_hash, email, firstName, lastName) VALUES (?, ?, ?, ?, ?)"""
             
-            cursor.execute(query, (username, password_hash, email, first_name, last_name))
+            cursor.execute(query, (username, password_hash, email, firstName, lastName))
             db.commit()
         
         return redirect("/login")
@@ -122,7 +122,7 @@ def login():
 
     #if login fails then redirect to the same login page
     else:
-        flash(error = "Invalid username or password")         
+        flash(error = "Invalid username or password")  
     
 #implement the homecalendar page which will be the main user calendar
 #this calendar includes all saved and shared events user has
