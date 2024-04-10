@@ -141,10 +141,25 @@ may not be needed
 @app.route("/user_settings", methods = ["GET", "POST"])
 @login_required
 def user_settings():
-    if request.method == "POST":
+    if req9uest.method == "POST":
         email
 """
+@app.route("/forgotpassword", methods = ["GET", "POST"])
+@login_required
+def forgotpassword():
+    if request.method=="POST":
+        #get username or email
+        username = request.form.get("username")
+        email = request.form.get("email")
 
+        #now we will get the username from our database through either 
+        #username of email itself. we must verify if the user has an acc.
+        if username != None or email != None:
+            if username != None:
+                unemail =getemail(username)
+            if email != None and email_exists(email):
+                eemail = email
+            if unemail =! None
 #changing a user's password
 @app.route("/change_password", methods = ["GET", "POST"])
 @login_required
