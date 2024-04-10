@@ -92,6 +92,7 @@ label {
 }   
 
 .weekRow {
+    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     width: 170px; /*width of the cell*/
     height: 30px; /*hight of the cell*/
     text-align: center;   /*align the text to center*/
@@ -99,6 +100,8 @@ label {
 }   
 
 .dayCell {
+    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    width: 170px; /*width of the cell*/
     vertical-align: top; /* セル内のテキストを上揃えにする */
     width: 170px; /*width of the cell*/
     height: 120px; /*hight of the cell*/
