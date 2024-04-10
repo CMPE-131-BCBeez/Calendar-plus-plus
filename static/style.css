@@ -87,20 +87,6 @@ label {
     border-radius: 5px; /*radius of the button*/
 }
 
-.BlackButton:hover{
-    background-color: #FFFFFF; /*background color*/
-    color: #000000; /*text color*/
-    outline: 2px solid #000000;
-}
-
-.BlackButton:focus{
-    background-color: #FFFFFF; /*background color*/
-    color: #000000; /*text color*/
-    outline: 2px solid #000000;
-}
-
-
-
 .WhiteButton{
     font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     background-color: #FFFFFF; /*background color*/

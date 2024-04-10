@@ -1,6 +1,5 @@
 from flask import Flask, g, Response, request, redirect, session, flash
-
-
+from datetime import *
 from flask_session import Session
 from flask_mail import Mail, Message
 import tempfile
@@ -9,12 +8,11 @@ import sqlite3
 from werkzeug.local import LocalProxy
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
-
-import utils
+from utils import *
 
 # Configure database
 DATABASE = "calendar.db"
-utils.db_setup(DATABASE)
+db_setup(DATABASE)
 
 def make_dicts(cursor: sqlite3.Cursor, row: sqlite3.Row) -> Dict[Any, Any]:
     """
@@ -122,7 +120,7 @@ def login():
     if user and check_password_hash(user["password_hash"], password):
         #set username in session to update user logged in
         session["username"] = user["username"]
-        return redirect("/home_calendar")
+        return redirect("/monthly_calendar")
 
     #if login fails then redirect to the same login page
     else:
@@ -130,15 +128,24 @@ def login():
     
 #implement the homecalendar page which will be the main user calendar
 #this calendar includes all saved and shared events user has
-@app.route("/homecalendar", methods = ["POST"])
+@app.route("/monthly_calendar", methods = ["POST"])
 @login_required
-def homecalendar():
+def monthlycalendar():
     username = session.get("username")
     if username:
         #continue to the homecalendar
-        place_holder
+        place_holder = 1
     else:
-        return redirect("/login")      
+        return redirect("/login")   
+
+@app.route("/weekly_calendar",methods =["POST"])
+@login_required
+def weeklycalendar():
+    username = session.get("username")
+    if username:
+        placeholder = 1
+    else:
+        return redirect("/login")
 """
 may not be needed
 @app.route("/user_settings", methods = ["GET", "POST"])
@@ -189,6 +196,40 @@ def forgotpassword():
         
 
 @app.route("/change_password_vc", methods = ["GET", "POST"])
+
+#create new event!
+@app.route("/new_event", methods = ["GET","POST"])
+@login_required
+def new_event():
+    username = session.get("username")
+    if request.method == "POST":
+        #get event data from form
+        username = session
+        title = request.form.get("title")
+        description = request.form.get("description")
+        start_time = request.form.get("start_time")
+        end_time = request.form.get("end_time")
+        location = request.form.get("location")
+        color = request.form.get("color")
+        type = request.form.get("type")
+
+        is_valid, error_message = validate_event(title, start_time, end_time)
+        if not is_valid:
+            flash(error_message,"error")
+            return redirect("/new_event")
+        
+        #insert event into database 
+        with app.app_context():
+            cursor = db.cursor()
+            #input the data to events
+            query = """INSERT INTO Events (username, title, description, start_time, end_time, location, color, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"""
+            #we might need to modify this in the future
+            cursor.execute(query, (username, title, description, start_time, end_time, location, color, type))
+            db.commit()
+        
+        flash("Event created successfully!")
+        return redirect("/monthly_calendar")
+    return redirect("/new_event")
 
 #changing a user's password
 @app.route("/change_password_settings", methods = ["GET", "POST"])
