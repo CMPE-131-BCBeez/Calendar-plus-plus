@@ -1,7 +1,10 @@
 from flask import Flask, g, Response, request, redirect, session, flash
 
+
 from flask_session import Session
+from flask_mail import Mail, Message
 import tempfile
+import email
 import sqlite3
 from werkzeug.local import LocalProxy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -149,19 +152,46 @@ def user_settings():
 def forgotpassword():
     if request.method=="POST":
         #get username or email
-        username = request.form.get("username")
-        email = request.form.get("email")
+        username_or_email = request.form.get("username_or_email")
 
         #now we will get the username from our database through either 
         #username of email itself. we must verify if the user has an acc.
-        if username != None or email != None:
-            if username != None:
-                unemail =getemail(username)
-            if email != None and email_exists(email):
-                eemail = email
-            if unemail =! None
+        if username_or_email != None:
+            with app.app_context():
+                cursor = db.cursor()
+                cursor.execute("SELECT email FROM Users WHERE username=? OR email=?", (username_or_email, username_or_email))
+                useremail = cursor.fetchone()
+                eemail = cursor.fetchone()
+                #check if username exists
+                if useremail == None and eemail == None:
+                    flash("username or email does not exist! \n please try again.")
+                #now just verify if the user info match.
+                if useremail != None and eemail != None:
+                    if useremail != eemail:
+                        flash("Information does not match!")
+                    #lastly you succeed you will create a confirmation code and 
+                    #send it to the user's email
+                    else:
+                        #generate the confirmation code
+                        confirmation_code = generate_confirmation_code()
+                        #now send the confirmation code you generated
+                        send_confirmation_email(email, confirmation_code)
+                        #finally save it to your database
+                        with app.app_context():
+                            cursor = db.cursor
+                            cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, eemail, username))
+                            db.commit()
+                        flash("password changed successfully!")
+                        return redirect("/change_password_vc")
+
+        else: 
+            flash("Please enter a username or email")
+        
+
+@app.route("/change_password_vc", methods = ["GET", "POST"])
+
 #changing a user's password
-@app.route("/change_password", methods = ["GET", "POST"])
+@app.route("/change_password_settings", methods = ["GET", "POST"])
 @login_required
 def change_password():
     #get the password from the user input & update password

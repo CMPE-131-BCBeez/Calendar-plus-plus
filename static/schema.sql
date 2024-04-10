@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS Users (
     id INTEGER PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(20) NOT NULL,
+    confirmation_code VARCHAR(10),
     email VARCHAR(50) UNIQUE NOT NULL,
     first_name VARCHAR(40) NOT NULL,
     last_name VARCHAR(40) NOT NULL
