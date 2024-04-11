@@ -24,7 +24,7 @@ form textarea {
     font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
 }
 
-h1{  /*the h1(header 1) tag style*/
+.customh1{  /*the h1(header 1) tag style*/
     font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     font-size: 50px;    /*font size*/
     font-weight: bold;  /*font style*/
@@ -45,7 +45,7 @@ p{
     font-weight: bold; /* Make the label text bold */
 }
 
-.customh1 {
+h1 {
     margin: 0 auto;
     margin-bottom: 20px;    /*the bottom margin of the content*/
     margin-top: 150px; 
@@ -54,9 +54,8 @@ p{
     display: flex;      /*put the element in the container class object in flex box*/
     justify-content: center;    /*allign the content with the main axis(row by default)*/
     /* align-items: center;    allign the content with the closs axis(colmn by default) */
-
-   
 }
+   
 
 
 
