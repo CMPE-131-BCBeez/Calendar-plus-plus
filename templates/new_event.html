@@ -3,8 +3,11 @@
 
 {% block body %}
 
-<h1>Create New Event</h1>
-<form action="/new_event" method="POST">
+<h1>
+    Create New Event
+</h1>
+<div class="container">
+    <form action="/new_event" method="POST">
     <label for="title">Title:</label><br>
     <input type="text" id="title" name="title" required><br>
 
@@ -32,4 +35,6 @@
 
     <input type="submit" value="Create Event">
 </form>
+</div>
+
 {% endblock %}
