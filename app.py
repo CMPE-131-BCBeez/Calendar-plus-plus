@@ -156,7 +156,6 @@ def monthlycalendar():
 #         email
 
 @app.route("/forgotpassword", methods = ["GET", "POST"])
-@login_required
 def forgotpassword():
     if request.method=="POST":
         #get username or email
@@ -195,7 +194,7 @@ def forgotpassword():
         else: 
             flash("Please enter a username or email")
     else:
-        return "Doesn't exist yet!"
+        return render_template("forgotpassword.html")
         
 
 # @app.route("/change_password_vc", methods = ["GET", "POST"])
