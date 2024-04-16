@@ -186,7 +186,7 @@ def forgot_password():
                         #finally save it to your database
                         with app.app_context():
                             cursor = db.cursor
-                            cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, eemail, username))
+                            cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, eemail, username_or_email))
                             db.commit()
                         flash("password changed successfully!")
                         return redirect("/change_password_email")
