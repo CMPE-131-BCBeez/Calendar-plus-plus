@@ -64,7 +64,7 @@ def convert_to_timezone(date_str, from_tz, to_tz):
     dt = from_timezone(to_timezone)
 
     #format to target timezone
-    return dt.strftime("%Y-%m-%d %H:%M:%S")
+    return dt.strftime("%M-%D-%Y %H:%M:%S")
 """
 example how to use in the app.py or wherever we want to implement it
 from utils import convert_to_timezone
@@ -85,8 +85,8 @@ def validate_event(title, start_time, end_time):
         return False, "Please enter all required fields.\n"
     #check if start_time is before end_time
     try:
-        start_time = datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
-        end_time = datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S")
+        start_time = datetime.strptime(start_time, "%M-%D-%Y %H:%M:%S")
+        end_time = datetime.strptime(end_time, "%M-%D-%Y %H:%M:%S")
         if start_time >= end_time:
             return False, "End time must be after start time."
     except ValueError:
