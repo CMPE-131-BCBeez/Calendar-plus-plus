@@ -99,7 +99,7 @@ def register_page() -> str:
         
         return redirect("/login")
     else:
-        return render_template("UserRegister.html")
+        return render_template("user_register.html")
 
 
 #we will implement the login page which is just used to
@@ -135,8 +135,8 @@ def login():
 #this calendar includes all saved and shared events user has
 @app.route("/monthly_calendar", methods = ["GET"])
 @login_required
-def monthlycalendar():
-    return render_template("MonthlyCalendar.html")    
+def monthly_calendar():
+    return render_template("monthly_calendar.html")    
     
 
 # @app.route("/weekly_calendar",methods =["POST"])
@@ -189,7 +189,7 @@ def forgot_password():
                             cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, eemail, username))
                             db.commit()
                         flash("password changed successfully!")
-                        return redirect("/change_password_vc")
+                        return redirect("/change_password_email")
 
         else: 
             flash("Please enter a username or email")
