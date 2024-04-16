@@ -156,7 +156,7 @@ def monthlycalendar():
 #         email
 
 @app.route("/forgot_password", methods = ["GET", "POST"])
-def forgot_password():
+def forgotpassword():
     if request.method=="POST":
         #get username or email
         username_or_email = request.form.get("username_or_email")
