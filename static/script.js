@@ -1,9 +1,9 @@
 function generate_calendar(year, month) {
-  var date = new Date(year, month - 1, 1);
-  var last_day = new Date(year, month, 0).getDate();
-  var englishMonth = date.toLocaleString('en', { month: 'long' });
-  var prev_month_last_day = new Date(year, month - 2, 0);
-  var next_month_first_day = new Date(year, month, 1);
+  var first_date = new Date(year, month - 1, 1);
+  var last_day = new Date(year, month, 0);
+  var englishMonth = first_date.toLocaleString('en', { month: 'long' });
+  var prev_month_last_day = new Date(year, month - 1, 0);
+  var next_month_mergin = 6 - last_day.getDay();
 
   var calendar = '<table>';
   calendar += '<thead>';
@@ -11,25 +11,27 @@ function generate_calendar(year, month) {
   calendar += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
   calendar += '</thead>';
 
-  var day_of_Week = date.getDay();
+  var day_of_Week = first_date.getDay();
   calendar += '<tr>';
   for (var i = 0; i < day_of_Week; i++) {
-    calendar += '<td>' + (prev_month_last_day.getDate() - day_of_Week + i + 1) + '</td>';
+    calendar += '<td>' + (prev_month_last_day.getDate() - day_of_Week + 1 + i) + '</td>';
   }
 
-  for (var day = 1; day <= last_day; day++) {
+  for (var day = 1; day <= last_day.getDate(); day++) {
     calendar += '<td>' + day + '</td>';
-      if (date.getDay() === 6) {
+      if (first_date.getDay() === 6) {
         calendar += '</tr><tr>';
       }
-      date.setDate(date.getDate() + 1);
+      first_date.setDate(first_date.getDate() + 1);
   }
 
-  if (date.getDay() !== 0) {
-      for (var i = date.getDay(); i < 7; i++) {
-        calendar += '<td>' + (next_month_first_day.getDate() + i + 1) + '</td>';
-      }
-  }
+  if (first_date.getDay() !== 0 || next_month_mergin > 0) {
+    for (var i = 0; i < next_month_mergin; i++) {
+        calendar += '<td>' + (i + 1) + '</td>';
+        
+    }
+}
+
   calendar += '</tr>';
 
   calendar += '</table>';
