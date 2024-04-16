@@ -85,8 +85,6 @@ def validate_event(title, start_time, end_time):
         return False, "Please enter all required fields.\n"
     #check if start_time is before end_time
     try:
-        start_time = datetime.strptime(start_time, "YYYY-MM-DDThh:mm")
-        end_time = datetime.strptime(end_time, "YYYY-MM-DDThh:mm")
         if start_time >= end_time:
             return False, "End time must be after start time."
     except ValueError:
