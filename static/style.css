@@ -57,6 +57,12 @@ h1 {
     align-items: center;    /*allign the content with the closs axis(colmn by default) */
 }
 
+.calendar_h1 {
+    margin: 0 auto;
+    width: 100%;
+    font-size: 25px;    /*font size*/
+}
+
 .registerh1 {
     margin: 0 auto;
     margin-bottom: 20px;    /*the bottom margin of the content*/
@@ -68,9 +74,6 @@ h1 {
     align-items: center;    /*allign the content with the closs axis(colmn by default) */
 }
    
-
-
-
 .input-field {  /*the input-field class style(use it for element of the form)*/
     border: none;   /* delete the border line of the form box*/
     border-bottom: 1px solid black; /*leave the bottom border line of the form box*/
@@ -83,19 +86,6 @@ h1 {
     border-bottom: 2px solid black; /*make the bottom border line bold*/
 }
 
-/* Optional: Adjust label styles */
-label {
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.custom-label {
-    font-weight: bold; /* Make the label text bold */
-    color: #333; /* Change label text color */
-    font-size: 16px; /* Change label text size */
-    margin-bottom: 5px; /* Add space after each label */
-}
-
 .calendarGrid{
     font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     font-weight: bold;
@@ -105,63 +95,40 @@ label {
     margin-bottom: 5px;
     margin-top: 0px;
     border: 3px solid #000000;
-}   
+}  
 
-.weekRow {
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    width: 170px; /*width of the cell*/
-    height: 30px; /*hight of the cell*/
-    text-align: center;   /*align the text to center*/
-    border: 3px solid #000000; /*the style of the borderline and the color*/
-}   
-
-.dayCell {
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    width: 170px; /*width of the cell*/
-    vertical-align: top; /* セル内のテキストを上揃えにする */
-    width: 170px; /*width of the cell*/
-    height: 120px; /*hight of the cell*/
-    text-align: center;   /*align the text to center*/
-    border: 1px solid #000000; /*the style of the borderline and the color*/
+table {
+    border-collapse: collapse;
 }
 
-.calenderTable{
+.monthly_view{
     font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     font-weight: bold;
-    height: 100px;
-    margin: 0 auto;
-    border-collapse: collapse; /* セルの境界線を結合*/
+    height: 100%;
+    display: flex;      /*put the element in the container class object in flex box*/
+    /* justify-content: center;    allign the content with the main axis(row by default) */
+    align-items: center;    /*allign the content with the closs axis(colmn by default) */
+    flex-direction: column; 
     
 }
 
-.calenderTable thead th,
-.calenderTable thead td {
-  width: 200px; /*width of the cell*/
-  height: 30px; /*hight of the cell*/
-  text-align: center;   /*align the text to center*/
-  border: 3px solid #000000; /*the style of the borderline and the color*/
- 
+.monthly_view thead th,
+.monthly_view thead td {
+    font-size: 25px;    /*font size*/
+    width: 200px; /*width of the cell*/
+    height: 30px; /*hight of the cell*/
+    text-align: center;   /*align the text to center*/
+    border: 0px solid #000000; /*the style of the borderline and the color*/
 }   
 
-.calenderTable tbody th,
-.calenderTable tbody td {
-  width: 100px; /*width of the cell*/
-  height: 70px; /*hight of the cell*/
-  text-align: center;   /*align the text to center*/
-  border: 1px solid #000000; /*the style of the borderline and the color*/
-  
-}
-
-.calendarGrid caption{
-    height: 70px; /*hight of the cell*/
-    margin-bottom: 0px;
-    margin-top: 10px;
-    font-size: 30px;
-}
-.calendarGrid h2 {
-    height: 10px; /*hight of the cell*/
-    margin-bottom: 0px;
-    margin-top: 0px;
+.monthly_view tbody th,
+.monthly_view tbody td {
+    font-size: 15px;    /*font size*/
+    width: 100px; /*width of the cell*/
+    height:100px; /*hight of the cell*/
+    text-align: center;   /*align the text to center*/
+    vertical-align: top;
+    border: 1px solid #000000; /*the style of the borderline and the color*/
 }
 
 .BlackButton{   /*use this to make a black botton*/
@@ -191,4 +158,20 @@ label {
     font-size: 16px; /*font size*/
     margin-bottom: 10px; /* Add space after the submit button */
     cursor: pointer; /*change the mouse cursor to pointer to click the button*/
+}
+
+#prev_month, #next_month{ 
+    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    background-color: #000000; /*background color*/
+    border: none;   /* delete the border line of the form box*/
+    color: #ffffff; /*text color*/
+    padding: 5px 15px;   /*adjust the margin in the box*/
+    text-align: center; /*align the text to center*/
+    text-decoration: none;  /*delete the underline of the link*/
+    display: inline-block;  /*put the element in the container class object in inline-box*/
+    font-size: 16px; /*font size*/
+    margin-bottom: 10px; /* Add space after the submit button */
+    cursor: pointer; /*change the mouse cursor to pointer to click the button*/
+    border-radius: 5px; /*radius of the button*/
+    margin-left: auto;  /*allign the content with the closs axis(colmn by default) */
 }
