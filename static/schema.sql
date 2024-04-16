@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Calendars(
 );
 
 CREATE TABLE IF NOT EXISTS Events (
-    username PRIMARY KEY,
+    username VARCHAR(50) PRIMARY KEY,
     calendar_id INT,
     title VARCHAR(50) NOT NULL,
     description TEXT,
