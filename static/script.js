@@ -4,11 +4,20 @@ function generate_calendar(year, month) {
   var englishMonth = first_date.toLocaleString('en', { month: 'long' });
   var prev_month_last_day = new Date(year, month - 1, 0);
   var next_month_mergin = 6 - last_day.getDay();
+  var height_count = 0;
 
   var calendar = '<table>';
   calendar += '<thead>';
-  calendar += '<tr><th colspan="7" class="calendar_h1">' + englishMonth + '/' + year+ '</th></tr>';
-  calendar += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
+  calendar += '<tr><th colspan="7">' + englishMonth + '/' + year+ '</th></tr>';
+  calendar += '<tr class="calendar_day">';
+  calendar += '<th class="calendar_day">Sun</th>';
+  calendar += '<th class="calendar_day">Mon</th>';
+  calendar += '<th class="calendar_day">Tue</th>';
+  calendar += '<th class="calendar_day">Wed</th>';
+  calendar += '<th class="calendar_day">Thu</th>';
+  calendar += '<th class="calendar_day">Fri</th>';
+  calendar += '<th class="calendar_day"a>Sat</th>';
+  calendar += '</tr>';
   calendar += '</thead>';
 
   var day_of_Week = first_date.getDay();
@@ -31,12 +40,13 @@ function generate_calendar(year, month) {
         
     }
 }
-
+  
   calendar += '</tr>';
 
   calendar += '</table>';
   document.getElementById('calendar').innerHTML = calendar;
-}
+  
+};
 
 document.getElementById('prev_month').addEventListener('click', function() {
 current_month--; 
@@ -57,6 +67,8 @@ document.getElementById('next_month').addEventListener('click', function() {
 });
 
 var today = new Date();
+var current_day = today.getDate();
 var current_year = today.getFullYear();
 var current_month = today.getMonth() + 1;
 generate_calendar(current_year, current_month);
+

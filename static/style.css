@@ -1,7 +1,19 @@
 @charset "UTF-8";
 @font-face {    /*Adding a font*/
     font-family: "CaviarDreams";    /*the name of the font that will be used in the code*/
+    src: url(../static/Font/CaviarDreams.ttf);     /*path to the .ttf file*/
+}
+@font-face {    /*Adding a font*/
+    font-family: "CaviarDreams_Bold";    /*the name of the font that will be used in the code*/
     src: url(../static/Font/CaviarDreams_Bold.ttf);     /*path to the .ttf file*/
+}
+@font-face {    /*Adding a font*/
+    font-family: "CaviarDreams_BoldItalic";    /*the name of the font that will be used in the code*/
+    src: url(../static/Font/CaviarDreams_BoldItalic.ttf);     /*path to the .ttf file*/
+}
+@font-face {    /*Adding a font*/
+    font-family: "CaviarDreams_Italic";    /*the name of the font that will be used in the code*/
+    src: url(../static/Font/CaviarDreams_Italic.ttf);     /*path to the .ttf file*/
 }
 @font-face {    /*Adding a font*/
     font-family: "SIMPLIFICA";    /*the name of the font that will be used in the code*/
@@ -9,7 +21,7 @@
 }
 
 body, form{   /*the body and form tag style*/
-    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-family: "CaviarDreams_Bold", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     font-size: 20px;     /*font size*/
     background-color: #FFFFFF;   /*background color*/
     color:#000000;  /*text color*/
@@ -21,11 +33,11 @@ form input[type="email"],
 form input[type="tel"],
 form textarea {
     font-size: 23px; /*size of the user input font*/
-    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-family: "CaviarDreams_Bold", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
 }
 
 .customh1{  /*the h1(header 1) tag style*/
-    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-family: "CaviarDreams_Bold", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     font-size: 50px;    /*font size*/
     font-weight: bold;  /*font style*/
     color:#000000;    /*text color*/
@@ -57,10 +69,10 @@ h1 {
     align-items: center;    /*allign the content with the closs axis(colmn by default) */
 }
 
-.calendar_h1 {
+.calendar_day {
     margin: 0 auto;
     width: 100%;
-    font-size: 25px;    /*font size*/
+    font-size: 10px;    /*font size*/
 }
 
 .registerh1 {
@@ -87,7 +99,7 @@ h1 {
 }
 
 .calendarGrid{
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-family: "CaviarDreams_Bold", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     font-weight: bold;
     height: 100%;
     margin: 0 auto;
@@ -102,12 +114,12 @@ table {
 }
 
 .monthly_view{
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-family: "CaviarDreams_Bold", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     font-weight: bold;
-    height: 100%;
+    height: 100vh;
     display: flex;      /*put the element in the container class object in flex box*/
     /* justify-content: center;    allign the content with the main axis(row by default) */
-    align-items: center;    /*allign the content with the closs axis(colmn by default) */
+    align-items: center;     /* allign the content with the closs axis(colmn by default)*/
     flex-direction: column; 
     
 }
@@ -115,7 +127,7 @@ table {
 .monthly_view thead th,
 .monthly_view thead td {
     font-size: 25px;    /*font size*/
-    width: 200px; /*width of the cell*/
+    width: 100px; /*width of the cell*/
     height: 30px; /*hight of the cell*/
     text-align: center;   /*align the text to center*/
     border: 0px solid #000000; /*the style of the borderline and the color*/
@@ -128,11 +140,11 @@ table {
     height:100px; /*hight of the cell*/
     text-align: center;   /*align the text to center*/
     vertical-align: top;
-    border: 1px solid #000000; /*the style of the borderline and the color*/
+    border: 2px solid #000000; /*the style of the borderline and the color*/
 }
 
 .BlackButton{   /*use this to make a black botton*/
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-family: "CaviarDreams_Bold", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     background-color: #000000; /*background color*/
     border: none;   /* delete the border line of the form box*/
     color: #ffffff; /*text color*/
@@ -147,7 +159,7 @@ table {
 }
 
 .WhiteButton{
-    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-family: "CaviarDreams_Bold", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     background-color: #FFFFFF; /*background color*/
     border-bottom: 1px solid black; /*leave the bottom border line of the form box*/
     color: #000000; /*text color*/
@@ -161,7 +173,7 @@ table {
 }
 
 #prev_month, #next_month{ 
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-family: "CaviarDreams_Bold", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
     background-color: #000000; /*background color*/
     border: none;   /* delete the border line of the form box*/
     color: #ffffff; /*text color*/
@@ -171,7 +183,19 @@ table {
     display: inline-block;  /*put the element in the container class object in inline-box*/
     font-size: 16px; /*font size*/
     margin-bottom: 10px; /* Add space after the submit button */
+    margin-top: 100px; /* Add space after the submit button */
     cursor: pointer; /*change the mouse cursor to pointer to click the button*/
     border-radius: 5px; /*radius of the button*/
     margin-left: auto;  /*allign the content with the closs axis(colmn by default) */
+}
+
+#pagination{
+    width:70%;
+    display: flex;      /*put the element in the container class object in flex box*/
+    justify-content: center;    /*allign the content with the main axis(row by default)*/
+    align-items: center;    /*allign the content with the closs axis(colmn by default) */
+}
+
+#today{
+    background-color: #000000;
 }
