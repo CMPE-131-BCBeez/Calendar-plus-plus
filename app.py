@@ -203,10 +203,8 @@ def forgot_password():
 @app.route("/new_event", methods = ["GET","POST"])
 @login_required
 def new_event():
-    username = session.get("username")
     if request.method == "POST":
         #get event data from form
-        username = session
         title = request.form.get("title")
         description = request.form.get("description")
         start_time = request.form.get("start_time")
@@ -224,9 +222,9 @@ def new_event():
         with app.app_context():
             cursor = db.cursor()
             #input the data to events
-            query = """INSERT INTO Events (username, title, description, start_time, end_time, location, color, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"""
+            query = """INSERT INTO Events (title, description, start_time, end_time, location, color, type) VALUES (?, ?, ?, ?, ?, ?, ?)"""
             #we might need to modify this in the future
-            cursor.execute(query, (username, title, description, start_time, end_time, location, color, type))
+            cursor.execute(query, (title, description, start_time, end_time, location, color, type))
             db.commit()
         
         flash("Event created successfully!")

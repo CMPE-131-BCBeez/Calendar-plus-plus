@@ -1,7 +1,7 @@
 -- SQLITE3
 
 CREATE TABLE IF NOT EXISTS Users (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(20) NOT NULL,
     confirmation_code VARCHAR(10),
@@ -11,14 +11,14 @@ CREATE TABLE IF NOT EXISTS Users (
 );
 
 CREATE TABLE IF NOT EXISTS Calendars(
-    id INT PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     user_id INT,
     name VARCHAR(50) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
 CREATE TABLE IF NOT EXISTS Events (
-    username VARCHAR(50) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     calendar_id INT,
     title VARCHAR(50) NOT NULL,
     description TEXT,
