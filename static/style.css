@@ -154,9 +154,9 @@ table {
     height: calc(90vh / 6);
 }
 
-.today{
-    color: #FFFFFF;
-    background: #000000;
+.today {
+    background-color: #000000;
+    color:#FFFFFF;
 }
 
 #pagination{

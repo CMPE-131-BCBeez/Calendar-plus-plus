@@ -1,6 +1,7 @@
 var today = new Date();
-var current_year = today.getFullYear();
+var current_day = today.getDate();
 var current_month = today.getMonth() + 1;
+var current_year = today.getFullYear();
 
 function generate_calendar(year, month) {
   var first_date = new Date(year, month - 1, 1);
@@ -24,10 +25,6 @@ function generate_calendar(year, month) {
 
   //body of the calendar
   calendar += '<tbody>';
-  var today = new Date();
-  var current_day = today.getDate();
-  var current_month = today.getMonth() + 1;
-  var current_year = today.getFullYear();
   var day_of_Week = first_date.getDay();
   var prev_next_day_class = 'calendar_basic';
 
@@ -43,8 +40,9 @@ function generate_calendar(year, month) {
   for (var day = 1; day <= last_day.getDate(); day++) {
     var cell_class = 'calendar_basic';
     if (year === current_year && month === current_month && day === current_day) {
-      cell_class += ' today';
+      cell_class += 'today';
     }
+   
     calendar += '<td class="' + cell_class + '">' + day + '</td>';
     if (first_date.getDay() === 6) {
       calendar += '</tr><tr>';
@@ -64,6 +62,11 @@ function generate_calendar(year, month) {
   calendar += '</table>';
 
   document.getElementById('calendar').innerHTML = calendar;
+  var todayCell = document.querySelector('.calendar_basic.today');
+    if (todayCell) {
+        var todayCellNumber = todayCell.innerText;
+        todayCell.innerHTML = '<span>' + todayCellNumber + '</span>';
+}
 }
 
 //implement the button going back to previous month
@@ -96,3 +99,5 @@ function year_month(month, year){
 
 year_month(current_month, current_year);
 generate_calendar(current_year, current_month);
+day(current_day);
+today(today);
