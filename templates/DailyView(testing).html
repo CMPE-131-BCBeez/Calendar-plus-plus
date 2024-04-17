@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar++</title>
+    <link rel="stylesheet" href="../static/style.css"> 
+</head>
+
+<ion-header>
+    <ion-toolbar color='primary'>
+        <ion-buttons slot="start" class="menu_btn">
+            <ion-menu-button color="light" defaultHref="home1"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>This Week C++</ion-title>
+    </ion-toolbar>
+</ion-header>  
+
+<ion-content>
+    <div class="cal">
+        <div class="monthLine">
+            <div class="month">
+                <p>April 2024</p>
+            </div>
+
+            <div class="monthChange">
+                <ion-icon name="arrow-back-outline" (click)="moveDate('prev')"></ion-icon>
+                <ion-icon name="arrow-fordward-outline" (click)="moveDate('next')"></ion-icon>
+            </div>
+
+            <div class="week">
+                <div *ngFor="let data of cells">
+                    <div class="weekDay">
+                        <p [ngClass]="data.isToday ? 'today' : ''">{{data.day}}</p>
+                    </div>
+
+                    <div class="weekNumber" (click)="dateClicked(data.date)">
+                        <p [ngClass]="data.isToday ? 'today square' : ''"{{data.date}}></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</ion-content>
