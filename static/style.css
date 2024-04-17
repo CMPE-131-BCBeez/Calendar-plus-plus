@@ -204,6 +204,17 @@ table {
     cursor: pointer; 
 }
 
+.setting_icon {
+    background-image: url('../static/image/setting_icon_dark.png'); 
+    background-size: cover; 
+    padding: 15px;
+    width: 30px;
+    height: 30px; 
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
 
 
 
