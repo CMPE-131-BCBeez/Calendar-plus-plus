@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %} Weekly {% endblock %}
+<script src="{{url_for('static', filename='script.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+
+<div id="calendarGrid"></div>
+<table class="Weekly">
+    <caption>April</caption>
+    <thead>
+        <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+        </tr>
+    </thead>
+
+
+
+</table>
+
+
+
+
+{% endblock %}
