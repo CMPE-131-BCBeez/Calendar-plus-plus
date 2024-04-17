@@ -166,8 +166,9 @@ def forgot_password():
         if username_or_email != None:
             with app.app_context():
                 cursor = db.cursor()
-                cursor.execute("SELECT email FROM Users WHERE username=? OR email=?", (username_or_email, username_or_email))
+                cursor.execute("SELECT email FROM Users WHERE username=?", (username_or_email))
                 useremail = cursor.fetchone()
+                cursor.execute("SELECT email FROM Users WHERE email=?", (username_or_email))
                 eemail = cursor.fetchone()
                 #check if username exists
                 if useremail == None and eemail == None:
