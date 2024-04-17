@@ -94,10 +94,4 @@ function year_month(month, year){
 };
 
 year_month(current_month, current_year);
-
-// window.onload = function() {
-
-// };
-
-
 generate_calendar(current_year, current_month);
