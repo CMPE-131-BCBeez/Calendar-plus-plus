@@ -60,8 +60,9 @@ function generate_calendar(year, month) {
   }
 
   calendar += '</tr>';
-  calendar += '</table>';
   calendar += '</tbody>';
+  calendar += '</table>';
+
   document.getElementById('calendar').innerHTML = calendar;
 }
 
