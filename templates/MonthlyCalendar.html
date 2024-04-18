@@ -2,18 +2,26 @@
 {% block title %} Monthly Calendar {% endblock %}
 
 {% block body %}
-    <button class="blackButton">
-      
-    </button>
-    <div id="pagination">
-      <button id="prev_month">↫</button>
-      <h2 id="year_month_header"></h2>
-      <button id="next_month">↬</button>
+<div class="monthly_header"> 
+    <div class="top_buttons">
+      <button type="button" id="setting" class="BlackButton">Setting</button>
+      <button type="button" id="weekly" class="BlackButton">Weekly</button>
+      <button type="button" id="event" class="BlackButton">Eevent</button>
+      <button type="button" id="weekly" class="BlackButton">Today</button>
     </div>
+    
+    <div id="pagination">
+      <button id="prev_month"><</button>
+      <h2 id="year_month_header"></h2>
+      <button id="next_month">></button>
+    </div>
+  </div>
   
     <div class="monthly_view">
-      <div id="calendar"></div> 
-    </div>
-     
-    <script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
+      <div id="monthly_calendar"></div> 
+    </div>>
+    
+<script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
+<script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+
 {% endblock %}
