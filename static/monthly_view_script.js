@@ -8,6 +8,7 @@ function generate_calendar(year, month) {
   let last_day = new Date(year, month, 0);
   let prev_month_last_day = new Date(year, month - 1, 0);
   let next_month_mergin = 6 - last_day.getDay();
+ 
 
   //Header of the calendar
 let monthly_calendar = '<table>';
