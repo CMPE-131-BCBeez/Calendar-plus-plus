@@ -1,46 +1,106 @@
-a<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar++</title>
+    <title>Weekly Calendar ++</title>
     <link rel="stylesheet" href="../static/style.css"> 
 </head>
 
-<ion-header>
-    <ion-toolbar color='primary'>
-        <ion-buttons slot="start" class="menu_btn">
-            <ion-menu-button color="light" defaultHref="home1"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>This Week C++</ion-title>
-    </ion-toolbar>
-</ion-header>  
+<style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .navButton {
+      margin-bottom: 10px;
+    }
+  </style>
+  </head>
+  <body>
+  
+  <h2>Weekly Calendar ++</h2>
+  
+  <div>
+    <button class="navButton" onclick="previousWeek()">Previous 7 Days</button>
+    <button class="navButton" onclick="nextWeek()">Next 7 Days</button>
+  </div>
+  
+  <table id="calendar">
+    <tr>
+      <th>Time</th>
+      <th id="sunday"></th>
+      <th id="monday"></th>
+      <th id="tuesday"></th>
+      <th id="wednesday"></th>
+      <th id="thursday"></th>
+      <th id="friday"></th>
+      <th id="saturday"></th>
+    </tr>
+  </table>
+  
+  <script>
+    var startDate = new Date();
+  
+    function generateWeeklyCalendar(startDate) {
+      var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var table = document.getElementById('calendar');
+  
+      var rows = table.getElementsByTagName('tr');
+      for (var i = rows.length - 1; i > 0; i--) {
+        table.removeChild(rows[i]);
+      }
+  
+      var sundayDate = new Date(startDate);
+      sundayDate.setDate(sundayDate.getDate() - sundayDate.getDay());
+  
+      for (var i = 0; i < 7; i++) {
+        var date = new Date(sundayDate);
+        date.setDate(date.getDate() + i);
+        var dateText = date.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'});
+        var th = document.getElementById(daysOfWeek[i].toLowerCase());
+        th.textContent = dateText;
+      }
 
-<ion-content>
-    <div class="cal">
-        <div class="monthLine">
-            <div class="month">
-                <p>April 2024</p>
-            </div>
+      for (var hour = 0; hour < 24; hour++) {
+        var row = document.createElement('tr');
+        var hourCell = document.createElement('td');
+        hourCell.textContent = hour + ':00';
+        row.appendChild(hourCell);
+  
+        for (var day = 0; day < 7; day++) {
+          var cell = document.createElement('td');
 
-            <div class="monthChange">
-                <ion-icon name="arrow-back-outline" (click)="moveDate('prev')"></ion-icon>
-                <ion-icon name="arrow-fordward-outline" (click)="moveDate('next')"></ion-icon>
-            </div>
-
-            <div class="week">
-                <div *ngFor="let data of cells">
-                    <div class="weekDay">
-                        <p [ngClass]="data.isToday ? 'today' : ''">{{data.day}}</p>
-                    </div>
-
-                    <div class="weekNumber" (click)="dateClicked(data.date)">
-                        <p [ngClass]="data.isToday ? 'today square' : ''"{{data.date}}></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-</ion-content>
+          row.appendChild(cell);
+        }
+  
+        table.appendChild(row);
+      }
+    }
+  
+    function nextWeek() {
+      startDate.setDate(startDate.getDate() + 7);
+      generateWeeklyCalendar(startDate);
+    }
+  
+    function previousWeek() {
+      startDate.setDate(startDate.getDate() - 7);
+      generateWeeklyCalendar(startDate);
+    }
+  
+    window.onload = function() {
+      generateWeeklyCalendar(startDate);
+    };
+  </script>
+  
+  </body>
+  </html>
+  
