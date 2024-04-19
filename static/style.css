@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 @font-face {    /*Adding a font*/
     font-family: "CaviarDreams";    
     src: url(../static/Font/CaviarDreams.ttf);    
@@ -100,8 +101,9 @@ h1 {
 .top_buttons{
     align-items: right;  
 }
+
 table {
-    width: 70vw; 
+    width: 90vw; 
     height: 70vh;
     border-collapse: collapse;
 }
@@ -119,11 +121,11 @@ table {
     font-family: "CaviarDreams", sans-serif;
     margin: 0 auto;
     width: 100%;
-    font-size: 15px;   
+    font-size: 15px; 
+    height: calc(70vh / 6);  
 }
 
-.monthly_view thead th,
-.monthly_view thead td {
+.calendar_day {
     font-size: 20px;    
     width: calc(100% / 7);  
     height: 30px;
@@ -136,24 +138,21 @@ table {
 .monthly_view tbody th,
 .monthly_view tbody td {
     width: calc(100% / 7); 
-    height: calc(90vh / 6); 
     box-sizing: border-box; 
     vertical-align: top;
     border: 2px solid #000000; 
 }
 
-.monthly_view tbody th:last-child,
-.monthly_view tbody td:last-child {
-    height: calc(90vh / 6); 
-}
-
-.monthly_view tbody tr{
-    height: calc(90vh / 6);
-}
-
 .today {
     background-color: #000000;
     color:#FFFFFF;
+}
+
+.five_cells_height{
+    height: calc(70vh / 6);
+}
+.six_cells_height{
+    height: calc(70vh / 6);
 }
 
 #pagination{

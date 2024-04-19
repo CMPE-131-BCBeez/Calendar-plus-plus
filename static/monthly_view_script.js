@@ -8,7 +8,6 @@ function generate_calendar(year, month) {
   let last_day = new Date(year, month, 0);
   let prev_month_last_day = new Date(year, month - 1, 0);
   let next_month_mergin = 6 - last_day.getDay();
- 
 
   //Header of the calendar
 let monthly_calendar = '<table>';
@@ -98,19 +97,21 @@ function year_month(month, year){
   document.getElementById('year_month_header').innerHTML = year_month_header;
 };
 
+document.getElementById('today_button').addEventListener('click', function() {
+  current_month = today.getMonth() + 1;
+  current_year = today.getFullYear();
+  generate_calendar(current_year, current_month);
+  year_month(current_month, current_year);
+});
+
 year_month(current_month, current_year);
 generate_calendar(current_year, current_month);
 document.querySelectorAll('.calendar_basic').forEach(cell => {
   cell.addEventListener('click', function() {
     let day = this.innerText;
-    // var month = current_month;
-    // var year = current_year;
-
     let url = '/daily_calendar?date=' + current_year + '-' + current_month + '-' + day;
-
     window.location.href = url;
   });
 });
 
 day(current_day);
-today(today);
