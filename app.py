@@ -91,7 +91,7 @@ def register_page() -> str:
             print(f"{res}")
             if (res):
                 flash("This username already exists")
-                return render_template("UserRegister.html"), 400 # TODO: change to template rendering once frontend decides how they want to handle errors
+                return render_template("user_register.html"), 400 # TODO: change to template rendering once frontend decides how they want to handle errors
             query = """INSERT INTO Users (username, password_hash, email, first_name, last_name) VALUES (?, ?, ?, ?, ?)"""
             
             cursor.execute(query, (username, password_hash, email, firstName, lastName))
