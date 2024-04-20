@@ -136,7 +136,7 @@ def login():
 @app.route("/monthly_calendar", methods = ["GET"])
 @login_required
 def monthlycalendar():
-    return render_template("MonthlyCalendar.html")    
+    return render_template("monthly_calendar.html")    
     
 
 # @app.route("/weekly_calendar",methods =["POST"])
