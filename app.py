@@ -129,7 +129,7 @@ def login():
         else:
             flash("Invalid username or password")
     
-    return render_template("Loginpage.html")
+    return render_template("login_page.html")
     
 #implement the homecalendar page which will be the main user calendar
 #this calendar includes all saved and shared events user has
@@ -155,9 +155,8 @@ def monthlycalendar():
 #     if req9uest.method == "POST":
 #         email
 
-@app.route("/forgotpassword", methods = ["GET", "POST"])
-@login_required
-def forgotpassword():
+@app.route("/forgot_password", methods = ["GET", "POST"])
+def forgot_password():
     if request.method=="POST":
         #get username or email
         username_or_email = request.form.get("username_or_email")
@@ -195,7 +194,7 @@ def forgotpassword():
         else: 
             flash("Please enter a username or email")
     else:
-        return "Doesn't exist yet!"
+        return render_template("forgot_password.html")
         
 
 # @app.route("/change_password_vc", methods = ["GET", "POST"])
@@ -237,7 +236,7 @@ def new_event():
 #changing a user's password
 @app.route("/change_password_settings", methods = ["GET", "POST"])
 @login_required
-def change_password():
+def change_password_settings():
     #get the password from the user input & update password
     if request.method == "POST":
         current_password = request.form.get("current_password")
@@ -261,6 +260,34 @@ def change_password():
         else:
             flash("Incorrect password, please enter current password")
         return redirect("/user_settings")
+    
+#changing a user's password
+@app.route("/change_password_email", methods = ["GET", "POST"])
+def change_password_email():
+    #get the password from the user input & update password
+    if request.method == "POST":
+        current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_new_password = request.form.get("confirm_new_password")
+
+        #to change password you need to input correct current pw
+        username = session.get("username")
+        current_password_hash = generate_password_hash(username)
+        if check_password_hash(current_password_hash, current_password):
+            #check if new passwords match
+            if new_password == confirm_new_password:
+                new_password_hash = generate_password_hash(new_password, "sha256")
+                with app.app_context():
+                    cursor = db.cursor
+                    cursor.execute("UPDATE Users SET password_hash=? WHERE username=?", (new_password_hash, username))
+                    db.commit()
+                flash("password changed successfully!")
+            else:
+                flash("New password and confirm new password must match!\n")
+        else:
+            flash("Incorrect password, please enter current password")
+        return redirect("/user_settings")
+
 
 @app.route("/data_management")
 @login_required
