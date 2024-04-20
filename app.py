@@ -99,7 +99,7 @@ def register_page() -> str:
         
         return redirect("/login")
     else:
-        return render_template("UserRegister.html")
+        return render_template("user_register.html")
 
 
 #we will implement the login page which is just used to
