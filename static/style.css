@@ -1,194 +1,237 @@
 @charset "UTF-8";
+
 @font-face {    /*Adding a font*/
-    font-family: "CaviarDreams";    /*the name of the font that will be used in the code*/
-    src: url(../static/Font/CaviarDreams_Bold.ttf);     /*path to the .ttf file*/
+    font-family: "CaviarDreams";    
+    src: url(../static/Font/CaviarDreams.ttf);    
 }
 @font-face {    /*Adding a font*/
-    font-family: "SIMPLIFICA";    /*the name of the font that will be used in the code*/
-    src: url(../static/Font/SIMPLIFICA_Typeface.ttf);     /*path to the .ttf file*/
+    font-family: "CaviarDreams_Bold";   
+    src: url(../static/Font/CaviarDreams_Bold.ttf);     
+}
+@font-face {    /*Adding a font*/
+    font-family: "CaviarDreams_BoldItalic";    
+    src: url(../static/Font/CaviarDreams_BoldItalic.ttf);  
+}
+@font-face {    /*Adding a font*/
+    font-family: "CaviarDreams_Italic";    
+    src: url(../static/Font/CaviarDreams_Italic.ttf);     
+}
+@font-face {    /*Adding a font*/
+    font-family: "SIMPLIFICA";   
+    src: url(../static/Font/SIMPLIFICA_Typeface.ttf);     
 }
 
-body, form{   /*the body and form tag style*/
-    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    font-size: 20px;     /*font size*/
-    background-color: #FFFFFF;   /*background color*/
-    color:#000000;  /*text color*/
+.light_mode{
+    color:#000000;
+    background-color: FFFFFF;
 }
 
-form input[type="text"],     /*the style of input text*/
+.dark_mode{
+    color:#FFFFFF;
+    background-color: #000000;
+}
+
+/*the body and form tag style*/
+body, form{   
+    font-family: "CaviarDreams_Bold", sans-serif;     
+    font-size: 20px;     
+    background-color: #FFFFFF;   
+    color:#000000;  
+}
+/* use dark/lightmode */
+
+form input[type="text"],     
 form input[type="password"], 
 form input[type="email"], 
 form input[type="tel"],
 form textarea {
-    font-size: 23px; /*size of the user input font*/
-    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
+    font-size: 23px; 
+    font-family: "CaviarDreams_Bold", sans-serif;    
 }
 
-.customh1{  /*the h1(header 1) tag style*/
-    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    font-size: 50px;    /*font size*/
-    font-weight: bold;  /*font style*/
-    color:#000000;    /*text color*/
-}
-
-p{
-    font-size: 20px;    /*font size*/
-}
-
-.container {    /*the container class style*/
+/*the container class style*/
+.container {    
+    font-family: "CaviarDreams_Bold", sans-serif;
     margin: 0 auto;
-    border-collapse: collapse; /* セルの境界線を結合 */
+    border-collapse: collapse; 
     margin-top: 100px; 
     height: 30%;
     width: 30%;
-    margin-bottom: 20px;    /*the bottom margin of the content*/
-    text-align: left;   /*align the text to left*/
-    font-weight: bold; /* Make the label text bold */
+    margin-bottom: 20px;   
+    text-align: left;   
+    font-weight: bold; 
 }
 
 h1 {
     margin: 0 auto;
-    margin-bottom: 20px;    /*the bottom margin of the content*/
+    margin-bottom: 20px;    
     margin-top: 150px; 
-    text-align: left;   /*align the text to left*/
+    text-align: left; 
     width: 100%;
-    display: flex;      /*put the element in the container class object in flex box*/
-    justify-content: center;    /*allign the content with the main axis(row by default)*/
-    align-items: center;    /*allign the content with the closs axis(colmn by default) */
+    display: flex;      
+    justify-content: center;   
+    align-items: center;    
 }
 
 .registerh1 {
     margin: 0 auto;
-    margin-bottom: 20px;    /*the bottom margin of the content*/
-    margin-top: 70px; 
-    text-align: left;   /*align the text to left*/
+    margin-bottom: 20px;   
+    text-align: left;   
     width: 100%;
-    display: flex;      /*put the element in the container class object in flex box*/
-    justify-content: center;    /*allign the content with the main axis(row by default)*/
-    align-items: center;    /*allign the content with the closs axis(colmn by default) */
-}
-   
-
-
-
-.input-field {  /*the input-field class style(use it for element of the form)*/
-    border: none;   /* delete the border line of the form box*/
-    border-bottom: 1px solid black; /*leave the bottom border line of the form box*/
-    outline: none;  /* delete the border line of the form box*/
-    width: 100%; /* Ensure input fields take up full width */
-    margin-bottom: 20px;    /*the bottom margin of the content*/
+    display: flex;      
+    justify-content: center;    
+    align-items: center;   
 }
 
-.input-field:focus {    /*this will be used when the input-field is focused(clicked or selected)*/
-    border-bottom: 2px solid black; /*make the bottom border line bold*/
+/* used for input field for every page */
+.input-field {  
+    border: none;   
+    border-bottom: 1px solid black;
+    outline: none; 
+    width: 100%; 
+    margin-bottom: 20px;    
 }
-
-/* Optional: Adjust label styles */
-label {
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.custom-label {
-    font-weight: bold; /* Make the label text bold */
-    color: #333; /* Change label text color */
-    font-size: 16px; /* Change label text size */
-    margin-bottom: 5px; /* Add space after each label */
-}
-
-.calendarGrid{
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    font-weight: bold;
-    height: 100%;
-    margin: 0 auto;
-    border-collapse: collapse; /* セルの境界線を結合*/
-    margin-bottom: 5px;
-    margin-top: 0px;
-    border: 3px solid #000000;
-}   
-
-.weekRow {
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    width: 170px; /*width of the cell*/
-    height: 30px; /*hight of the cell*/
-    text-align: center;   /*align the text to center*/
-    border: 3px solid #000000; /*the style of the borderline and the color*/
-}   
-
-.dayCell {
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    width: 170px; /*width of the cell*/
-    vertical-align: top; /* セル内のテキストを上揃えにする */
-    width: 170px; /*width of the cell*/
-    height: 120px; /*hight of the cell*/
-    text-align: center;   /*align the text to center*/
-    border: 1px solid #000000; /*the style of the borderline and the color*/
-}
-
-.calenderTable{
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    font-weight: bold;
-    height: 100px;
-    margin: 0 auto;
-    border-collapse: collapse; /* セルの境界線を結合*/
-    
-}
-
-.calenderTable thead th,
-.calenderTable thead td {
-  width: 200px; /*width of the cell*/
-  height: 30px; /*hight of the cell*/
-  text-align: center;   /*align the text to center*/
-  border: 3px solid #000000; /*the style of the borderline and the color*/
  
+/*this will be used when the input-field is focused(clicked or selected)*/
+.input-field:focus {    
+    border-bottom: 2px solid black; 
+}
+
+/* used for the monthly view page */
+.top_buttons{
+    align-items: right;  
+}
+
+table {
+    width: 90vw; 
+    height: 70vh;
+    border-collapse: collapse;
+}
+
+.monthly_view{
+    font-family: "CaviarDreams_Bold", sans-serif;     
+    font-weight: bold;
+    display: flex;      
+    /* justify-content: center;*/
+    align-items: center;     
+    flex-direction: column; 
+}
+
+.calendar_basic {
+    font-family: "CaviarDreams", sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    font-size: 15px; 
+    height: calc(70vh / 6);  
+}
+
+.calendar_day {
+    font-size: 20px;    
+    width: calc(100% / 7);  
+    height: 30px;
+    text-align: center;   
+    border: 0px solid #000000;
+    box-sizing: border-box; 
+    vertical-align: top;  
 }   
 
-.calenderTable tbody th,
-.calenderTable tbody td {
-  width: 100px; /*width of the cell*/
-  height: 70px; /*hight of the cell*/
-  text-align: center;   /*align the text to center*/
-  border: 1px solid #000000; /*the style of the borderline and the color*/
-  
+.monthly_view tbody th,
+.monthly_view tbody td {
+    width: calc(100% / 7); 
+    box-sizing: border-box; 
+    vertical-align: top;
+    border: 2px solid #000000; 
 }
 
-.calendarGrid caption{
-    height: 70px; /*hight of the cell*/
-    margin-bottom: 0px;
-    margin-top: 10px;
-    font-size: 30px;
-}
-.calendarGrid h2 {
-    height: 10px; /*hight of the cell*/
-    margin-bottom: 0px;
-    margin-top: 0px;
+.today {
+    background-color: #000000;
+    color:#FFFFFF;
 }
 
-.BlackButton{   /*use this to make a black botton*/
-    font-family: "CaviarDreams", sans-serif;     /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    background-color: #000000; /*background color*/
-    border: none;   /* delete the border line of the form box*/
-    color: #ffffff; /*text color*/
-    padding: 5px 15px;   /*adjust the margin in the box*/
-    text-align: center; /*align the text to center*/
-    text-decoration: none;  /*delete the underline of the link*/
-    display: inline-block;  /*put the element in the container class object in inline-box*/
-    font-size: 16px; /*font size*/
-    margin-bottom: 10px; /* Add space after the submit button */
-    cursor: pointer; /*change the mouse cursor to pointer to click the button*/
-    border-radius: 5px; /*radius of the button*/
+.five_cells_height{
+    height: calc(70vh / 6);
+}
+.six_cells_height{
+    height: calc(70vh / 6);
+}
+
+#pagination{
+    margin: 0 auto;
+    width:40%;
+    display: flex;     
+    justify-content: center;  
+    align-items: center; 
+    margin-bottom: 30px; 
+    margin-top: 30px; 
+}
+
+#prev_month, #next_month{ 
+    font-family: "CaviarDreams_Bold", sans-serif;     
+    background-color: #000000; 
+    border: none;   
+    color: #ffffff; 
+    padding: 5px 15px;   
+    text-align: center; 
+    text-decoration: none;  
+    display: inline-block;  
+    font-size: 30px; 
+    cursor: pointer; 
+    border-radius: 5px;
+}
+
+#year_month_header{
+    font-size: 40px; 
+    margin: 0 auto;
+    text-align: center;  
+    width: 70%;
+    display: flex;     
+    justify-content: center;    
+    align-items: center;    
+}
+
+/* buttons */
+.BlackButton{   
+    font-family: "CaviarDreams_Bold", sans-serif;     
+    background-color: #000000; 
+    border: none;   
+    color: #ffffff; 
+    padding: 5px 15px;   
+    text-align: center; 
+    text-decoration: none;  
+    display: inline-block;  
+    font-size: 16px; 
+    margin-bottom: 10px; 
+    cursor: pointer; 
+    border-radius: 5px; 
 }
 
 .WhiteButton{
-    font-family: "CaviarDreams", sans-serif;    /*use CaviarDreams fornt, sans-serif if can't find the .ttf*/
-    background-color: #FFFFFF; /*background color*/
-    border-bottom: 1px solid black; /*leave the bottom border line of the form box*/
-    color: #000000; /*text color*/
-    padding: 0px 2px; /*adjust the margin in the box*/
-    text-align: center; /*align the text to center*/
-    text-decoration: none;  /*delete the underline of the link*/
-    display: inline-block;  /*put the element in the container class object in inline-box*/
-    font-size: 16px; /*font size*/
-    margin-bottom: 10px; /* Add space after the submit button */
-    cursor: pointer; /*change the mouse cursor to pointer to click the button*/
+    font-family: "CaviarDreams_Bold", sans-serif;   
+    background-color: #FFFFFF; 
+    border-bottom: 1px solid black; 
+    color: #000000; 
+    padding: 0px 2px; 
+    text-align: center; 
+    text-decoration: none;  
+    display: inline-block;  
+    font-size: 16px; 
+    margin-bottom: 10px; 
+    cursor: pointer; 
 }
+
+.setting_icon {
+    background-image: url('../static/image/setting_icon_dark.png'); 
+    background-size: cover; 
+    padding: 15px;
+    width: 30px;
+    height: 30px; 
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+
+
+
+
+
