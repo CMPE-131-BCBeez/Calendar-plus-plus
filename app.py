@@ -37,8 +37,19 @@ db: sqlite3.Connection = LocalProxy(get_db)
 
 # Start flask app
 app: Flask = Flask(__name__)
+mail = Mail(app)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+#I have ben trying to get this to work with email but I cannot for the life of me make it work
+#the issue here is that the gmail I made for the class needs an app password but this option does 
+#not appear when I go to settings-security-2step verification
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = ['calandarPlusPlus@gmail.com']
+app.config['MAIL_PASSWORD'] = ['ThisAintItFr2025']
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 # Ensure responses aren't cached
 @app.after_request
@@ -173,6 +184,7 @@ def forgot_password():
     
                 if email is None:
                     flash("username or email does not exist! \n please try again.")
+                    return render_template("forgot_password.html")
                 else:
                     #lastly you succeed you will create a confirmation code and 
                     #send it to the user's email
@@ -180,7 +192,12 @@ def forgot_password():
                     #generate the confirmation code
                     confirmation_code = generate_confirmation_code()
                     #now send the confirmation code you generated
-                    send_confirmation_email(email, confirmation_code)
+                    subject = "Confirm Your Email Address"
+                    body = f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
+                    sender = "calendarPlusPlus@gmail.com"
+                    msg = Message(subject, sender = sender, recipients=[email], body=body)
+                    mail.send(msg)
+                    
                     #finally save it to your database
                     with app.app_context():
                         cursor = db.cursor
