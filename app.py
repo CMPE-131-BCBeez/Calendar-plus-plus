@@ -166,31 +166,28 @@ def forgot_password():
         if username_or_email != None:
             with app.app_context():
                 cursor = db.cursor()
-                cursor.execute("SELECT email FROM Users WHERE username=?", (username_or_email))
-                useremail = cursor.fetchone()
-                cursor.execute("SELECT email FROM Users WHERE email=?", (username_or_email))
-                eemail = cursor.fetchone()
-                #check if username exists
-                if useremail == None and eemail == None:
+                cursor.execute("""SELECT email FROM Users WHERE username=(?) OR email=(?)""", (username_or_email, username_or_email)) 
+                email = None
+                email = cursor.fetchone() 
+                flash(f"the content of the cursor is: {email}")
+    
+                if email is None:
                     flash("username or email does not exist! \n please try again.")
-                #now just verify if the user info match.
-                if useremail != None and eemail != None:
-                    if useremail != eemail:
-                        flash("Information does not match!")
+                else:
                     #lastly you succeed you will create a confirmation code and 
                     #send it to the user's email
-                    else:
-                        #generate the confirmation code
-                        confirmation_code = generate_confirmation_code()
-                        #now send the confirmation code you generated
-                        send_confirmation_email(email, confirmation_code)
-                        #finally save it to your database
-                        with app.app_context():
-                            cursor = db.cursor
-                            cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, eemail, username_or_email))
-                            db.commit()
-                        flash("password changed successfully!")
-                        return redirect("/change_password_email")
+                    
+                    #generate the confirmation code
+                    confirmation_code = generate_confirmation_code()
+                    #now send the confirmation code you generated
+                    send_confirmation_email(email, confirmation_code)
+                    #finally save it to your database
+                    with app.app_context():
+                        cursor = db.cursor
+                        cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, email, username_or_email))
+                        db.commit()
+                    flash("password changed successfully!")
+                    return redirect("/change_password_email")
 
         else: 
             flash("Please enter a username or email")

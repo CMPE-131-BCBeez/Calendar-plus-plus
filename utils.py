@@ -29,7 +29,7 @@ def generate_confirmation_code():
 
 def send_confirmation_email(email, confirmation_code):
     subject = "Confirm Your Email Address"
-    body = f"Please click the following link to confirm your email address: /confirm_email?code={confirmation_code}"
+    body = f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
     msg = Message(subject, recipients=[email], body=body)
     Mail.send(msg)
 
