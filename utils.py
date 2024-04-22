@@ -29,8 +29,9 @@ def generate_confirmation_code():
 
 def send_confirmation_email(email, confirmation_code):
     subject = "Confirm Your Email Address"
-    body = f"Please click the following link to confirm your email address: /confirm_email?code={confirmation_code}"
-    msg = Message(subject, recipients=[email], body=body)
+    body = f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
+    sender = "calendarPlusPlus@gmail.com"
+    msg = Message(subject, sender = sender, recipients=[email], body=body)
     Mail.send(msg)
 
 def db_setup(db_path: str):
@@ -85,8 +86,6 @@ def validate_event(title, start_time, end_time):
         return False, "Please enter all required fields.\n"
     #check if start_time is before end_time
     try:
-        start_time = datetime.strptime(start_time, "%M-%D-%Y %H:%M:%S")
-        end_time = datetime.strptime(end_time, "%M-%D-%Y %H:%M:%S")
         if start_time >= end_time:
             return False, "End time must be after start time."
     except ValueError:
