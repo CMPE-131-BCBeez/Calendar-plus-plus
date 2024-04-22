@@ -1,4 +1,7 @@
 let today = new Date();
+const this_month = today.getMonth() + 1;
+const this_year = today.getFullYear();
+const this_day = today.getDate();
 let current_day = today.getDate();
 let current_month = today.getMonth() + 1;
 let current_year = today.getFullYear();
@@ -39,19 +42,23 @@ let monthly_calendar = '<table>';
   //fill the date and change the color of today's cell
   for (let day = 1; day <= last_day.getDate(); day++) {
     let cell_class = 'calendar_basic';
-    if (year === current_year && month === current_month && day === current_day) {
-      cell_class += 'today';
+    if (year === this_year && month === this_month && day === this_day) {
+      cell_class = 'today';
     }
-   
+    else{
+      cell_class = 'calendar_basic';
+    }
+
     monthly_calendar += '<td class="' + cell_class + '">' + day + '</td>';
     if (first_date.getDay() === 6) {
       monthly_calendar += '</tr><tr>';
     }
     first_date.setDate(first_date.getDate() + 1);
   }
+  
 
   //fill the blank after the last day
-  if (first_date.getDay() !== 0 || next_month_mergin > 0) {
+  if (last_day.getDay() !== 6 || next_month_mergin > 0) {
     for (let i = 0; i < next_month_mergin; i++) {
       monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1) + '</td>';
     }
@@ -62,10 +69,10 @@ let monthly_calendar = '<table>';
   monthly_calendar += '</table>';
 
   document.getElementById('monthly_calendar').innerHTML = monthly_calendar;
-  let todayCell = document.querySelector('.calendar_basic.today');
+  let todayCell = document.querySelector('.today');
     if (todayCell) {
       let todayCellNumber = todayCell.innerText;
-        todayCell.innerHTML = '<span>' + todayCellNumber + '</span>';
+        todayCell.innerHTML = '<span class="today_cell">' + todayCellNumber + '</span>';
 }
 }
 
