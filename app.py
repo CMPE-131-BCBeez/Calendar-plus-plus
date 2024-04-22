@@ -159,16 +159,18 @@ def monthlycalendar():
 def forgot_password():
     if request.method=="POST":
         #get username or email
-        username_or_email = request.form.get("username_or_email")
-
+        username_or_email = request.form.get("username_or_email")  
+                
         #now we will get the username from our database through either 
         #username of email itself. we must verify if the user has an acc.
-        if username_or_email != None:
+        if username_or_email != None or username_or_email != ' ':
             with app.app_context():
                 cursor = db.cursor()
-                cursor.execute("SELECT email FROM Users WHERE username=? OR email=?", (username_or_email, username_or_email))
-                useremail = cursor.fetchone()
-                eemail = cursor.fetchone()
+                cursor.execute("SELECT email FROM Users WHERE username=?", (username_or_email,))
+                useremail = cursor.fetchall()
+                cursor.execute("SELECT email FROM Users WHERE email=?;", (username_or_email,))
+                eemail = cursor.fetchall()
+
                 #check if username exists
                 if useremail == None and eemail == None:
                     flash("username or email does not exist! \n please try again.")
@@ -193,6 +195,7 @@ def forgot_password():
 
         else: 
             flash("Please enter a username or email")
+
     else:
         return render_template("forgot_password.html")
         
