@@ -347,7 +347,7 @@ def data_management():
 @login_required
 def security_setting():
     #I would like to implement the option of 2 step verification
-    return redirect("security_settings")
+    return redirect("security_settings.html")
 
 @app.route("/social_settings")
 @login_required
