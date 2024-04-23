@@ -100,7 +100,6 @@ def register_page() -> str:
             cursor = db.cursor()
             cursor.execute("SELECT username, email FROM Users WHERE username = ? OR email = ?", (username, email))
             res = cursor.fetchone()
-            print(f"{res}")
             if (res):
                 flash("This username already exists")
                 return render_template("user_register.html"), 400 # TODO: change to template rendering once frontend decides how they want to handle errors
@@ -127,14 +126,13 @@ def login():
         #the database funtions so that the devices dont get the hashed passwords
         with app.app_context():
             cursor = db.cursor()
-            cursor.execute("SELECT username, password_hash FROM Users WHERE username=?", (username,))
+            cursor.execute("SELECT id, username, password_hash FROM Users WHERE username=?", (username,))
             user = cursor.fetchone()
             
         #Check if user exists and verify password
         if user and check_password_hash(user["password_hash"], password):
             #set username in session to update user logged in
-            session["username"] = user["username"]
-            print(f"session {session}")
+            session["user_id"] = user["id"]
             return redirect("/monthly_calendar")
 
         #if login fails then redirect to the same login page
@@ -155,8 +153,8 @@ def monthly_calendar():
 # @app.route("/weekly_calendar",methods =["POST"])
 # @login_required
 # def weeklycalendar():
-#     username = session.get("username")
-#     if username:
+#     user_id = session.get("user_id")
+#     if user_id:
 #         placeholder = 1
 #     else:
 #         return redirect("/login")
@@ -260,6 +258,10 @@ def new_event():
             #we might need to modify this in the future
             cursor.execute(query, (title, description, start_time, end_time, location, color, type))
             db.commit()
+            event_id = cursor.execute("SELECT last_insert_rowid() AS last").fetchone()['last']
+            cursor.execute("INSERT INTO UsersEvents (user_id, event_id) VALUES (?, ?)", (session['user_id'], event_id))
+            db.commit()
+           
         
         flash("Event created successfully!")
         return redirect("/monthly_calendar")
@@ -276,7 +278,10 @@ def change_password_settings():
         confirm_new_password = request.form.get("confirm_new_password")
 
         #to change password you need to input correct current pw
-        username = session.get("username")
+        user_id = session.get("user_id")
+        with app.app_context():
+            cursor = db.cursor()
+            username = cursor.execute("SELECT username FROM Users WHERE id = ?", (user_id,))['username']
         current_password_hash = generate_password_hash(username)
         if check_password_hash(current_password_hash, current_password):
             #check if new passwords match
@@ -363,35 +368,39 @@ def social_setting():
 
 @app.route("/api/events")
 def event_api():
-    if session.get("username") is None:
-        return json.dumps({"username": None}), 403
+    if session.get("user_id") is None:
+        return json.dumps({"error_msg":"Not logged in.", "user_id": None}), 403
 
     # Args should be: start_date, end_date
     get_args = request.args
     if len(get_args) < 2 or (not (request.args.get('start_time') and request.args.get('end_time'))):
-        return json.dumps({"start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
+        return json.dumps({"error_msg":"Invalid arguments.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
     
     try:
-        start_time_arg = int(request.args['start_time'])
-        end_time_arg = int(request.args['end_time'])
-    except TypeError:
-        return json.dumps({"start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
+        start_time_ts = int(request.args['start_time'])
+        end_time_ts = int(request.args['end_time'])
+    except ValueError:
+        return json.dumps({"error_msg":"Invalid timestamp format.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
 
+    start_datetime = datetime.fromtimestamp(start_time_ts)
+    end_datetime = datetime.fromtimestamp(end_time_ts)
+ 
     query = """
     SELECT Events.title, Events.description, Events.start_time, Events.end_time, Events.location, Events.color, Events.type
     FROM Events 
-    JOIN Calendars ON Events.calendar_id = Calendars.id
-    JOIN Users ON Calendars.user_id = Users.id
+    INNER JOIN UsersEvents ON Events.id = UsersEvents.event_id
+    INNER JOIN Users ON UsersEvents.user_id = Users.id
     WHERE Users.id = ?
-    AND Events.start_time >= ? AND Events.end_time <= ?
+    AND Events.start_time >= ? AND Events.end_time < ?
     """
+
     records = None
     with app.app_context():
         cursor = db.cursor()
-        cursor.execute(query, (session['username'], request.args['start_time'], request['end_time']))
+        cursor.execute(query, (session['user_id'], start_datetime, end_datetime))
         records = cursor.fetchall()
-        db.commit()
-    if records is None:
+    
+    if not records:
         return json.dumps({}), 404
     
     output_dict = {}
