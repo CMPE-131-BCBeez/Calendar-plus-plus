@@ -137,13 +137,13 @@ data.forEach(item => {
   // get date and text
   const { date, event } = item;
 
-  // 日付に対応するセルを探す
-  const cell = document.getElementById(date); // 各セルが日付に対応するIDを持つと仮定しています
+  //find the cell that match with the data
+  const cell = document.getElementById(date); 
 
-  // セルが存在するかどうかを確認する
+  //check if there is a cell
   if (cell) {
-    // セルにイベントを追加する
-    cell.innerHTML += `<br>${event}`; // イベントを改行して追加する例
+    //add event on cell
+    cell.innerHTML += `<br>${event}`; 
   }
 });
 }
