@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Calendar ++</title>
+    <link rel="stylesheet" href="../static/style.css"> 
+</head>
+
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  .navButton {
+    margin-bottom: 10px;
+  }
+  .selected {
+    background-color: lightblue;
+  }
+  /* Setting fixed width for table cells */
+  td {
+    width: 100px; /* Adjust the width as per your preference */
+  }
+</style>
+</head>
+<body>
+
+
+<h2>Weekly Calendar</h2>
+
+
+<div>
+  <button class="navButton" onclick="previousWeek()">Previous 7 Days</button>
+  <button class="navButton" onclick="nextWeek()">Next 7 Days</button>
+</div>
+
+
+<table id="calendar">
+  <tr>
+    <th>Time</th>
+    <th id="sunday"></th>
+    <th id="monday"></th>
+    <th id="tuesday"></th>
+    <th id="wednesday"></th>
+    <th id="thursday"></th>
+    <th id="friday"></th>
+    <th id="saturday"></th>
+  </tr>
+</table>
+
+
+<script>
+  var startDate = new Date();
+  var selectedCell = null;
+
+
+  // Function to generate the weekly calendar
+  function generateWeeklyCalendar(startDate) {
+    var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var table = document.getElementById('calendar');
+
+
+    // Clear existing rows except the header row
+    var rows = table.getElementsByTagName('tr');
+    for (var i = rows.length - 1; i > 0; i--) {
+      table.removeChild(rows[i]);
+    }
+
+
+    // Find the previous Sunday
+    var sundayDate = new Date(startDate);
+    sundayDate.setDate(sundayDate.getDate() - sundayDate.getDay()); // Adjust to the previous Sunday
+
+
+    // Display days of the week above each cell starting from Sunday
+    for (var i = 0; i < 7; i++) {
+      var date = new Date(sundayDate);
+      date.setDate(date.getDate() + i);
+      var dateText = date.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'});
+      var th = document.getElementById(daysOfWeek[i].toLowerCase());
+      th.textContent = dateText;
+    }
+
+
+    // Loop through each hour
+    for (var hour = 0; hour < 24; hour++) {
+      var row = document.createElement('tr');
+      var hourCell = document.createElement('td');
+      hourCell.textContent = hour + ':00';
+      row.appendChild(hourCell);
+
+
+      // Loop through each day of the week
+      for (var day = 0; day < 7; day++) {
+        var cell = document.createElement('td');
+        cell.addEventListener('click', function() {
+          selectCell(this);
+        });
+        row.appendChild(cell);
+      }
+
+
+      table.appendChild(row);
+    }
+  }
+
+
+  // Function to select a cell
+  function selectCell(cell) {
+    if (selectedCell !== null) {
+      selectedCell.classList.remove('selected');
+    }
+    cell.classList.add('selected');
+    selectedCell = cell;
+  }
+
+
+  // Function to go to the next 7 days
+  function nextWeek() {
+    startDate.setDate(startDate.getDate() + 7);
+    generateWeeklyCalendar(startDate);
+  }
+
+
+  // Function to go to the previous 7 days
+  function previousWeek() {
+    startDate.setDate(startDate.getDate() - 7);
+    generateWeeklyCalendar(startDate);
+  }
+
+
+  // Call the function to generate the calendar when the page loads
+  window.onload = function() {
+    generateWeeklyCalendar(startDate);
+  };
+</script>
+
+
+</body>
+</html>
+
+  
