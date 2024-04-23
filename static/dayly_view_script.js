@@ -3,7 +3,15 @@ let current_day = today.getDate();
 let current_month = today.getMonth() + 1;
 let current_year = today.getFullYear();
 
-function time_to_timestamp(current_day) {
+current_day.setHours(0, 0, 0, 0);
+
+let midnight_timestamp = current_day.getTime();
+
+let midnight_unix_timestamp = Math.floor(midnightTimestamp / 1000);
+
+console.log(midnightUnixTimestamp); // 午前0時の Unix タイムスタンプを出力
+
+function day_to_timestamp(current_day) {
     var date = new Date(timestamp * 1000);
     var hours = date.getHours();
     var minutes = date.getMinutes();

@@ -8,20 +8,22 @@
 </h1>
 <div class="container">
     <form action="/new_event" method="POST">
+    <button type="button" id="closeDialogButton" class="BlackButton">X</button>
+
     <label for="title">Title:</label><br>
-    <input type="text" id="title" name="title" required><br>
+    <input type="text" id="title" name="title" class="input-field" required><br>
 
     <label for="description">Description:</label><br>
-    <textarea id="description" name="description"></textarea><br>
+    <textarea id="description" name="description" class="input-field"></textarea><br>
 
     <label for="start_time">Start Time:</label><br>
-    <input type="datetime-local" id="start_time" name="start_time" required><br>
+    <input type="datetime-local" id="start_time" name="start_time" class="input-field" required><br>
 
     <label for="end_time">End Time:</label><br>
-    <input type="datetime-local" id="end_time" name="end_time" required><br>
+    <input type="datetime-local" id="end_time" name="end_time" class="input-field"required><br>
 
     <label for="location">Location:</label><br>
-    <input type="text" id="location" name="location"><br>
+    <input type="text" id="location" name="location" class="input-field"><br>
 
     <label for="color">Color:</label><br>
     <input type="color" id="color" name="color" value="#000000"><br>
@@ -33,7 +35,7 @@
         <option value="BIRTHDAY">Birthday</option>
     </select><br>
 
-    <input type="submit" value="Create Event">
+    <input type="submit" value="Create Event" class="BlackButton">
 </form>
 </div>
 

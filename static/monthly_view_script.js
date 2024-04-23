@@ -150,6 +150,30 @@ data.forEach(item => {
 
 };
 
+function openDialog() {
+  // Fetch the content of the separate HTML file
+  fetch('/new_event')
+    .then(response => response.text())
+    .then(html => {
+      // Insert the fetched HTML content into the dialog
+      document.getElementById("dialogContent").innerHTML = html;
+      // Show the dialog
+      document.getElementById("dialog").classList.add("visible");
+    })
+    .catch(error => console.error('Error fetching content:', error));
+}
+
+// Function to close the dialog
+function closeDialog() {
+  document.getElementById("dialog").classList.remove("visible");
+}
+
+// Event listener for opening the dialog
+document.getElementById("openDialogButton").addEventListener("click", openDialog);
+
+// Event listener for closing the dialog
+document.getElementById("closeDialogButton").addEventListener("click", closeDialog);
+
 //load the get_location_and_send() when it finished loading page
 document.addEventListener('DOMContentLoaded', function() {
   get_location_and_send();
