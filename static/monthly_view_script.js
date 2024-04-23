@@ -123,20 +123,18 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 
 function event_render(){
 fetch('data.json')
-.then(response => response.json()) // JSON応答をパースする
+.then(response => response.json()) 
 .then(data => {
-  // データがパースされたら、カレンダーのセルにイベントを追加する
   addEventsToCalendarCells(data);
 })
 .catch(error => {
-  console.error('データの取得中にエラーが発生しました:', error);
+  console.error('error occurd dring getting data:', error);
 });
 
-// カレンダーのセルにイベントを追加する関数
 function addEventsToCalendarCells(data) {
-// データをループしてセルにイベントを追加する
+// loop the data and add events in the cell
 data.forEach(item => {
-  // 各アイテムから日付とイベントのテキストを抽出する
+  // get date and text
   const { date, event } = item;
 
   // 日付に対応するセルを探す
