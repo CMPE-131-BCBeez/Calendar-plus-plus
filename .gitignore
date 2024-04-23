@@ -1,6 +1,6 @@
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,flask,python,venv
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,flask,python,venv
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,venv,python,macos,flask,pydev
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,venv,python,macos,flask,pydev
 
 ### Flask ###
 instance/*
@@ -201,6 +201,9 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
+### pydev ###
+.pydevproject
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 
@@ -324,9 +327,11 @@ pip-selfcheck.json
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,flask,python,venv
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,venv,python,macos,flask,pydev
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
 *.db
 calendar.db
+__pycache__
+__pypackages__
