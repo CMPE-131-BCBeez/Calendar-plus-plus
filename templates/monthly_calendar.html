@@ -4,14 +4,18 @@
 {% block body %}
 <div class="monthly_header"> 
 
-      <button type="button" id="settings" class="BlackButton">settings</button>
+      <button type="button" id="settings"  class="BlackButton">
+      <a href="/settings" style="color: inherit; text-decoration: none;">
+        settings
+      </a>
+      </button>
       <button type="button" id="weekly" class="BlackButton">Weekly</button>
       <button type="button" id="event" class="BlackButton">Eevent</button>
       <button type="button" id="today_button" class="BlackButton">Today</button>
     </b>
     
     <div id="pagination">
-      <button id="prev_month"></button>
+      <button id="prev_month"><</button>
       <h2 id="year_month_header"></h2>
       <button id="next_month">></button>
     </div>
