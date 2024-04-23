@@ -76,11 +76,14 @@ Session(app)
 # Route handlers
 
 @app.route("/")
-def hello_world() -> str:
+def landing_route() -> str:
     """
     Testing route for now
     """
-    return "<p>Hello, World!</p>"
+    if session.get('user_id'):
+        return redirect("/monthly_calendar")
+    else:
+        return redirect("/login")
 
 @app.route("/register", methods=['GET', 'POST'])
 def register_page() -> str:
