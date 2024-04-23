@@ -37,8 +37,19 @@ db: sqlite3.Connection = LocalProxy(get_db)
 
 # Start flask app
 app: Flask = Flask(__name__)
+mail = Mail(app)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+#I have ben trying to get this to work with email but I cannot for the life of me make it work
+#the issue here is that the gmail I made for the class needs an app password but this option does 
+#not appear when I go to settings-security-2step verification
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = ['calandarPlusPlus@gmail.com']
+app.config['MAIL_PASSWORD'] = ['ThisAintItFr2025']
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 # Ensure responses aren't cached
 @app.after_request
@@ -135,7 +146,8 @@ def login():
 #this calendar includes all saved and shared events user has
 @app.route("/monthly_calendar", methods = ["GET"])
 @login_required
-def monthlycalendar():
+def monthly_calendar():
+
     return render_template("monthly_calendar.html")    
     
 
@@ -183,30 +195,34 @@ def forgot_password():
         if username_or_email != None:
             with app.app_context():
                 cursor = db.cursor()
-                cursor.execute("SELECT email FROM Users WHERE username=? OR email=?", (username_or_email, username_or_email))
-                useremail = cursor.fetchone()
-                eemail = cursor.fetchone()
-                #check if username exists
-                if useremail == None and eemail == None:
+                cursor.execute("""SELECT email FROM Users WHERE username=(?) OR email=(?)""", (username_or_email, username_or_email)) 
+                email = None
+                email = cursor.fetchone() 
+                flash(f"the content of the cursor is: {email}")
+    
+                if email is None:
                     flash("username or email does not exist! \n please try again.")
-                #now just verify if the user info match.
-                if useremail != None and eemail != None:
-                    if useremail != eemail:
-                        flash("Information does not match!")
+                    return render_template("forgot_password.html")
+                else:
                     #lastly you succeed you will create a confirmation code and 
                     #send it to the user's email
-                    else:
-                        #generate the confirmation code
-                        confirmation_code = generate_confirmation_code()
-                        #now send the confirmation code you generated
-                        send_confirmation_email(email, confirmation_code)
-                        #finally save it to your database
-                        with app.app_context():
-                            cursor = db.cursor
-                            cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, eemail, username))
-                            db.commit()
-                        flash("password changed successfully!")
-                        return redirect("/change_password_vc")
+                    
+                    #generate the confirmation code
+                    confirmation_code = generate_confirmation_code()
+                    #now send the confirmation code you generated
+                    subject = "Confirm Your Email Address"
+                    body = f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
+                    sender = "calendarPlusPlus@gmail.com"
+                    msg = Message(subject, sender = sender, recipients=[email], body=body)
+                    mail.send(msg)
+                    
+                    #finally save it to your database
+                    with app.app_context():
+                        cursor = db.cursor
+                        cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, email, username_or_email))
+                        db.commit()
+                    flash("password changed successfully!")
+                    return redirect("/change_password_email")
 
         else: 
             flash("Please enter a username or email")
@@ -220,10 +236,8 @@ def forgot_password():
 @app.route("/new_event", methods = ["GET","POST"])
 @login_required
 def new_event():
-    username = session.get("username")
     if request.method == "POST":
         #get event data from form
-        username = session
         title = request.form.get("title")
         description = request.form.get("description")
         start_time = request.form.get("start_time")
@@ -241,9 +255,9 @@ def new_event():
         with app.app_context():
             cursor = db.cursor()
             #input the data to events
-            query = """INSERT INTO Events (username, title, description, start_time, end_time, location, color, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"""
+            query = """INSERT INTO Events (title, description, start_time, end_time, location, color, type) VALUES (?, ?, ?, ?, ?, ?, ?)"""
             #we might need to modify this in the future
-            cursor.execute(query, (username, title, description, start_time, end_time, location, color, type))
+            cursor.execute(query, (title, description, start_time, end_time, location, color, type))
             db.commit()
         
         flash("Event created successfully!")
@@ -272,25 +286,35 @@ def change_password_settings():
                     cursor.execute("UPDATE Users SET password_hash=? WHERE username=?", (new_password_hash, username))
                     db.commit()
                 flash("password changed successfully!")
+                render_template("change_password_settings")
             else:
                 flash("New password and confirm new password must match!\n")
         else:
             flash("Incorrect password, please enter current password")
-        return redirect("/user_settings")
+            return redirect("/user_settings")
+    return render_template("change_password_settings.html")
     
 #changing a user's password
 @app.route("/change_password_email", methods = ["GET", "POST"])
 def change_password_email():
     #get the password from the user input & update password
     if request.method == "POST":
-        current_password = request.form.get("current_password")
+        username = request.form.get("username")
+        confirmation_code = request.form.get("confirmation_code")
         new_password = request.form.get("new_password")
         confirm_new_password = request.form.get("confirm_new_password")
 
-        #to change password you need to input correct current pw
-        username = session.get("username")
-        current_password_hash = generate_password_hash(username)
-        if check_password_hash(current_password_hash, current_password):
+        #to change password you need to input correct confirmation code
+        with app.app_context():
+                cursor = db.cursor()
+                cursor.execute("""SELECT password_hash FROM Users WHERE username=(?) """, (username,))
+                saved_confirmation_code = cursor.fetchone() 
+                flash(f"the content of the cursor is: {email}")
+        saved_confirmation_code = cursor.fetchone()
+        if saved_confirmation_code == None:
+            flash("Information does not match!\n please try again")
+            render_template("change_password_email.html")
+        if confirmation_code == saved_confirmation_code:
             #check if new passwords match
             if new_password == confirm_new_password:
                 new_password_hash = generate_password_hash(new_password, "sha256")
@@ -302,26 +326,33 @@ def change_password_email():
             else:
                 flash("New password and confirm new password must match!\n")
         else:
-            flash("Incorrect password, please enter current password")
-        return redirect("/user_settings")
+            flash("Incorrect confirmation code, please enter the latest Confirmation Code.")
+        return redirect("/login")
+    return render_template("change_password_email.html")
 
+
+@app.route("/settings")
+@login_required
+def settings():
+    #This will allow the user to download their data or delete/edit
+    return render_template("settings_page.html")
 
 @app.route("/data_management")
 @login_required
 def data_management():
     #This will allow the user to download their data or delete/edit
-    return redirect("/user_settings")
+    return render_template("data_management.html")
 
-@app.route("/security_setting")
+@app.route("/security_settings")
 @login_required
 def security_setting():
     #I would like to implement the option of 2 step verification
-    return redirect("/user_settings")
+    return redirect("security_settings")
 
-@app.route("/social_setting")
+@app.route("/social_settings")
 @login_required
 def social_setting():
     #this will allow the users to share whole schedules/calendars
     #this will also allow them to block or unblock other users
     #create calendar groups etc.
-    return redirect("/user_settings")
+    return render_template("social_settings.html")
