@@ -16,7 +16,7 @@ def login_required(f: Callable) -> Callable:
     Decorator for routes that should only be visited by users that are logged in, verifies that they're logged in via session context
     """
     def decorated_function(*args, **kwargs):
-        if session.get("username") is None:
+        if session.get("user_id") is None:
             return redirect("/login")
         return f(*args, **kwargs)
     decorated_function.__name__ = f.__name__

@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block title %} Daiy Calendar++ {% endblock %}
 
+{% block navbar %}
+{{super()}}
+{% endblock %}
+
 {% block body %}
 <h1>daily_view</h1>
 <div class="top_buttons">
@@ -28,15 +32,6 @@
     
 <!-- </div> -->
 
-
-
-
-<!-- <h1>Daily Calendar</h1>
-<ul>
-    {% for event in events %}
-        <li>{{ event.date }}: {{ event.event }}</li>
-    {% endfor %}
-</ul> -->
     
 <script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
 <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
