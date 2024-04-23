@@ -148,6 +148,23 @@ def monthlycalendar():
 #     else:
 #         return redirect("/login")
 
+@app.route('/daily_calendar')
+def daily_calendar():
+    # 日付に関連するデータをデータベースなどから取得する処理をここに記述
+
+    # 仮のデータ
+    date = request.args.get('date')
+    events = [
+        {'date': date, 'event': 'Event 1'},
+        {'date': date, 'event': 'Event 2'},
+        {'date': date, 'event': 'Event 3'}
+    ]
+
+    return render_template('daily_calendar.html', events=events)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 # may not be needed
 # @app.route("/user_settings", methods = ["GET", "POST"])
 # @login_required

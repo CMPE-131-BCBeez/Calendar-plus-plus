@@ -121,4 +121,33 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
   });
 });
 
-day(current_day);
+function event_render(){
+fetch('data.json')
+.then(response => response.json()) // JSON応答をパースする
+.then(data => {
+  // データがパースされたら、カレンダーのセルにイベントを追加する
+  addEventsToCalendarCells(data);
+})
+.catch(error => {
+  console.error('データの取得中にエラーが発生しました:', error);
+});
+
+// カレンダーのセルにイベントを追加する関数
+function addEventsToCalendarCells(data) {
+// データをループしてセルにイベントを追加する
+data.forEach(item => {
+  // 各アイテムから日付とイベントのテキストを抽出する
+  const { date, event } = item;
+
+  // 日付に対応するセルを探す
+  const cell = document.getElementById(date); // 各セルが日付に対応するIDを持つと仮定しています
+
+  // セルが存在するかどうかを確認する
+  if (cell) {
+    // セルにイベントを追加する
+    cell.innerHTML += `<br>${event}`; // イベントを改行して追加する例
+  }
+});
+}
+
+};

@@ -8,16 +8,14 @@
     <button type="button" id="event" class="BlackButton">Eevent</button>
 </div>
 
-<div id="pagination">
-    <button id="prev_month">↫</button>
-    <h2 id="year_month_header"></h2>
-    <button id="next_month">↬</button>
-</div>
-  
-<div class="monthly_view">
-    <div id="calendar"></div> 
-</div>
+<h1>Daily Calendar</h1>
+<ul>
+    {% for event in events %}
+        <li>{{ event.date }}: {{ event.event }}</li>
+    {% endfor %}
+</ul>
     
 <script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
 <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
 {% endblock %}
+
