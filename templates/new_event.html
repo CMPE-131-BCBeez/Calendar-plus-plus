@@ -3,12 +3,11 @@
 
 {% block body %}
 
-<h1>
+<h1 class="top_h1">
     Create New Event
 </h1>
 <div class="container">
     <form action="/new_event" method="POST">
-    <button type="button" id="closeDialogButton" class="BlackButton">X</button>
 
     <label for="title">Title:</label><br>
     <input type="text" id="title" name="title" class="input-field" required><br>

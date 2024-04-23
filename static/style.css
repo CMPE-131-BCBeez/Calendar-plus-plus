@@ -62,6 +62,17 @@ form textarea {
     font-weight: bold; 
 }
 
+.daily_container {    
+    font-family: "CaviarDreams_Bold", sans-serif;
+    margin: 0 auto;
+    border-collapse: collapse; 
+    margin-top: 100px; 
+    width: 100%;
+    margin-bottom: 20px;   
+    text-align: left;   
+    font-weight: bold; 
+}
+
 h1 {
     margin: 0 auto;
     margin-bottom: 20px;    
@@ -73,7 +84,7 @@ h1 {
     align-items: center;    
 }
 
-.registerh1 {
+.top_h1 {
     margin: 0 auto;
     margin-bottom: 20px;   
     text-align: left;   
