@@ -34,8 +34,7 @@ CREATE TABLE IF NOT EXISTS UsersEvents (
     user_id INTEGER,
     event_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES Users(id),
-    FOREIGN KEY (event_id) REFERENCES Events(id),
-    PRIMARY KEY (user_id, event_id)
+    FOREIGN KEY (event_id) REFERENCES Events(id)
 );
 
 CREATE TABLE IF NOT EXISTS Test (
