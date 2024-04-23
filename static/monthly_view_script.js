@@ -151,3 +151,8 @@ data.forEach(item => {
 }
 
 };
+
+//load the get_location_and_send() when it finished loading page
+document.addEventListener('DOMContentLoaded', function() {
+  get_location_and_send();
+});
