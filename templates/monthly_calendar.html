@@ -3,6 +3,7 @@
 
 {% block body %}
 <div class="monthly_header"> 
+
       <button type="button" id="settings" class="BlackButton">settings</button>
       <button type="button" id="weekly" class="BlackButton">Weekly</button>
       <button type="button" id="event" class="BlackButton">Eevent</button>
@@ -21,6 +22,10 @@
     </div>
     
 <script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
+<script src="{{url_for('static', filename='get_geolocation_script.js')}}"></script>
 <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+<script src="{{url_for('static', filename='theme_script.js')}}"></script>
+
+
 
 {% endblock %}
