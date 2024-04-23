@@ -9,6 +9,7 @@ from werkzeug.local import LocalProxy
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
 from utils import *
+import json
 
 # Configure database
 DATABASE = "calendar.db"
@@ -355,4 +356,47 @@ def social_setting():
     #this will allow the users to share whole schedules/calendars
     #this will also allow them to block or unblock other users
     #create calendar groups etc.
+
     return render_template("social_settings.html")
+
+
+
+@app.route("/api/events")
+def event_api():
+    if session.get("username") is None:
+        return json.dumps({"username": None}), 403
+
+    # Args should be: start_date, end_date
+    get_args = request.args
+    if len(get_args) < 2 or (not (request.args.get('start_time') and request.args.get('end_time'))):
+        return json.dumps({"start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
+    
+    try:
+        start_time_arg = int(request.args['start_time'])
+        end_time_arg = int(request.args['end_time'])
+    except TypeError:
+        return json.dumps({"start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
+
+    query = """
+    SELECT Events.title, Events.description, Events.start_time, Events.end_time, Events.location, Events.color, Events.type
+    FROM Events 
+    JOIN Calendars ON Events.calendar_id = Calendars.id
+    JOIN Users ON Calendars.user_id = Users.id
+    WHERE Users.id = ?
+    AND Events.start_time >= ? AND Events.end_time <= ?
+    """
+    records = None
+    with app.app_context():
+        cursor = db.cursor()
+        cursor.execute(query, (session['username'], request.args['start_time'], request['end_time']))
+        records = cursor.fetchall()
+        db.commit()
+    if records is None:
+        return json.dumps({}), 404
+    
+    output_dict = {}
+    for rec in records:
+        output_dict[rec['start_time']] = rec
+    
+    return json.dumps(output_dict)
+
