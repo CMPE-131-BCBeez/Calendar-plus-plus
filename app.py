@@ -162,19 +162,19 @@ def monthly_calendar():
 #     else:
 #         return redirect("/login")
 
-@app.route('/daily_calendar')
+@app.route('/example')
 def daily_calendar():
     # 日付に関連するデータをデータベースなどから取得する処理をここに記述
 
     # 仮のデータ
     date = request.args.get('date')
-    events = [
-        {'date': date, 'event': 'Event 1'},
-        {'date': date, 'event': 'Event 2'},
-        {'date': date, 'event': 'Event 3'}
+    internal_events = [
+        {'count': 1, 'event': 'Event 1'},
+        {'count': 2, 'event': 'Event 2'},
+        {'count': 3, 'event': 'Event 3'}
     ]
 
-    return render_template('daily_calendar.html', events=events)
+    return render_template('template_example.html', events=internal_events)
 
 if __name__ == '__main__':
     app.run(debug=True)

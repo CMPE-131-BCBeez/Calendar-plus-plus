@@ -7,12 +7,17 @@
 
 {% block body %}
 <h1>Daily Calendar</h1>
+<h2>this is a header!</h2>
+
+{% if events %}
+<h3>we have events!</h3>
+
 <ul>
     {% for event in events %}
-    <li>{{ event.date }}: {{ event.event }}</li>
+    <li>An Event: {{ event.count }}: {{ event.event }}</li>
     {% endfor %}
 </ul>
+{% endif %}
 
-<script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
-<script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+
 {% endblock %}
