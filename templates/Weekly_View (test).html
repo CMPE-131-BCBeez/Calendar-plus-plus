@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weekly Calendar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Calendar ++</title>
+    <link rel="stylesheet" href="../static/style.css"> 
+</head>
+
 <style>
   table {
     border-collapse: collapse;
@@ -23,9 +26,8 @@
   .selected {
     background-color: lightblue;
   }
-  /* Setting fixed width for table cells */
   td {
-    width: 100px; /* Adjust the width as per your preference */
+    width: 100px;
   }
 </style>
 </head>
@@ -60,25 +62,19 @@
   var selectedCell = null;
 
 
-  // Function to generate the weekly calendar
   function generateWeeklyCalendar(startDate) {
     var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var table = document.getElementById('calendar');
 
-
-    // Clear existing rows except the header row
     var rows = table.getElementsByTagName('tr');
     for (var i = rows.length - 1; i > 0; i--) {
       table.removeChild(rows[i]);
     }
 
-
-    // Find the previous Sunday
     var sundayDate = new Date(startDate);
-    sundayDate.setDate(sundayDate.getDate() - sundayDate.getDay()); // Adjust to the previous Sunday
+    sundayDate.setDate(sundayDate.getDate() - sundayDate.getDay());
 
 
-    // Display days of the week above each cell starting from Sunday
     for (var i = 0; i < 7; i++) {
       var date = new Date(sundayDate);
       date.setDate(date.getDate() + i);
@@ -88,7 +84,6 @@
     }
 
 
-    // Loop through each hour
     for (var hour = 0; hour < 24; hour++) {
       var row = document.createElement('tr');
       var hourCell = document.createElement('td');
@@ -96,7 +91,6 @@
       row.appendChild(hourCell);
 
 
-      // Loop through each day of the week
       for (var day = 0; day < 7; day++) {
         var cell = document.createElement('td');
         cell.addEventListener('click', function() {
@@ -110,8 +104,6 @@
     }
   }
 
-
-  // Function to select a cell
   function selectCell(cell) {
     if (selectedCell !== null) {
       selectedCell.classList.remove('selected');
@@ -120,22 +112,16 @@
     selectedCell = cell;
   }
 
-
-  // Function to go to the next 7 days
   function nextWeek() {
     startDate.setDate(startDate.getDate() + 7);
     generateWeeklyCalendar(startDate);
   }
 
-
-  // Function to go to the previous 7 days
   function previousWeek() {
     startDate.setDate(startDate.getDate() - 7);
     generateWeeklyCalendar(startDate);
   }
 
-
-  // Call the function to generate the calendar when the page loads
   window.onload = function() {
     generateWeeklyCalendar(startDate);
   };
@@ -144,3 +130,5 @@
 
 </body>
 </html>
+
+  
