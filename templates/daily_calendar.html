@@ -1,28 +1,20 @@
 {% extends "layout.html" %}
 {% block title %} Daiy Calendar++ {% endblock %}
 
-{% block navbar %}
-{{super()}}
-{% endblock %}
-
 {% block body %}
-<h1>daily_view</h1>
 <div class="top_buttons">
-    <button type="button" id="openDialogButton" class="BlackButton">New Event</button>
-
-
-    <button type="button" id="settings"  class="BlackButton">
-      <a href="/settings" style="color: inherit; text-decoration: none;">
-        Settings
-      </a>
-    </button>
+    <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
   
     <button type="button" id="mode_switch_button" class="BlackButton">DarkMode</button>
-  
+
     <button type="button" id="weekly" class="BlackButton">Weekly</button>
+  
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
          
     <button type="button" id="today_button" class="BlackButton">Today</button>
 </div>
+
+<h1 class="daily_container">daily_view</h1>
 
 
 <!-- <div class="daily_container"> -->
@@ -33,7 +25,7 @@
 <!-- </div> -->
 
     
-<script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
+
 <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
 {% endblock %}
 
