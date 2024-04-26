@@ -4,7 +4,6 @@ mode_button.addEventListener('click', function() {
     let body = document.body;
     let is_darkMode = body.classList.contains('dark_mode');
     
-
     if (is_darkMode) {
         body.classList.remove('dark_mode');
         body.classList.add('light_mode');
@@ -46,8 +45,6 @@ mode_button.addEventListener('click', function() {
         todays.style.border = '4px solid ' + borderColor;
 
     });
-
-    
 });
 
     

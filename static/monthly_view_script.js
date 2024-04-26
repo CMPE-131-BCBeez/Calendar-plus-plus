@@ -113,6 +113,8 @@ document.getElementById('today_button').addEventListener('click', function() {
 
 year_month(current_month, current_year);
 generate_calendar(current_year, current_month);
+
+//make the cell to button
 document.querySelectorAll('.calendar_basic').forEach(cell => {
   cell.addEventListener('click', function() {
     let day = this.innerText;
