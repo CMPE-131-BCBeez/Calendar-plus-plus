@@ -5,43 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weekly Calendar ++</title>
     <link rel="stylesheet" href="../static/style.css"> 
-</head>
-
-<style>
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  th, td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: center;
-  }
-  th {
-    background-color: #f2f2f2;
-  }
-  .navButton {
-    margin-bottom: 10px;
-  }
-  .selected {
-    background-color: lightblue;
-  }
-  td {
-    width: 100px;
-  }
-</style>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+        position: relative;
+        height: 40px;
+      }
+      .dayInfo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .dayName {
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .dateNumber {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .navButtonContainer {
+        margin-bottom: 20px;
+      }
+      .navButton {
+        background-color: black;
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border-radius: 8px;
+      }
+      .navButton:hover {
+        background-color: #333;
+        color: white;
+      }
+      .selected {
+        background-color: lightblue;
+      }
+      td {
+        width: 100px;
+      }
+      tr:first-child th {
+        background-color: black;
+        color: white;
+      }
+    </style>
 </head>
 <body>
 
-
 <h2>Weekly Calendar</h2>
 
-
-<div>
+<div class="navButtonContainer">
   <button class="navButton" onclick="previousWeek()">Previous 7 Days</button>
   <button class="navButton" onclick="nextWeek()">Next 7 Days</button>
 </div>
-
 
 <table id="calendar">
   <tr>
@@ -56,33 +89,29 @@
   </tr>
 </table>
 
-
 <script>
   var startDate = new Date();
   var selectedCell = null;
 
-
   function generateWeeklyCalendar(startDate) {
     var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var table = document.getElementById('calendar');
-
 
     var rows = table.getElementsByTagName('tr');
     for (var i = rows.length - 1; i > 0; i--) {
       table.removeChild(rows[i]);
     }
 
-
     var sundayDate = new Date(startDate);
     sundayDate.setDate(sundayDate.getDate() - sundayDate.getDay());
-
 
     for (var i = 0; i < 7; i++) {
       var date = new Date(sundayDate);
       date.setDate(date.getDate() + i);
-      var dateText = date.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'});
+      var day = daysOfWeek[i];
+      var dateText = date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
       var th = document.getElementById(daysOfWeek[i].toLowerCase());
-      th.textContent = dateText;
+      th.innerHTML = '<div class="dayInfo"><div class="dayName">' + day + '</div><div class="dateNumber">' + dateText + '</div></div>';
     }
 
     for (var hour = 0; hour < 24; hour++) {
@@ -90,7 +119,6 @@
       var hourCell = document.createElement('td');
       hourCell.textContent = hour + ':00';
       row.appendChild(hourCell);
-
 
       for (var day = 0; day < 7; day++) {
         var cell = document.createElement('td');
@@ -100,11 +128,9 @@
         row.appendChild(cell);
       }
 
-
       table.appendChild(row);
     }
   }
-
 
   function selectCell(cell) {
     if (selectedCell !== null) {
@@ -114,24 +140,20 @@
     selectedCell = cell;
   }
 
-
   function nextWeek() {
     startDate.setDate(startDate.getDate() + 7);
     generateWeeklyCalendar(startDate);
   }
-
 
   function previousWeek() {
     startDate.setDate(startDate.getDate() - 7);
     generateWeeklyCalendar(startDate);
   }
 
-
   window.onload = function() {
     generateWeeklyCalendar(startDate);
   };
 </script>
-
 
 </body>
 </html>
