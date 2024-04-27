@@ -4,14 +4,9 @@
 {% block body %}
 <div class="monthly_header"> 
 
-  <button type="button" id="openDialogButton" class="BlackButton">New Event</button>
+  <button type="button" id="new_event" class="BlackButton" onclick="location.href='/new_event'">New Event</button>
 
-
-  <button type="button" id="settings"  class="BlackButton">
-    <a href="/settings" style="color: inherit; text-decoration: none;">
-      Settings
-    </a>
-  </button>
+  <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
 
   <button type="button" id="mode_switch_button" class="BlackButton">DarkMode</button>
 
