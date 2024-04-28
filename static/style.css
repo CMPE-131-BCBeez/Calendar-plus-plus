@@ -163,6 +163,11 @@ table{
     border: 4px solid #000000;  
 }
 
+.events{
+    font-family: "CaviarDreams", sans-serif;
+    color:#000000;
+}
+
 
 .five_cells_height{
     height: calc(70vh / 6);

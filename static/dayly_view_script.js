@@ -1,12 +1,24 @@
-let url = window.daily_view_url; //example(http://127.0.0.1:5000/daily_calendar?date=2024-4-1
-let parts = url.split("-"); //sprit url with "/"
-let year = parseInt(parts[0]); //
-let month = parseInt(parts[1]); //
-let day = parseInt(parts[2]); // 日はURLの7番目の要素
+//get the start and end timestamp from url
+function get_start_and_end() {
+  const url = new URLSearchParams(window.location.search);
+  const start = parseInt(url.get('start'));
+  const end = parseInt(url.get('end'));
+  return { start, end };
+}
 
-let midnight_timestamp = today.getTime(); // current_dayをtodayに修正
-let beginning_day = Math.floor(midnight_timestamp / 1000);
+const start_and_end = get_start_and_end();
+let beginning_day = start_and_end.start;
 let afternoon = beginning_day + 43200;
+let time = beginning_day *1000;
+
+let date = new Date(unixTimestampMilliseconds);
+
+let year = parseInt(date.getFullYear());
+let month = parseInt(date.getMonth() + 1); 
+let day = parseInt(date.getDate());
+let hours = parseInt(date.getHours());
+let minutes = parseInt(date.getMinutes());
+let seconds = parseInt(date.getSeconds());
 
 function generate_am_daily_view(beginning_day){
     let am_daily_view= '<table>';
@@ -14,13 +26,13 @@ function generate_am_daily_view(beginning_day){
 
     for (let i = 0; i < 12; i++) {
         am_daily_view += '<tr>';
-        am_daily_view += '<td>' + (beginning_day + i * 3600) + '</td>';
-        am_daily_view += '<td>' + (beginning_day) + '</td>';
+        am_daily_view += '<td>' + (hours + i) + '</td>';
+        am_daily_view += '<td>' + ("event") + '</td>';
         am_daily_view += '</tr>';
       }
     am_daily_view += '</tbody>';
     am_daily_view += '</table>';
-    return am_daily_view;
+    document.getElementById('am_daily_view').innerHTML = am_daily_view;
 }
 
 
@@ -30,14 +42,14 @@ function generate_pm_daily_view(afternoon){
 
     for (let i = 0; i < 12; i++) {
         pm_daily_view += '<tr>';
-        pm_daily_view += '<td>' + (afternoon + i * 3600) + '</td>';
-        pm_daily_view += '<td>' + (afternoon) + '</td>';
+        pm_daily_view += '<td>' + (hours + i) + '</td>';
+        pm_daily_view += '<td>' + ("event") + '</td>';
         pm_daily_view += '</tr>';
       }
     pm_daily_view += '</tbody>';
     pm_daily_view += '</table>';
-    return pm_daily_view;
+    document.getElementById('pm_daily_view').innerHTML = pm_daily_view;
 };
 
-let am_view = generate_am_daily_view(beginning_day);
-let pm_view = generate_pm_daily_view(afternoon);
+generate_am_daily_view(beginning_day);
+generate_pm_daily_view(afternoon);

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} Daiy Calendar++ {% endblock %}
+{% block title %} Daily Calendar++ {% endblock %}
 
 {% block body %}
 <div class="top_buttons">
@@ -14,18 +14,15 @@
     <button type="button" id="today_button" class="BlackButton">Today</button>
 </div>
 
-<h1 class="daily_container">daily_view</h1>
-
+<h1 class="daily_container"><div id="am_daily_view"></div>
+    <div id="pm_daily_view"></div></h1>
 
 <!-- <div class="daily_container"> -->
     <!-- <iframe src="/new_event" width="100%" height="1000px" frameborder="0"></iframe> -->
-    <div id="am_view"></div>
-    <div id="pm_view"></div>
+    
     
 <!-- </div> -->
 
-    
-
-<script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+<script src="{{url_for('static', filename='dayly_view_script.js')}}"></script>
 {% endblock %}
 
