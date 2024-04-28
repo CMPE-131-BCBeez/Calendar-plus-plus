@@ -3,7 +3,7 @@ function get_start_and_end() {
   const url = new URLSearchParams(window.location.search);
   const start = parseInt(url.get('start'));
   const end = parseInt(url.get('end'));
-  return { start, end };
+  return {start, end};
 }
 
 const start_and_end = get_start_and_end();
@@ -11,7 +11,7 @@ let beginning_day = start_and_end.start;
 let afternoon = beginning_day + 43200;
 let time = beginning_day *1000;
 
-let date = new Date(unixTimestampMilliseconds);
+let date = new Date(time);
 
 let year = parseInt(date.getFullYear());
 let month = parseInt(date.getMonth() + 1); 
@@ -26,8 +26,8 @@ function generate_am_daily_view(beginning_day){
 
     for (let i = 0; i < 12; i++) {
         am_daily_view += '<tr>';
-        am_daily_view += '<td>' + (hours + i) + '</td>';
-        am_daily_view += '<td>' + ("event") + '</td>';
+        am_daily_view += '<td class="time_cell">' + (hours + i) + '</td>';
+        am_daily_view += '<td class="event_cell">' + ("event") + '</td>';
         am_daily_view += '</tr>';
       }
     am_daily_view += '</tbody>';
@@ -42,8 +42,8 @@ function generate_pm_daily_view(afternoon){
 
     for (let i = 0; i < 12; i++) {
         pm_daily_view += '<tr>';
-        pm_daily_view += '<td>' + (hours + i) + '</td>';
-        pm_daily_view += '<td>' + ("event") + '</td>';
+        pm_daily_view += '<td class="time_cell">' + (hours + i + 12) + '</td>';
+        pm_daily_view += '<td class="event_cell">' + ("event") + '</td>';
         pm_daily_view += '</tr>';
       }
     pm_daily_view += '</tbody>';

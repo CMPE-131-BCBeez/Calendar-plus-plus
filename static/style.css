@@ -62,17 +62,6 @@ form textarea {
     font-weight: bold; 
 }
 
-.daily_container {    
-    font-family: "CaviarDreams_Bold", sans-serif;
-    margin: 0 auto;
-    border-collapse: collapse; 
-    margin-top: 20px; 
-    width: 100%;
-    margin-bottom: 20px;   
-    text-align: left;   
-    font-weight: bold; 
-}
-
 h1 {
     margin: 0 auto;
     margin-bottom: 20px;    
@@ -87,6 +76,17 @@ h1 {
 .top_h1 {
     margin: 0 auto;
     margin-bottom: 20px;   
+    text-align: left;   
+    width: 100%;
+    display: flex;      
+    justify-content: center;    
+    align-items: center;   
+}
+
+.small_h1 {
+    font-size: 23px; 
+    margin: 0 auto;
+    margin-bottom: 10px;   
     text-align: left;   
     width: 100%;
     display: flex;      
@@ -209,6 +209,37 @@ table{
     display: flex;     
     justify-content: center;    
     align-items: center;    
+}
+
+.daily_container {
+    display: flex; 
+    justify-content: space-between; 
+
+}
+
+.daily_container iframe,
+.daily_container #am_daily_view,
+.daily_container #pm_daily_view {
+    width: calc(33.33% - 10px); 
+    margin-right: 10px; 
+}
+
+.daily_container tbody td,
+.daily_container tbody th{
+    border: 1px solid #000000;  
+}
+
+.time_cell{
+    background-color: #000000;
+    color:#FFFFFF;
+    font-size: 15px ;
+    display: border-box;
+    width: 50px;
+    border: 1px solid #FFFFFF;
+    
+}
+.event_cell{
+
 }
 
 /* buttons */
