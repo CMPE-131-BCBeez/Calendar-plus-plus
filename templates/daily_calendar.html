@@ -14,14 +14,15 @@
     <button type="button" id="today_button" class="BlackButton">Today</button>
 </div>
 
-<h1 class="top_h1">daily_view</h1>
+<h1 class="top_h1" id="year_month_day_header"></h1>
 
 <div class="daily_container">
-    <iframe src="/new_event" width="100%" height="800px" frameborder="0"></iframe>
+    <iframe src="/new_event" frameborder="0"></iframe>
     <div id="am_daily_view"></div>
     <div id="pm_daily_view"></div>
-    
 </div>
+
+
 
 <script src="{{url_for('static', filename='dayly_view_script.js')}}"></script>
 {% endblock %}

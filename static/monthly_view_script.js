@@ -173,7 +173,7 @@ function get_timestamp_monthly(year,month,timestamp_start_day, timestamp_last_da
 document.querySelectorAll('.calendar_basic').forEach(cell => {
   cell.addEventListener('click', function() {
     let day = this.innerText;
-    let start_timestamp  = new Date(current_year, current_month - 1, day).getTime()/100;
+    let start_timestamp  = new Date(current_year, current_month - 1, day, 0, 0, 0).getTime()/1000;
     let end_timestamp  = start_timestamp + (24*60*60);
     let daily_view_url = '/daily_calendar?start='+ start_timestamp + '&end=' + end_timestamp;
     window.location.href = daily_view_url;
@@ -182,33 +182,34 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 });
 
 //function for lendering event(get data from api)
-function event_render(year,month,timestamp_start_day, timestamp_last_day){
+function event_render(year, month, timestamp_start_day, timestamp_last_day) {
   let time_stamp = get_timestamp_monthly(year, month, timestamp_start_day, timestamp_last_day);
-  fetch('/api/events?start_time=' + time_stamp.start + '&end_time=' + time_stamp.end) //insert start time and end time to url for end point
-  .then(response => response.json()) 
-  .then(data => {
-    addEventsToCalendarCells(data);
-  })
-  .catch(error => {
-    console.error('Error occured during getting data:', error);
-  });
+  fetch('/api/events?start_time=' + time_stamp.start + '&end_time=' + time_stamp.end)
+    .then(response => response.json())
+    .then(data => {
+      addEventsToCalendarCells(data);
+    })
+    .catch(error => {
+      console.error('Error occurred during getting data:', error);
+    });
 
   function addEventsToCalendarCells(data) {
     for (const date in data) {
-      if (data.hasOwnProperty(event_day_cell)) {
-        const event = data[date];
-        const startTime = event.start_time;
-        const title = event.title;
-        const cell = document.getElementById(event_day_cell); 
-        const cell_class ='';
-        if (cell === event_day_cell) {
-          cell_class = 'events';
-          cell.innerHTML += '<br>${'+ startTime +'}: ${'+ title +'}'; 
-        }
+      if (data.hasOwnProperty(date)) {
+        const events = data[date];
+        events.forEach(event => {
+          const startTime = event.start_time;
+          const title = event.title;
+          const cell = document.getElementById(date);
+          if (cell) {
+            cell.classList.add('events');
+            cell.innerHTML += `<br>${startTime}: ${title}`;
+          }
+        });
       }
     }
   }
-};
+}
 
 //load the get_location_and_send() when it finished loading page
 
