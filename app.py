@@ -339,13 +339,6 @@ def change_password_email():
         return redirect("/login")
     return render_template("change_password_email.html")
 
-
-@app.route("/settings")
-@login_required
-def settings():
-    #This will allow the user to download their data or delete/edit
-    return render_template("settings_page.html")
-
 @app.route("/data_management")
 @login_required
 def data_management():
