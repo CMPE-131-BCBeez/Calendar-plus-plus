@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 {% block title %} Login {% endblock %}
 
+{% block navbar %}
+{% endblock %}
+
 {% block body %}
-<h1 class="customh1">
+<h1>
     Login to Calendar++
 </h1>
 <div class="container">
@@ -13,11 +16,12 @@
         <input type="password" id="password" name="password" class="input-field" required><br>
         <input type="submit" value="Login" class="BlackButton"><br>
     </form>
-    <a href="UserRegister.html" class="WhiteButton">
-        Establish a Fresh Account<!--Go to the sign in page-->
+    <a href="/register" class="WhiteButton">
+        Establish a Fresh Account<!--Go to register page-->
+
     </a><br>
-    <a href="ResetPassword.html" class="WhiteButton">
-        Reset My Password<!--Go to the reset pasword page-->
+    <a href="/forgot_password" class="WhiteButton">
+        Forgot Password<!--Go to the reset pasword page-->
     </a>
 </div>
 {% endblock %}

@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %} Monthly Calendar {% endblock %}
+
+{% block navbar %}
+{{super()}}
+<button type="button" id="today_button" class="BlackButton">Today</button>
+{% endblock %}
+
+{% block body %}
+<div class="monthly_header">
+  <div id="pagination">
+    <button id="prev_month"></button>
+    <h2 id="year_month_header"></h2>
+    <button id="next_month">></button>
+  </div>
+</div>
+
+<div class="monthly_view">
+  <div id="monthly_calendar"></div>
+</div>
+
+<script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
+<script src="{{url_for('static', filename='get_geolocation_script.js')}}"></script>
+<script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+<script src="{{url_for('static', filename='theme_script.js')}}"></script>
+
+
+
+{% endblock %}
