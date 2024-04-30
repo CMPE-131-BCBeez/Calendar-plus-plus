@@ -63,11 +63,7 @@
     </div>    
 </div>
 
-
-
-{% block scripts %}
-  {{ super() }}
-{% endblock %}
+<script src="{{url_for('static', filename='dayly_view_script.js')}}"></script>
 
 {% endblock %}
 
