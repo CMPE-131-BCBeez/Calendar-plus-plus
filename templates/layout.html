@@ -41,6 +41,17 @@
     
 
     {% block body %}
+
+    {% block scripts %}
+
+    <script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
+    <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+    <script src="{{url_for('static', filename='get_geolocation_script.js')}}"></script>
+    <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+    <script src="{{url_for('static', filename='event_script.js')}}"></script>
+
+    {% endblock %}
+
     {% endblock %}
 </body>
 

@@ -66,7 +66,7 @@ form textarea {
     font-family: "CaviarDreams_Bold", sans-serif;
     margin: 0 auto;
     border-collapse: collapse; 
-    margin-top: 100px; 
+    margin-top: 10%; 
     height: 30%;
     width: 80%;
     margin-bottom: 20px;   
@@ -125,8 +125,8 @@ h1 {
     align-items: right;  
 }
 
-table{
-    width: 90vw; 
+#monthly_calendar table{
+    width: 90vw;  
     height: 70vh;
     border-collapse: collapse;
 }
@@ -138,6 +138,7 @@ table{
     /* justify-content: center;*/
     align-items: center;     
     flex-direction: column; 
+    margin-bottom: 15px;
 }
 
 .calendar_basic {
@@ -180,7 +181,6 @@ table{
     color:#000000;
 }
 
-
 .five_cells_height{
     height: calc(70vh / 6);
 }
@@ -189,17 +189,22 @@ table{
     margin-right: 30px;
 }
 
-#pagination{
+#color{
+    margin: 0; 
+}
+
+#pagination_monthly{
     margin: 0 auto;
     width:40%;
     display: flex;     
-    justify-content: center;  
+    justify-content: space-between;  
     align-items: center; 
     margin-bottom: 15px; 
     margin-top: 15px; 
 }
 
-#prev_month, #next_month{ 
+#prev_month, #next_month,
+#prev_day, #next_day{ 
     font-family: "CaviarDreams_Bold", sans-serif;     
     background-color: #000000; 
     border: none;   
@@ -223,25 +228,67 @@ table{
     align-items: center;    
 }
 
-.daily_container {
+#year_month_day_header{
+    font-size: 35px; 
+    margin: 0 auto;
+    text-align: center;  
+    width: 70%;
+    display: flex;     
+    justify-content: center;    
+    align-items: center;  
+}
+
+.daily_page_container{
     display: flex;
     flex-direction: row; 
     justify-content: center; 
-    height: 80vh;
-    width: 100%
+    margin-right: 20px;
+    
 }
 
-.daily_container iframe,
-.daily_container #am_daily_view,
-.daily_container #pm_daily_view{
-    margin-right: 20px;
-    max-width: calc(100%/3); 
+.daily_container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    height: 80vh;
+    width: 70%;
+}
+
+#pagination_daily{
+    margin: 0 auto;
+    width:40%;
+    display: flex;     
+    justify-content: space-between;  
+    align-items: center; 
+    margin-bottom: 15px; 
+    margin-top: 15px; 
+}
+
+.daily_view_container{
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+}
+
+.daily_item_event{
+    margin-top: 15px; 
+    flex-grow: 1; 
+    max-width: 30%;
+    border-collapse: collapse;
 }
 
 #am_daily_view,
 #pm_daily_view {
-    flex: 1; 
-    max-width: 25%;
+    flex-grow: 1; 
+    max-width: 45%;
+    border-collapse: collapse;
+}
+
+#am_daily_view table,
+#pm_daily_view table{ 
+    height: 80vh;
+    border-collapse: collapse;
+    margin-right: 5%;
 }
 
 .time_cell{
@@ -249,12 +296,16 @@ table{
     color:#FFFFFF;
     font-size: 15px ;
     border: 1px solid #FFFFFF;
+    padding: 10px;
+    width:10px;
 }
 .event_cell{
     background-color: #FFFFFF;
     color:#000000;
     font-size: 15px ;
     border: 1px solid #000000;
+    width:100%;
+    
 }
 
 /* buttons */

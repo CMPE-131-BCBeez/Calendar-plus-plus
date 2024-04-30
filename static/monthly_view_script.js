@@ -85,17 +85,7 @@ let monthly_calendar = '<table>';
       event_day_cell++;
     }
     monthly_calendar += '</tr>';
-  }
-
-    if(count_colmn < 6 || last_day.getDay() === 6){
-      monthly_calendar += '<tr>'
-      for(let i = next_month_mergin; i < next_month_mergin + 7; i++){
-        monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1) + '</td>';
-        event_day_cell++;
-      }
-      monthly_calendar += '</tr>';
-      last_date_on_calendar +=  7;
-    }
+  } 
 
   monthly_calendar += '</tbody>';
   monthly_calendar += '</table>';
@@ -138,7 +128,7 @@ function year_month(month, year){
 };
 
 //go to the month that have today
-document.getElementById('today_button').addEventListener('click', function() {
+document.getElementById('today_button_month').addEventListener('click', function() {
   current_month = today.getMonth() + 1;
   current_year = today.getFullYear();
   generate_calendar(current_year, current_month);

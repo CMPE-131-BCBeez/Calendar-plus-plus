@@ -11,26 +11,27 @@ let beginning_day = start_and_end.start;
 let afternoon = beginning_day + 43200;
 let time = beginning_day *1000;
 let date = new Date(time);
-let year = parseInt(date.getFullYear());
-let month = parseInt(date.getMonth() + 1); 
-let day = parseInt(date.getDate());
-let hours = parseInt(date.getHours());
-let minutes = parseInt(date.getMinutes());
-let seconds = parseInt(date.getSeconds());
+let this_year = parseInt(date.getFullYear());
+let this_month = parseInt(date.getMonth() + 1); 
+let this_day = parseInt(date.getDate());
+let this_hours = parseInt(date.getHours());
+let this_minutes = parseInt(date.getMinutes());
+let this_seconds = parseInt(date.getSeconds());
 
-function generate_am_daily_view(beginning_day){
+function generate_am_daily_view(){
     let am_daily_view= '<table>';
     am_daily_view += '<tbody>';
     
     for (let i = 0; i < 12; i++) {
         am_daily_view += '<tr>';
-        if(i === 0){
-          am_daily_view += '<td class="time_cell">' + (hours + i + 12 + ":00 AM") + '</td>';
+
+        if(this_hours + i <= 9){
+          time_num = " " + this_hours + i
         }
         else{
-          am_daily_view += '<td class="time_cell">' + (hours + i + ":00 AM") + '</td>';
+          time_num = this_hours + i;
         }
-       
+        am_daily_view += '<td class="time_cell">' + (time_num + ":00") + '</td>';
         am_daily_view += '<td class="event_cell">' + (" ") + '</td>';
         am_daily_view += '</tr>';
       }
@@ -39,13 +40,13 @@ function generate_am_daily_view(beginning_day){
     document.getElementById('am_daily_view').innerHTML = am_daily_view;
 }
 
-function generate_pm_daily_view(afternoon){
+function generate_pm_daily_view(){
     let pm_daily_view = '<table>';
     pm_daily_view += '<tbody>';
 
     for (let i = 0; i < 12; i++) {
         pm_daily_view += '<tr>';
-        pm_daily_view += '<td class="time_cell">' + (hours + i + ":00 PM") + '</td>';
+        pm_daily_view += '<td class="time_cell">' + (this_hours +12 + i + ":00") + '</td>';
         pm_daily_view += '<td class="event_cell">' + (" ") + '</td>';
         pm_daily_view += '</tr>';
       }
@@ -60,6 +61,38 @@ function year_month_day(month, year, day){
   document.getElementById('year_month_day_header').innerHTML = year_month_day_header;
 };
 
-generate_am_daily_view(beginning_day);
-generate_pm_daily_view(afternoon);
-year_month_day(month, year, day);
+//implement the button going back to previous month
+document.getElementById('prev_day').addEventListener('click', function() {
+  let day = this_day - 1;
+  let start_timestamp  = new Date(this_year, this_month - 1, day, 0, 0, 0).getTime()/1000;
+  let end_timestamp  = start_timestamp + (24*60*60);
+  let daily_view_url = '/daily_calendar?start='+ start_timestamp + '&end=' + end_timestamp;
+  window.location.href = daily_view_url;
+  window.daily_view_url = daily_view_url;
+});
+
+//implement the button going forward to next month
+document.getElementById('next_day').addEventListener('click', function() {
+  let day = this_day + 1;
+  let start_timestamp  = new Date(this_year, this_month - 1, day, 0, 0, 0).getTime()/1000;
+  let end_timestamp  = start_timestamp + (24*60*60);
+  let daily_view_url = '/daily_calendar?start='+ start_timestamp + '&end=' + end_timestamp;
+  window.location.href = daily_view_url;
+  window.daily_view_url = daily_view_url;
+});
+
+document.getElementById('today_button_daily').addEventListener('click', function() {
+  let today = new Date();
+  let today_year = today.getFullYear();
+  let today_month = today.getMonth() + 1;
+  let today_day = today.getDate();
+  let start_timestamp  = new Date(today_year, today_month - 1, today_day, 0, 0, 0).getTime()/1000;
+  let end_timestamp  = start_timestamp + (24*60*60);
+  let daily_view_url = '/daily_calendar?start='+ start_timestamp + '&end=' + end_timestamp;
+  window.location.href = daily_view_url;
+  window.daily_view_url = daily_view_url;
+});
+
+generate_am_daily_view();
+generate_pm_daily_view();
+year_month_day(this_month, this_year, this_day);
