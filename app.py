@@ -165,20 +165,8 @@ def monthly_calendar():
 
 @app.route('/example')
 def daily_calendar():
-    # 日付に関連するデータをデータベースなどから取得する処理をここに記述
+    return render_template('daily_calendar.html')
 
-    # 仮のデータ
-    date = request.args.get('date')
-    internal_events = [
-        {'count': 1, 'event': 'Event 1'},
-        {'count': 2, 'event': 'Event 2'},
-        {'count': 3, 'event': 'Event 3'}
-    ]
-
-    return render_template('template_example.html', events=internal_events)
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 # may not be needed
 # @app.route("/user_settings", methods = ["GET", "POST"])
@@ -355,9 +343,9 @@ def data_management():
 
 @app.route("/security_settings")
 @login_required
-def security_setting():
+def security_settings():
     #I would like to implement the option of 2 step verification
-    return redirect("security_settings.html")
+    return render_template("security_settings.html")
 
 @app.route("/social_settings")
 @login_required

@@ -1,16 +1,32 @@
 let today = new Date();
-const this_month = today.getMonth() + 1;
-const this_year = today.getFullYear();
-const this_day = today.getDate();
-let current_day = today.getDate();
+let event_day_cell = today.getDate();
 let current_month = today.getMonth() + 1;
 let current_year = today.getFullYear();
+const this_day = event_day_cell;
+const this_month = current_month;
+const this_year = current_year;
+let first_date_on_calendar = 0;
+let last_date_on_calendar = 0;
+
 
 function generate_calendar(year, month) {
   let first_date = new Date(year, month - 1, 1);
   let last_day = new Date(year, month, 0);
   let prev_month_last_day = new Date(year, month - 1, 0);
   let next_month_mergin = 6 - last_day.getDay();
+  let count_colmn = 0;
+  let day_of_Week = first_date.getDay();
+  let prev_next_day_class = 'calendar_basic';
+  last_date_on_calendar = next_month_mergin;
+
+  if(first_date.getDay() === 0){  
+    first_date_on_calendar = 1;
+  }
+  else{
+    first_date_on_calendar = prev_month_last_day.getDate() - day_of_Week + 1;
+  }
+
+    event_day_cell = first_date_on_calendar;
 
   //Header of the calendar
 let monthly_calendar = '<table>';
@@ -28,17 +44,21 @@ let monthly_calendar = '<table>';
 
   //body of the calendar
   monthly_calendar += '<tbody>';
-  let day_of_Week = first_date.getDay();
-  let prev_next_day_class = 'calendar_basic';
 
   //day block start
   monthly_calendar += '<tr>';
+  count_colmn++;
 
   //fill the blank before the 1st date 
   for (let i = 0; i < day_of_Week; i++) {
     monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (prev_month_last_day.getDate() - day_of_Week + 1 + i) + '</td>';
+    event_day_cell++;
+    // if(first_date.getDay() !== 0){
+    //   first_date_on_calendar--;
+    // }
   }
-
+  
+  event_day_cell = 1;
   //fill the date and change the color of today's cell
   for (let day = 1; day <= last_day.getDate(); day++) {
     let cell_class = 'calendar_basic';
@@ -48,27 +68,53 @@ let monthly_calendar = '<table>';
     else{
       cell_class = 'calendar_basic';
     }
-
     monthly_calendar += '<td class="' + cell_class + '">' + day + '</td>';
     if (first_date.getDay() === 6) {
       monthly_calendar += '</tr><tr>';
+      count_colmn++;
     }
     first_date.setDate(first_date.getDate() + 1);
+    event_day_cell++;
   }
   
-
+  event_day_cell = 1;
   //fill the blank after the last day
   if (last_day.getDay() !== 6 || next_month_mergin > 0) {
     for (let i = 0; i < next_month_mergin; i++) {
       monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1) + '</td>';
+      event_day_cell++;
     }
+    monthly_calendar += '</tr>';
   }
 
+  if(count_colmn < 6 || last_day.getDay() === 6){
+    for(let i = next_month_mergin; i < next_month_mergin + 7; i++){
+      monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1) + '</td>';
+      event_day_cell++;
+    }
+    monthly_calendar += '</tr>';
+    last_date_on_calendar +=  7;
+    count_colmn++;
+  }
+
+  if(count_colmn < 6){
+    monthly_calendar += '<tr>'
+    for(let i = next_month_mergin + 7; i < next_month_mergin + 14; i++){
+      monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1) + '</td>';
+      event_day_cell++;
+  }
   monthly_calendar += '</tr>';
+  last_date_on_calendar +=  7;
+  count_colmn++;
+  }
+  
+    
+
   monthly_calendar += '</tbody>';
   monthly_calendar += '</table>';
 
   document.getElementById('monthly_calendar').innerHTML = monthly_calendar;
+
   let todayCell = document.querySelector('.today');
     if (todayCell) {
       let todayCellNumber = todayCell.innerText;
@@ -104,7 +150,8 @@ function year_month(month, year){
   document.getElementById('year_month_header').innerHTML = year_month_header;
 };
 
-document.getElementById('today_button').addEventListener('click', function() {
+//go to the month that have today
+document.getElementById('today_button_month').addEventListener('click', function() {
   current_month = today.getMonth() + 1;
   current_year = today.getFullYear();
   generate_calendar(current_year, current_month);
@@ -113,41 +160,74 @@ document.getElementById('today_button').addEventListener('click', function() {
 
 year_month(current_month, current_year);
 generate_calendar(current_year, current_month);
+
+//get timestamp for first date and last date of the calendar
+function get_timestamp_monthly(year,month,timestamp_start_day, timestamp_last_day){
+  let first_date,last_date;
+  if(timestamp_start_day > 1){
+    first_date = new Date(year, month - 2, timestamp_start_day);
+  }
+  else{
+    first_date = new Date(year, month - 1, timestamp_start_day);
+  }
+
+    last_date = new Date(year, month, timestamp_last_day);
+  
+  let start_timestamp = first_date.getTime() / 1000; 
+  let end_timestamp = last_date.getTime() / 1000;
+
+  return {
+    start: start_timestamp,
+    end: end_timestamp
+  };
+}
+
+//make the cell to button
 document.querySelectorAll('.calendar_basic').forEach(cell => {
   cell.addEventListener('click', function() {
     let day = this.innerText;
-    let url = '/daily_calendar?date=' + current_year + '-' + current_month + '-' + day;
-    window.location.href = url;
+    let start_timestamp  = new Date(current_year, current_month - 1, day, 0, 0, 0).getTime()/1000;
+    let end_timestamp  = start_timestamp + (24*60*60);
+    let daily_view_url = '/daily_calendar?start='+ start_timestamp + '&end=' + end_timestamp;
+    window.location.href = daily_view_url;
+    window.daily_view_url = daily_view_url;
   });
 });
 
-function event_render(){
-fetch('data.json')
-.then(response => response.json()) // JSON応答をパースする
-.then(data => {
-  // データがパースされたら、カレンダーのセルにイベントを追加する
-  addEventsToCalendarCells(data);
-})
-.catch(error => {
-  console.error('データの取得中にエラーが発生しました:', error);
-});
+//function for lendering event(get data from api)
+function event_render(year, month, timestamp_start_day, timestamp_last_day) {
+  let time_stamp = get_timestamp_monthly(year, month, timestamp_start_day, timestamp_last_day);
+  fetch('/api/events?start_time=' + time_stamp.start + '&end_time=' + time_stamp.end)
+    .then(response => response.json())
+    .then(data => {
+      addEventsToCalendarCells(data);
+    })
+    .catch(error => {
+      console.error('Error occurred during getting data:', error);
+    });
 
-// カレンダーのセルにイベントを追加する関数
-function addEventsToCalendarCells(data) {
-// データをループしてセルにイベントを追加する
-data.forEach(item => {
-  // 各アイテムから日付とイベントのテキストを抽出する
-  const { date, event } = item;
-
-  // 日付に対応するセルを探す
-  const cell = document.getElementById(date); // 各セルが日付に対応するIDを持つと仮定しています
-
-  // セルが存在するかどうかを確認する
-  if (cell) {
-    // セルにイベントを追加する
-    cell.innerHTML += `<br>${event}`; // イベントを改行して追加する例
+  function addEventsToCalendarCells(data) {
+    for (const date in data) {
+      if (data.hasOwnProperty(date)) {
+        const events = data[date];
+        events.forEach(event => {
+          const startTime = event.start_time;
+          const title = event.title;
+          const cell = document.getElementById(date);
+          if (cell) {
+            cell.classList.add('events');
+            cell.innerHTML += `<br>${startTime}: ${title}`;
+          }
+        });
+      }
+    }
   }
-});
 }
 
-};
+//load the get_location_and_send() when it finished loading page
+
+document.addEventListener('DOMContentLoaded', function() {
+  get_location_and_send();
+  event_render(current_year, current_month,first_date_on_calendar, last_date_on_calendar); 
+});
+
