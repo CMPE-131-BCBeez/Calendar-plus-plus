@@ -195,39 +195,33 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 });
 
 //function for lendering event(get data from api)
-function event_render(year, month, timestamp_start_day, timestamp_last_day) {
-  let time_stamp = get_timestamp_monthly(year, month, timestamp_start_day, timestamp_last_day);
-  fetch('/api/events?start_time=' + time_stamp.start + '&end_time=' + time_stamp.end)
-    .then(response => response.json())
-    .then(data => {
-      addEventsToCalendarCells(data);
-    })
-    .catch(error => {
-      console.error('Error occurred during getting data:', error);
-    });
-
-  function addEventsToCalendarCells(data) {
-    for (const date in data) {
-      if (data.hasOwnProperty(date)) {
-        const events = data[date];
-        events.forEach(event => {
-          const startTime = event.start_time;
-          const title = event.title;
-          const cell = document.getElementById(date);
-          if (cell) {
-            cell.classList.add('events');
-            cell.innerHTML += `<br>${startTime}: ${title}`;
-          }
-        });
+function event_render(timestamp_start_day, timestamp_last_day) {
+  query_events(timestamp_start_day, timestamp_last_day).then((data) => {
+      for (const date in data) {
+        if (data.hasOwnProperty(date)) {
+          const events = data[date];
+          events.forEach(event => {
+            const startTime = event.start_time;
+            const title = event.title;
+            const cell = document.getElementById(date);
+            if (cell) {
+              cell.classList.add('events');
+              cell.innerHTML += `<br>${startTime}: ${title}`;
+            }
+          });
+        }
       }
     }
-  }
+  ).catch(error => {
+    console.error('Error occurred during getting data:', error);
+  });
+
 }
 
 //load the get_location_and_send() when it finished loading page
 
 document.addEventListener('DOMContentLoaded', function() {
   get_location_and_send();
-  event_render(current_year, current_month,first_date_on_calendar, last_date_on_calendar); 
+  event_render(first_date_on_calendar, last_date_on_calendar); 
 });
 
