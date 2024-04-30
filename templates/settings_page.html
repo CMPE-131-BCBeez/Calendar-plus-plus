@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %} Setting {% endblock %}
+
+{% block body %}
+
+<h1>
+    User Settings
+</h1>
+
+<div class="container">
+    <button type="button" id="mode_switch_button" class="BlackButton" >DarkMode</button>
+    <br>
+    
+    <a href="/data_management" class="WhiteButton">
+        Manage My Data<!--Go to the sign in page-->
+    </a><br>
+    <a href="/security_settings" class="WhiteButton">
+        Security Settings<!--Go to the sign in page-->
+    </a><br>
+    <a href="/social_settings" class="WhiteButton">
+        Social Settings<!--Go to the sign in page-->
+    </a><br>
+</div>
+{% endblock %}

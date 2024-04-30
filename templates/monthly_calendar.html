@@ -1,29 +1,43 @@
 {% extends "layout.html" %}
 {% block title %} Monthly Calendar {% endblock %}
 
-{% block navbar %}
-{{super()}}
-<button type="button" id="today_button" class="BlackButton">Today</button>
-{% endblock %}
-
 {% block body %}
-<div class="monthly_header">
-  <div id="pagination">
-    <button id="prev_month"></button>
-    <h2 id="year_month_header"></h2>
-    <button id="next_month">></button>
+<div class="monthly_header"> 
+
+  <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
+
+  <button type="button" id="weekly" class="BlackButton">Weekly</button>
+       
+  <button type="button" id="today_button_month" class="BlackButton">Today</button>
+
+  <button onclick="openModal()" class="BlackButton">New Event</button>
+
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <div id="event_window"></div>
+    </div>
   </div>
+
+  <!-- <button type="button" id="mode_switch_button" class="BlackButton">DarkMode</button> -->
+
+
+       
+    <div id="pagination_monthly">
+      <button id="prev_month"><</button>
+      <h2 id="year_month_header"></h2>
+      <button id="next_month">></button>
+    </div>
 </div>
+  
+    <div class="monthly_view">
+      <div id="monthly_calendar"></div> 
+    </div>
 
-<div class="monthly_view">
-  <div id="monthly_calendar"></div>
-</div>
-
-<script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
-<script src="{{url_for('static', filename='get_geolocation_script.js')}}"></script>
-<script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
-<script src="{{url_for('static', filename='theme_script.js')}}"></script>
-
-
+    <script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
+    <script src="{{url_for('static', filename='dayly_view_script.js')}}"></script>
+    <script src="{{url_for('static', filename='get_geolocation_script.js')}}"></script>
+    <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+    <script src="{{url_for('static', filename='event_script.js')}}"></script>
 
 {% endblock %}

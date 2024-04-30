@@ -2,12 +2,16 @@
 <lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+    <script src="{{url_for('static', filename='theme_script.js')}}"></script>
     {% block head %}
     <title>{% block title %}{% endblock %} - Calendar++</title>
+    
     {% endblock %}
+    
 </head>
 
 <!--Handle flashing-->
@@ -22,6 +26,7 @@
 {% endwith %}
 
 <body class="light_mode">
+<<<<<<< HEAD
     {% block navbar %}
     <!--<button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>-->
 
@@ -38,6 +43,10 @@
         </a><br>
     </div>
 
+=======
+    <!-- {% block navbar %}
+    <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
+>>>>>>> c14d8e3 (Settings and events on month (#29))
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly
         View</button>
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly
@@ -45,7 +54,10 @@
     <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
         View</button>
     <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
-    {% endblock %}
+       
+    <button type="button" id="today_button" class="BlackButton">Today</button>
+    {% endblock %} -->
+    
 
     {% block body %}
     {% endblock %}
