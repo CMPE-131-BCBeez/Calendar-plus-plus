@@ -194,29 +194,8 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
   });
 });
 
-//function for lendering event(get data from api)
-function event_render(timestamp_start_day, timestamp_last_day) {
-  query_events(timestamp_start_day, timestamp_last_day).then((data) => {
-      for (const date in data) {
-        if (data.hasOwnProperty(date)) {
-          const events = data[date];
-          events.forEach(event => {
-            const startTime = event.start_time;
-            const title = event.title;
-            const cell = document.getElementById(date);
-            if (cell) {
-              cell.classList.add('events');
-              cell.innerHTML += `<br>${startTime}: ${title}`;
-            }
-          });
-        }
-      }
-    }
-  ).catch(error => {
-    console.error('Error occurred during getting data:', error);
-  });
+// //function for lendering event(get data from api)
 
-}
 
 //load the get_location_and_send() when it finished loading page
 
