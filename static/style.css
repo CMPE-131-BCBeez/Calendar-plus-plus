@@ -126,11 +126,15 @@ h1 {
 }
 
 #monthly_calendar table{
-    width: 90vw;  
+    width: 95vw;  
     height: 70vh;
     border-collapse: collapse;
 }
-
+.monthly_header{
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
 .monthly_view{
     font-family: "CaviarDreams_Bold", sans-serif;     
     font-weight: bold;
@@ -142,17 +146,17 @@ h1 {
 }
 
 .calendar_basic {
-    font-family: "CaviarDreams", sans-serif;
+    font-family: "CaviarDreams_Italic", sans-serif;
     margin: 0 auto;
     width: 100%;
     font-size: 15px; 
-    height: calc(70vh / 6);  
+    height: calc(80vh / 6);  
 }
 
 .calendar_day {
+    font-family: "CaviarDreams_BoldItalic", sans-serif;
     font-size: 20px;    
     width: calc(100% / 7);  
-    height: 30px;
     text-align: center;   
     border: 0px solid #000000;
     box-sizing: border-box; 
@@ -199,16 +203,15 @@ h1 {
     display: flex;     
     justify-content: space-between;  
     align-items: center; 
-    margin-bottom: 15px; 
-    margin-top: 15px; 
+    /* margin-bottom: 10px;  */
 }
 
 #prev_month, #next_month,
 #prev_day, #next_day{ 
     font-family: "CaviarDreams_Bold", sans-serif;     
-    background-color: #000000; 
+    background-color: #ffffff; 
     border: none;   
-    color: #ffffff; 
+    color: #000000; 
     padding: 5px 15px;   
     text-align: center; 
     text-decoration: none;  
@@ -236,13 +239,16 @@ h1 {
     display: flex;     
     justify-content: center;    
     align-items: center;  
+    
 }
 
 .daily_page_container{
     display: flex;
     flex-direction: row; 
     justify-content: center; 
-    margin-right: 20px;
+    margin-right: 10px;
+    margin-top:20px;
+    height:100vh;
     
 }
 
@@ -250,7 +256,7 @@ h1 {
     display: flex;
     flex-direction: column; 
     justify-content: center; 
-    height: 80vh;
+    height: 90vh;
     width: 70%;
 }
 
@@ -268,6 +274,8 @@ h1 {
     display: flex;
     flex-direction: row; 
     justify-content: center; 
+    margin-bottom: 10px;
+    height: 100%;
 }
 
 .daily_item_event{
@@ -292,11 +300,12 @@ h1 {
 }
 
 .time_cell{
+    font-family: "CaviarDreams_BoldItalic", sans-serif;
     background-color: #000000;
     color:#FFFFFF;
     font-size: 15px ;
     border: 1px solid #FFFFFF;
-    padding: 10px;
+    padding: 15px;
     width:10px;
 }
 .event_cell{
@@ -306,6 +315,19 @@ h1 {
     border: 1px solid #000000;
     width:100%;
     
+}
+
+input[type="color"] {
+    width: 30%; 
+    height: 30px;
+    border-radius: 5px; 
+    border: 2px solid rgba(0, 0, 0, 0); 
+    padding: 5px; 
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.event_select{
+    background-color: #FFFFFF;
 }
 
 /* buttons */
