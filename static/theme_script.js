@@ -1,6 +1,4 @@
-let mode_button = document.getElementById('mode_switch_button');
-
-mode_button.addEventListener('click', function() {
+document.getElementById('mode_switch_button').addEventListener('click', function() {
     let body = document.body;
     let is_darkMode = body.classList.contains('dark_mode');
     

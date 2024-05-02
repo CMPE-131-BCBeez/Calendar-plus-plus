@@ -23,7 +23,7 @@
 
 .light_mode{
     color:#000000;
-    background-color: FFFFFF;
+    background-color: #FFFFFF;
 }
 
 .dark_mode{
@@ -35,8 +35,13 @@
 body, form{   
     font-family: "CaviarDreams_Bold", sans-serif;     
     font-size: 20px;     
-    background-color: #FFFFFF;   
+    background-color: rgba(255, 255, 255, 0.8),;   
     color:#000000;  
+    background-image: url('../static/image/siroicon2.png');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    opacity: 0.9; 
+    
 }
 /* use dark/lightmode */
 
@@ -209,7 +214,7 @@ h1 {
 #prev_month, #next_month,
 #prev_day, #next_day{ 
     font-family: "CaviarDreams_Bold", sans-serif;     
-    background-color: #ffffff; 
+    background-color: rgba(0, 0, 0, 0.0); 
     border: none;   
     color: #000000; 
     padding: 5px 15px;   

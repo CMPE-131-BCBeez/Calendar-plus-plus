@@ -10,6 +10,7 @@
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
          
     <button type="button" id="today_button_daily" class="BlackButton">Today</button>
+    <button type="button" id="mode_switch_button" class="BlackButton">DarkMode</button>
 </div>
 
 <div class="daily_page_container">
@@ -64,6 +65,7 @@
 </div>
 
 <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+<script src="{{url_for('static', filename='theme_script.js')}}"></script>
 
 {% endblock %}
 

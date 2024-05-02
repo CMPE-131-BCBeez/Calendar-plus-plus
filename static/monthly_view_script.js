@@ -8,6 +8,9 @@ const this_year = current_year;
 let first_date_on_calendar = 0;
 let last_date_on_calendar = 0;
 
+let monthly_events;
+query_events(first_date_on_calendar, last_date_on_calendar).then((data) => monthly_events = data).catch(() => console.log("failed to get data"));
+
 
 function generate_calendar(year, month) {
   let first_date = new Date(year, month - 1, 1);
