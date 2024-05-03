@@ -27,22 +27,26 @@
 {% endwith %}
 
 <body class="light_mode">
-    <!-- {% block navbar %}
-    <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
-    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly
-        View</button>
-    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly
-        View</button>
-    <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
-        View</button>
-    <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
-       
-    <button type="button" id="today_button" class="BlackButton">Today</button>
-    {% endblock %} -->
-
-
-    {% block body %}
-    {% endblock %}
+    <div class="wallpaper" style="background-image: url('{{../static/image/siroicon2.png}}')">
+        <div class="transparent">
+            <!-- {% block navbar %}
+        <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
+        <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly
+            View</button>
+        <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly
+            View</button>
+        <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
+            View</button>
+        <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
+           
+        <button type="button" id="today_button" class="BlackButton">Today</button>
+        {% endblock %} -->
+    
+    
+        {% block body %}
+        {% endblock %}
+        </div>
+    </div>
     <!-- <script src="{{url_for('static', filename='theme_script.js')}}"></script> -->
 </body>
 

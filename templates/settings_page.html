@@ -20,5 +20,11 @@
     <a href="/social_settings" class="WhiteButton">
         Social Settings<!--Go to the sign in page-->
     </a><br>
+
+    <form action="/upload_wallpaper" method="POST" enctype="multipart/form-data">
+        <input type="file" name="wallpaper">
+        <button type="submit">Save It</button>
+    </form>
+      
 </div>
 {% endblock %}
