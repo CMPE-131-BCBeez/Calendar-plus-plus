@@ -9,19 +9,8 @@ let first_date_on_calendar = 0;
 let last_date_on_calendar = 0;
 
 let monthly_events;
-query_events(first_date_on_calendar, last_date_on_calendar)
-  .then(data => {
-    monthly_events = data;
 
-    const eventData = monthly_events.map(event => ({
-      title: event.title,
-      start: new Date(event.start),
-      color: event.color
-    }));
-    
-    return eventData;
-  })
-  .catch(error => {
+query_events(first_date_on_calendar, last_date_on_calendar).then(data => {monthly_events = data;}).catch(error => {
     console.error("Failed to get event data:", error);
     throw error; 
   });
@@ -43,7 +32,14 @@ function generate_calendar(year, month) {
     first_date_on_calendar = prev_month_last_day.getDate() - day_of_Week + 1;
   }
 
-    event_day_cell = first_date_on_calendar;
+  event_day_cell = first_date_on_calendar;
+  function get_timestamp_for_event(current_year,current_month,event_day_cell){
+    const current_date_event = new Date(current_year,current_month,event_day_cell);
+    const the_timestamp = current_date_event.getTime();
+    return the_timestamp;
+  };
+
+  event_day_cell = first_date_on_calendar;
 
   //Header of the calendar
 let monthly_calendar = '<table>';
@@ -68,11 +64,12 @@ let monthly_calendar = '<table>';
 
   //fill the blank before the 1st date 
   for (let i = 0; i < day_of_Week; i++) {
+    
     monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (prev_month_last_day.getDate() - day_of_Week + 1 + i);
     monthly_calendar += '<div>';
     monthly_calendar += '<ul>';
-    while(monthly_events){
-      monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+    for (envents of monthly_events[get_timestamp_for_event(current_year,current_month,event_day_cell)]){
+      monthly_calendar += '<li>' + envents[event_start_time] + envents[title] + '</li>';
     }
     monthly_calendar += '</ul>';
     monthly_calendar += '</div>';
