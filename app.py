@@ -1,5 +1,6 @@
 from flask import Flask, g, Response, request, redirect, session, flash, render_template
-from datetime import *
+from datetime import datetime
+from pytz import timezone
 from flask_session import Session
 from flask_mail import Mail, Message
 import tempfile
@@ -10,6 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
 from utils import *
 import json
+from collections import defaultdict
 
 # Configure database
 DATABASE = "calendar.db"
@@ -245,7 +247,7 @@ def new_event():
         if not is_valid:
             flash(error_message)
             return redirect("/new_event")
-        
+     
         #insert event into database 
         with app.app_context():
             cursor = db.cursor()
@@ -388,6 +390,7 @@ def event_api():
     INNER JOIN Users ON UsersEvents.user_id = Users.id
     WHERE Users.id = ?
     AND Events.start_time >= ? AND Events.end_time < ?
+    ORDER BY Events.start_time ASC
     """
 
     records = None
@@ -399,9 +402,18 @@ def event_api():
     if not records:
         return json.dumps({}), 404
     
-    output_dict = {}
-    for rec in records:
-        output_dict[rec['start_time']] = rec
+
+    output_dict = defaultdict(lambda: [])
+    
+    for r in records:
+        date_ts = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%dT%H:%M").replace(hour=0, minute=0, second=0)))
+        r['start_time'] = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%dT%H:%M")))
+        r['end_time'] = int(datetime.timestamp(datetime.strptime(r['end_time'], "%Y-%m-%dT%H:%M")))
+        output_dict[date_ts].append(r)
+    
+
+    
+        
     
     return json.dumps(output_dict)
 
