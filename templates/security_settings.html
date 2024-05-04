@@ -1,22 +1,40 @@
 {% extends "layout.html" %}
-{% block title %} Security {% endblock %}
+{% block title %} Create Event {% endblock %}
 
 {% block body %}
-<h1 class="top_h1">
-    Securrity Settings
+
+<h1>
+    Security settings
 </h1>
 <div class="container">
-    <a href="/change_email" class="WhiteButton">
-        Change My Email<!--Go to register page-->
+    <form action="/new_event" method="POST">
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" name="title" required><br>
 
-    </a><br>
-   
-    <a href="/change_password_settings" class="WhiteButton">
-        Change Password<!--Go to the reset pasword page-->
-    </a><br>
+    <label for="description">Description:</label><br>
+    <textarea id="description" name="description"></textarea><br>
 
-    <a href="/register" class="WhiteButton">
-        Adding Phone number <!--Go to register page-->
-    </a><br>
+    <label for="start_time">Start Time:</label><br>
+    <input type="datetime-local" id="start_time" name="start_time" required><br>
+
+    <label for="end_time">End Time:</label><br>
+    <input type="datetime-local" id="end_time" name="end_time" required><br>
+
+    <label for="location">Location:</label><br>
+    <input type="text" id="location" name="location"><br>
+
+    <label for="color">Color:</label><br>
+    <input type="color" id="color" name="color" value="#000000"><br>
+
+    <label for="type">Type:</label><br>
+    <select id="type" name="type">
+        <option value="EVENT">Event</option>
+        <option value="REMINDER">Reminder</option>
+        <option value="BIRTHDAY">Birthday</option>
+    </select><br>
+
+    <input type="submit" value="Create Event">
+</form>
 </div>
+
 {% endblock %}
