@@ -406,49 +406,42 @@ def event_api():
     
     return json.dumps(output_dict)
 
-@app.route('/')
-def index():
-    background_image_url = "static/default-background.jpg" 
-    
-    return render_template('layout.html', background_image_url=background_image_url)
-
-@app.route('/upload_wallpaper', methods=['POST'])
+@app.route('/upload_wallpaper', methods = ["GET","POST"])
 def upload():
     if request.method == "POST":
-
-        if 'image' not in request.files:         #error if there is no image selected
-            return 'wallpaper image is not selected'
+        if 'image' not in request.files:         # error if there is no image selected
+            flash('wallpaper image is not selected') 
+            return redirect("/settings")
     
         file = request.files['image']
-        if file.filename == '':                  #error if image file was empty
-            return 'Can not find the wallpaper image'
+        if file.filename == '':                  # error if image file was empty
+            flash('Can not find the wallpaper image') 
+            return redirect("/settings")
     
         filename = file.filename  #get the filename
 
         file_path = os.path.join('static', 'image', filename)
         file.save(file_path)
 
-        try:
-            with app.app_context():
-                cursor = db.cursor()    #input the data to events
-                query = """INSERT INTO UserSettings () VALUES (?)"""
-                cursor.execute(query, (filename, type))
-                db.commit()
-                event_id = cursor.execute("SELECT last_insert_rowid() AS last").fetchone()['last']
-                db.commit()
-        except sqlite3.Error as e:
-            db.rollback()
-            return f'Error: {e}'
-        
+        # try:
+        #     with app.app_context():
+        #         cursor = db.cursor()    #input the data to events
+        #         query = """INSERT INTO UserSettings () VALUES (?)"""
+        #         cursor.execute(query, (filename, type))
+        #         db.commit()
+        #         event_id = cursor.execute("SELECT last_insert_rowid() AS last").fetchone()['last']
+        #         db.commit()
+        # except sqlite3.Error as e:
+        #     db.rollback()
+        #     return f'Error: {e}'
+
         with app.app_context():
     
-        return f'The "{filename}" is now your wallpaper!!'
+            flash(f'The "{filename}" is now your wallpaper!!')
     
-        background_image_url = f"../static/image/{filename}" 
+        background_image_url = f"../image/{filename}" 
 
-    background_image_url = "static/default-background.jpg"  
+    else:
+        background_image_url = "../image/default-background.jpg"
     
     return render_template('index.html', background_image_url=background_image_url)
-
-if __name__ == '__main__':
-    app.run(debug=True)

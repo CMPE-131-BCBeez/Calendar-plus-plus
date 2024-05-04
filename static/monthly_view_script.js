@@ -9,8 +9,22 @@ let first_date_on_calendar = 0;
 let last_date_on_calendar = 0;
 
 let monthly_events;
-query_events(first_date_on_calendar, last_date_on_calendar).then((data) => monthly_events = data).catch(() => console.log("failed to get data"));
+query_events(first_date_on_calendar, last_date_on_calendar)
+  .then(data => {
+    monthly_events = data;
 
+    const eventData = monthly_events.map(event => ({
+      title: event.title,
+      start: new Date(event.start),
+      color: event.color
+    }));
+    
+    return eventData;
+  })
+  .catch(error => {
+    console.error("Failed to get event data:", error);
+    throw error; 
+  });
 
 function generate_calendar(year, month) {
   let first_date = new Date(year, month - 1, 1);
@@ -54,7 +68,15 @@ let monthly_calendar = '<table>';
 
   //fill the blank before the 1st date 
   for (let i = 0; i < day_of_Week; i++) {
-    monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (prev_month_last_day.getDate() - day_of_Week + 1 + i) + '</td>';
+    monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (prev_month_last_day.getDate() - day_of_Week + 1 + i);
+    monthly_calendar += '<div>';
+    monthly_calendar += '<ul>';
+    while(monthly_events){
+      monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+    }
+    monthly_calendar += '</ul>';
+    monthly_calendar += '</div>';
+    monthly_calendar += '</td>';
     event_day_cell++;
     // if(first_date.getDay() !== 0){
     //   first_date_on_calendar--;
@@ -71,7 +93,16 @@ let monthly_calendar = '<table>';
     else{
       cell_class = 'calendar_basic';
     }
-    monthly_calendar += '<td class="' + cell_class + '">' + day + '</td>';
+    monthly_calendar += '<td class="' + cell_class + '">' + day;
+    monthly_calendar += '<div>';
+    monthly_calendar += '<ul>';
+    while(monthly_events){
+      monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+    }
+    monthly_calendar += '</ul>';
+    monthly_calendar += '</div>';
+    monthly_calendar += '</td>';
+
     if (first_date.getDay() === 6) {
       monthly_calendar += '</tr><tr>';
       count_colmn++;
@@ -84,7 +115,15 @@ let monthly_calendar = '<table>';
   //fill the blank after the last day
   if (last_day.getDay() !== 6 || next_month_mergin > 0) {
     for (let i = 0; i < next_month_mergin; i++) {
-      monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1) + '</td>';
+      monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1);
+      monthly_calendar += '<div>';
+      monthly_calendar += '<ul>';
+      while(monthly_events){
+        monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+      }
+      monthly_calendar += '</ul>';
+      monthly_calendar += '</div>';
+      monthly_calendar += '</td>';
       event_day_cell++;
     }
     monthly_calendar += '</tr>';
@@ -92,7 +131,15 @@ let monthly_calendar = '<table>';
 
   if(count_colmn < 6 || last_day.getDay() === 6){
     for(let i = next_month_mergin; i < next_month_mergin + 7; i++){
-      monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1) + '</td>';
+      monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1);
+      monthly_calendar += '<div>';
+      monthly_calendar += '<ul>';
+      while(monthly_events){
+        monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+      }
+      monthly_calendar += '</ul>';
+      monthly_calendar += '</div>';
+      monthly_calendar += '</td>';
       event_day_cell++;
     }
     monthly_calendar += '</tr>';
@@ -103,7 +150,15 @@ let monthly_calendar = '<table>';
   if(count_colmn < 6){
     monthly_calendar += '<tr>'
     for(let i = next_month_mergin + 7; i < next_month_mergin + 14; i++){
-      monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1) + '</td>';
+      monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1);
+      monthly_calendar += '<div>';
+      monthly_calendar += '<ul>';
+      while(monthly_events){
+        monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+      }
+      monthly_calendar += '</ul>';
+      monthly_calendar += '</div>';
+      monthly_calendar += '</td>';
       event_day_cell++;
   }
   monthly_calendar += '</tr>';
@@ -197,13 +252,9 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
   });
 });
 
-// //function for lendering event(get data from api)
-
-
 //load the get_location_and_send() when it finished loading page
 
 document.addEventListener('DOMContentLoaded', function() {
   get_location_and_send();
   event_render(first_date_on_calendar, last_date_on_calendar); 
 });
-

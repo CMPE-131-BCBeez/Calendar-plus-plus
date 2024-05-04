@@ -152,11 +152,12 @@ h1 {
     height: 70vh;
     border-collapse: collapse;
 }
-.monthly_header{
+.button_header{
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
 }
+
 .monthly_view{
     font-family: "CaviarDreams_Bold", sans-serif;     
     font-weight: bold;
@@ -336,6 +337,7 @@ h1 {
     padding: 15px;
     width:10px;
 }
+
 .event_cell{
     background-color: #FFFFFF;
     color:#000000;
