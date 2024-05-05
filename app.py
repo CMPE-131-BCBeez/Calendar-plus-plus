@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
 from utils import *
 import json
+import resend
 
 # Configure database
 DATABASE = "calendar.db"
@@ -41,16 +42,18 @@ app: Flask = Flask(__name__)
 mail = Mail(app)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+resend.api_key = "re_FvWGLqJc_J1bw8bdwYMCV74gK5eCdEbJ2"
+
 #I have ben trying to get this to work with email but I cannot for the life of me make it work
 #the issue here is that the gmail I made for the class needs an app password but this option does 
 #not appear when I go to settings-security-2step verification
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = ['calandarPlusPlus@gmail.com']
-app.config['MAIL_PASSWORD'] = ['ThisAintItFr2025']
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail = Mail(app)
+#app.config['MAIL_SERVER']='smtp.gmail.com'
+#app.config['MAIL_PORT'] = 465
+#app.config['MAIL_USERNAME'] = ['calandarPlusPlus@gmail.com']
+#app.config['MAIL_PASSWORD'] = ['gfzq hpoy dzsr ivsk']
+#app.config['MAIL_USE_TLS'] = False
+#app.config['MAIL_USE_SSL'] = True
+#mail = Mail(app)
 
 # Ensure responses aren't cached
 @app.after_request
@@ -208,13 +211,22 @@ def forgot_password():
                     subject = "Confirm Your Email Address"
                     body = f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
                     sender = "calendarPlusPlus@gmail.com"
-                    msg = Message(subject, sender = sender, recipients=[email], body=body)
-                    mail.send(msg)
+                    #msg = Message(subject, sender = sender, recipients=[email], body=body)
+                    #mail.send(msg)
+
+
+
+                    r = resend.Emails.send({
+                        "from": "onboarding@resend.dev",
+                        "to": "calandarplusplus@gmail.com",
+                        "subject": "Confirm Your Email Address",
+                        "html": f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
+                    })  
                     
                     #finally save it to your database
                     with app.app_context():
-                        cursor = db.cursor
-                        cursor.execute("UPDATE Users SET confirmation_code=? WHERE email=? OR username =?", (confirmation_code, email, username_or_email))
+                        cursor = db.cursor()
+                        cursor.execute("""UPDATE Users SET confirmation_code=(?) WHERE email=(?) OR username =(?)""", (confirmation_code, username_or_email, username_or_email))
                         db.commit()
                     flash("password changed successfully!")
                     return redirect("/change_password_email")
