@@ -7,13 +7,30 @@ const this_month = current_month;
 const this_year = current_year;
 let first_date_on_calendar = 0;
 let last_date_on_calendar = 0;
+let monthly_events = {};
 
-let monthly_events;
+function get_timestamp_for_event(current_year, current_month, event_day_cell) {
+  let localDate = new Date(Date.UTC(current_year, current_month - 1, event_day_cell)).getTime();
+  let = UTC_timestamp_for_event = localDate/1000;
+  return UTC_timestamp_for_event;
+}
 
-query_events(first_date_on_calendar, last_date_on_calendar).then(data => {monthly_events = data;}).catch(error => {
+let timestamp_for_event = get_timestamp_for_event(current_year, current_month, event_day_cell);
+
+const timestamp = get_timestamp_monthly(current_year,current_month,first_date_on_calendar, last_date_on_calendar);
+const timestamp_for_first_date_on_calendar = timestamp.start;
+const timestamp_for_last_date_on_calendar = timestamp.end;
+
+query_events(timestamp_for_first_date_on_calendar, timestamp_for_last_date_on_calendar)
+  .then(data => {
+    monthly_events = data;
+  })
+  .catch(error => {
     console.error("Failed to get event data:", error);
     throw error; 
-  });
+});
+
+let event_for_this_day = monthly_events[get_timestamp_for_event(current_year, current_month, event_day_cell)];
 
 function generate_calendar(year, month) {
   let first_date = new Date(year, month - 1, 1);
@@ -31,14 +48,7 @@ function generate_calendar(year, month) {
   else{
     first_date_on_calendar = prev_month_last_day.getDate() - day_of_Week + 1;
   }
-
-  event_day_cell = first_date_on_calendar;
-  function get_timestamp_for_event(current_year,current_month,event_day_cell){
-    const current_date_event = new Date(current_year,current_month,event_day_cell);
-    const the_timestamp = current_date_event.getTime();
-    return the_timestamp;
-  };
-
+  
   event_day_cell = first_date_on_calendar;
 
   //Header of the calendar
@@ -68,16 +78,15 @@ let monthly_calendar = '<table>';
     monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (prev_month_last_day.getDate() - day_of_Week + 1 + i);
     monthly_calendar += '<div>';
     monthly_calendar += '<ul>';
-    for (envents of monthly_events[get_timestamp_for_event(current_year,current_month,event_day_cell)]){
-      monthly_calendar += '<li>' + envents[event_start_time] + envents[title] + '</li>';
+    if (event_for_this_day) {
+    for (envents of event_for_this_day){
+        monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+      }
     }
     monthly_calendar += '</ul>';
     monthly_calendar += '</div>';
     monthly_calendar += '</td>';
     event_day_cell++;
-    // if(first_date.getDay() !== 0){
-    //   first_date_on_calendar--;
-    // }
   }
   
   event_day_cell = 1;
@@ -93,8 +102,10 @@ let monthly_calendar = '<table>';
     monthly_calendar += '<td class="' + cell_class + '">' + day;
     monthly_calendar += '<div>';
     monthly_calendar += '<ul>';
-    while(monthly_events){
-      monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+    if (event_for_this_day) {
+    for (envents of event_for_this_day){
+        monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+      }
     }
     monthly_calendar += '</ul>';
     monthly_calendar += '</div>';
@@ -115,8 +126,10 @@ let monthly_calendar = '<table>';
       monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1);
       monthly_calendar += '<div>';
       monthly_calendar += '<ul>';
-      while(monthly_events){
-        monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+      if (event_for_this_day) {
+      for (envents of event_for_this_day){
+          monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+        }
       }
       monthly_calendar += '</ul>';
       monthly_calendar += '</div>';
@@ -131,8 +144,10 @@ let monthly_calendar = '<table>';
       monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1);
       monthly_calendar += '<div>';
       monthly_calendar += '<ul>';
-      while(monthly_events){
-        monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+      if (event_for_this_day) {
+      for (envents of event_for_this_day){
+          monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+        }
       }
       monthly_calendar += '</ul>';
       monthly_calendar += '</div>';
@@ -149,12 +164,14 @@ let monthly_calendar = '<table>';
     for(let i = next_month_mergin + 7; i < next_month_mergin + 14; i++){
       monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1);
       monthly_calendar += '<div>';
-      monthly_calendar += '<ul>';
-      while(monthly_events){
-        monthly_calendar += '<li>' + {$start_time} + {$title} + '</li>';
+    monthly_calendar += '<ul>';
+    if (event_for_this_day) {
+    for (envents of event_for_this_day){
+        monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
       }
-      monthly_calendar += '</ul>';
-      monthly_calendar += '</div>';
+    }
+    monthly_calendar += '</ul>';
+    monthly_calendar += '</div>';
       monthly_calendar += '</td>';
       event_day_cell++;
   }
@@ -203,7 +220,7 @@ function year_month(month, year){
   let englishMonth = new Date(year, month - 1, 1).toLocaleString('en', { month: 'long' });
   let year_month_header = englishMonth + '/' + year;
   document.getElementById('year_month_header').innerHTML = year_month_header;
-};
+}
 
 //go to the month that have today
 document.getElementById('today_button_month').addEventListener('click', function() {
@@ -220,20 +237,20 @@ generate_calendar(current_year, current_month);
 function get_timestamp_monthly(year,month,timestamp_start_day, timestamp_last_day){
   let first_date,last_date;
   if(timestamp_start_day > 1){
-    first_date = new Date(year, month - 2, timestamp_start_day);
+    first_date = new Date(Date.UTC(year, month - 2, timestamp_start_day)).getTime();
   }
   else{
-    first_date = new Date(year, month - 1, timestamp_start_day);
+    first_date = new Date(Date.UTC(year, month - 1, timestamp_start_day)).getTime();
   }
 
-    last_date = new Date(year, month, timestamp_last_day);
+    last_date = new Date(Date.UTC(year, month, timestamp_last_day)).getTime();
   
-  let start_timestamp = first_date.getTime() / 1000; 
-  let end_timestamp = last_date.getTime() / 1000;
+  let utc_start_timestamp = first_date / 1000;
+  let utc_end_timestamp = last_date / 1000;
 
   return {
-    start: start_timestamp,
-    end: end_timestamp
+    start: utc_start_timestamp,
+    end: utc_end_timestamp
   };
 }
 
@@ -253,5 +270,4 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 
 document.addEventListener('DOMContentLoaded', function() {
   get_location_and_send();
-  event_render(first_date_on_calendar, last_date_on_calendar); 
 });
