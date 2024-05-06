@@ -10,6 +10,13 @@ CREATE TABLE IF NOT EXISTS Users (
     last_name VARCHAR(40) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS BackupEmails (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    email VARCHAR(20) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
 CREATE TABLE IF NOT EXISTS Calendars(
     id INTEGER PRIMARY KEY,
     user_id INT,

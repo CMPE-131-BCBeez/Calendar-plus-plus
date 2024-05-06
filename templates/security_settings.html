@@ -6,35 +6,41 @@
 <h1>
     Security settings
 </h1>
-<div class="container">
-    <form action="/new_event" method="POST">
-    <label for="title">Title:</label><br>
-    <input type="text" id="title" name="title" required><br>
+<body class="light_mode">
 
-    <label for="description">Description:</label><br>
-    <textarea id="description" name="description"></textarea><br>
+    <!--<button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>-->
+    <!--
+    <button onclick="dropDown()" class="dropbtn">Settings</button>
+    <div id="settings" class="dropdown-content">
+        <a href="/data_management" class="WhiteButton">
+            Manage my data< !--Go to the sign in page-- >
+        </a><br>
+        <a href="/security_settings" class="WhiteButton">
+            Security settings< !--Go to the sign in page-- >
+        </a><br>
+        <a href="/social_settings" class="WhiteButton">
+            Social settings< !--Go to the sign in page-- >
+        </a><br>
+    </div>-->
 
-    <label for="start_time">Start Time:</label><br>
-    <input type="datetime-local" id="start_time" name="start_time" required><br>
+    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/change_password_settings'">Change Password</button>
+    <h1>User Settings</h1>
+    <h2>Backup Email:</h2>
+    <ul>
+        {% for email in backup_emails %}
+            <li>{{ email }}</li>
+        {% endfor %}
+    </ul>
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/backup_email'">Add backup Email or Phone Number</button>
+    <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
+        View</button>
+    <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
+       
+    <button type="button" id="today_button" class="BlackButton">Today</button>
 
-    <label for="end_time">End Time:</label><br>
-    <input type="datetime-local" id="end_time" name="end_time" required><br>
 
-    <label for="location">Location:</label><br>
-    <input type="text" id="location" name="location"><br>
-
-    <label for="color">Color:</label><br>
-    <input type="color" id="color" name="color" value="#000000"><br>
-
-    <label for="type">Type:</label><br>
-    <select id="type" name="type">
-        <option value="EVENT">Event</option>
-        <option value="REMINDER">Reminder</option>
-        <option value="BIRTHDAY">Birthday</option>
-    </select><br>
-
-    <input type="submit" value="Create Event">
-</form>
-</div>
+    {% block body %}
+    {% endblock %}
+</body>
 
 {% endblock %}

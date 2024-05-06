@@ -50,7 +50,7 @@ resend.api_key = "re_FvWGLqJc_J1bw8bdwYMCV74gK5eCdEbJ2"
 #app.config['MAIL_SERVER']='smtp.gmail.com'
 #app.config['MAIL_PORT'] = 465
 #app.config['MAIL_USERNAME'] = ['calandarPlusPlus@gmail.com']
-#app.config['MAIL_PASSWORD'] = ['gfzq hpoy dzsr ivsk']
+#app.config['MAIL_PASSWORD'] = ['gfzq hpoy dzsr ivsk'] #ThisAintItFr2025
 #app.config['MAIL_USE_TLS'] = False
 #app.config['MAIL_USE_SSL'] = True
 #mail = Mail(app)
@@ -321,7 +321,7 @@ def change_password_email():
         #to change password you need to input correct confirmation code
         with app.app_context():
                 cursor = db.cursor()
-                cursor.execute("""SELECT password_hash FROM Users WHERE username=(?) """, (username,))
+                cursor.execute("""SELECT confirmation_code FROM Users WHERE username=(?) """, (username,))
                 saved_confirmation_code = cursor.fetchone() 
                 flash(f"the content of the cursor is: {email}")
         saved_confirmation_code = cursor.fetchone()
@@ -334,9 +334,10 @@ def change_password_email():
                 new_password_hash = generate_password_hash(new_password, "sha256")
                 with app.app_context():
                     cursor = db.cursor
-                    cursor.execute("UPDATE Users SET password_hash=? WHERE username=?", (new_password_hash, username))
+                    cursor.execute("""UPDATE Users SET password_hash=? WHERE username=?""", (new_password_hash, username))
                     db.commit()
                 flash("password changed successfully!")
+                redirect("/login")
             else:
                 flash("New password and confirm new password must match!\n")
         else:
@@ -353,8 +354,13 @@ def data_management():
 @app.route("/security_settings")
 @login_required
 def security_settings():
-    #I would like to implement the option of 2 step verification
-    return render_template("security_settings.html")
+    user_id = session.get("user_id")
+
+    with app.app_context():
+        cursor = db.cursor()
+        cursor.execute("SELECT email FROM BackuoEmails WHERE id = ?", (user_id,))['email']
+        backup_emails = [row[0] for row in cursor.fetchall()]
+    return render_template("user_settings.html", backup_emails=backup_emails)
 
 @app.route("/social_settings")
 @login_required
