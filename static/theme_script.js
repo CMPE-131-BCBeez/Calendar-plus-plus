@@ -1,154 +1,5 @@
 // document.getElementById('mode_switch_button').addEventListener('click', function() {
-//     let body = document.body;
-//     let is_dark_mode = body.classList.contains('dark_mode');
-    
-//     if (is_dark_mode) {
-//         body.classList.remove('dark_mode');
-//         body.classList.add('light_mode');
-
-//         let black_buttons = document.querySelectorAll('.BlackButton');
-//         let black_buttons_text_color = '#FFFFFF';
-//         let black_buttons_color = '#000000';
-//         black_buttons.forEach(function(element){
-//             element.style.color = black_buttons_text_color;
-//             element.style.backgroundColor  = black_buttons_color;
-//         });
-
-//         let pagenation_buttons = document.querySelectorAll('#prev_month, #next_month, #prev_day, #next_day');
-//         let pagenation_buttonss_text_color = '#000000';
-//         pagenation_buttons.forEach(function(element){
-//             element.style.color = pagenation_buttonss_text_color;
-//         });
-
-//         let white_buttons = document.querySelectorAll('.WhiteButton');
-//         let white_buttons_text_color = '#000000';
-//         white_buttons.forEach(function(element){
-//             element.style.color = white_buttons_text_color;
-//         }); 
-
-//         let cells = document.querySelectorAll('.monthly_view tbody th, .monthly_view tbody td');
-//         let borderColor = '#000000';
-//         cells.forEach(function(element) {
-//             element.style.border = '2px solid ' + borderColor;
-//         });
-
-//         let  calendar_basic = document.querySelectorAll('.calendar_basic');
-//         let calendar_basic_color = 'rgba(255, 255, 255, 0.5)';
-//         calendar_basic.forEach(function(element) {
-//             element.style.backgroundColor = calendar_basic_color;
-//         });
-
-//         let  today = document.querySelectorAll('.today');
-//         let today_color = 'rgba(255, 255, 255, 0.5)';
-//         today.forEach(function(element) {
-//             element.style.backgroundColor = today_color;
-//         });
-
-//         let today_cell = document.querySelectorAll('.today_cell');
-//         let today_celly_text_color = '#FFFFFF';
-//         let today_cell_color = '#000000';
-//         today_cell.forEach(function(element){
-//             element.style.color = today_celly_text_color;
-//             element.style.backgroundColor  = today_cell_color;
-//             element.style.border = '4px solid ' + borderColor;
-//         });
-
-//         let transparent = document.querySelectorAll('.transparent');
-//         let transparent_color = 'rgba(255, 255, 255, 0.5)';
-//         transparent.forEach(function(transparent){
-//             transparent.style.backgroundColor  = transparent_color;
-//         });
-
-//         let event_cell = document.querySelectorAll('.event_cell');
-//         let event_cell_color = 'rgba(255, 255, 255, 0.5)';
-//         let event_cell_borderline_color = 'rgba(0, 0, 0, 0.5)';
-//         event_cell.forEach(function(element){
-//             element.style.backgroundColor  = event_cell_color;
-//             element.style.border = '1px solid ' + event_cell_borderline_color;
-//         });
-
-//         let time_cell = document.querySelectorAll('.time_cell');
-//         let time_cell_color = 'rgba(0, 0, 0, 0.5)';
-//         let time_cell_borderline_color = 'rgba(255, 255, 255, 0.5)';
-//         time_cell.forEach(function(element){
-//             element.style.backgroundColor  = time_cell_color;
-//             element.style.border = '1px solid ' + time_cell_borderline_color;
-//         });
-//     } 
-//     else {
-//         body.classList.remove('light_mode');
-//         body.classList.add('dark_mode');
-
-//         let black_buttons = document.querySelectorAll('.BlackButton');
-//         let black_buttons_text_color = '#000000';
-//         let black_buttons_color = '#FFFFFF';
-//         black_buttons.forEach(function(element){
-//         element.style.color = black_buttons_text_color;
-//         element.style.backgroundColor  = black_buttons_color;
-//         });
-
-//         let pagenation_buttons = document.querySelectorAll('#prev_month, #next_month, #prev_day, #next_day');
-//         let pagenation_buttonss_text_color = '#FFFFFF';
-//         pagenation_buttons.forEach(function(element){
-//         element.style.color = pagenation_buttonss_text_color;
-//         });
-
-//         let white_buttons = document.querySelectorAll('.WhiteButton');
-//         let white_buttons_text_color = '#FFFFFF';
-//         white_buttons.forEach(function(element){
-//         element.style.color = white_buttons_text_color;
-//         }); 
-
-//         let cells = document.querySelectorAll('.monthly_view tbody th, .monthly_view tbody td');
-//         let borderColor = '#FFFFFF';
-//         cells.forEach(function(element) {
-//         element.style.border = '2px solid ' + borderColor;
-//         });
-
-//         let  calendar_basic = document.querySelectorAll('.calendar_basic');
-//         let calendar_basic_color = 'rgba(0, 0, 0, 0.5)';
-//         calendar_basic.forEach(function(element) {
-//             element.style.backgroundColor = calendar_basic_color;
-//         });
-
-//         let today = document.querySelectorAll('.today');
-//         let today_color = 'rgba(0, 0, 0, 0.5)';
-//         today.forEach(function(element) {
-//             element.style.backgroundColor = today_color;
-//         });
-
-//         let today_cell = document.querySelectorAll('.today_cell');
-//         let today_cell_text_color = '#000000';
-//         let today_cell_color = '#FFFFFF';
-//         today_cell.forEach(function(element){
-//             element.style.color = today_cell_text_color;
-//             element.style.backgroundColor  = today_cell_color;
-//             element.style.border = '4px solid ' + borderColor;
-//         });
-
-//         let transparent = document.querySelectorAll('.transparent');
-//         let transparent_color = 'rgba(0, 0, 0, 0.5)';
-//         transparent.forEach(function(element){
-//             element.style.backgroundColor  = transparent_color;
-//         });
-
-//         let event_cell = document.querySelectorAll('.event_cell');
-//         let event_cell_color = 'rgba(0, 0, 0, 0.5)';
-//         let event_cell_borderline_color = 'rgba(255, 255, 255, 0.5)';
-//         event_cell.forEach(function(element){
-//             element.style.backgroundColor  = event_cell_color;
-//             element.style.border = '1px solid ' + event_cell_borderline_color;
-//         });
-
-//         let time_cell = document.querySelectorAll('.time_cell');
-//         let time_cell_color = 'rgba(255, 255, 255, 0.5)';
-//         let time_cell_borderline_color = 'rgba(0, 0, 0, 0.5)';
-//         time_cell.forEach(function(element){
-//             element.style.backgroundColor  = time_cell_color;
-//             element.style.border = '1px solid ' + time_cell_borderline_color;
-//         });
-//     }
-// });
+// }
 let is_dark_mode;
 
 
@@ -268,6 +119,12 @@ document.addEventListener("DOMContentLoaded", function() {
             element.style.backgroundColor  = time_cell_color;
             element.style.border = '1px solid ' + time_cell_borderline_color;
         });
+
+        let dropdown_content = document.querySelectorAll('.dropdown-content');
+        let dropdown_content_color = 'rgba(255, 255, 255, 1)';
+        dropdown_content.forEach(function(element){
+            element.style.backgroundColor  = dropdown_content_color;
+        });
     } 
     else {
         body.classList.remove('light_mode');
@@ -375,6 +232,22 @@ document.addEventListener("DOMContentLoaded", function() {
             element.style.backgroundColor  = time_cell_color;
             element.style.border = '1px solid ' + time_cell_borderline_color;
         });
+
+        let dropdown_content = document.querySelectorAll('.dropdown-content');
+        let dropdown_content_color = 'rgba(0, 0, 0, 1)';
+        let dropdown_content_background_color = 'rgba(255, 255, 255, 1)';
+        dropdown_content.forEach(function(element){
+            element.style.backgroundColor  = dropdown_content_color;
+            element.addEventListener('mouseenter', function() {
+                element.style.color =  dropdown_content_color; 
+            });
+            element.addEventListener('mouseleave', function() {
+                element.style.color = ''; 
+            });
+        });
+
+        
+
     }
 });
 
