@@ -289,14 +289,14 @@ def change_password_settings():
         user_id = session.get("user_id")
         with app.app_context():
             cursor = db.cursor()
-            username = cursor.execute("SELECT username FROM Users WHERE id = ?", (user_id,))['username']
+            username = cursor.execute("SELECT username FROM Users WHERE id = ?", (user_id,)).fetchone()['username']
         current_password_hash = generate_password_hash(username)
         if check_password_hash(current_password_hash, current_password):
             #check if new passwords match
             if new_password == confirm_new_password:
                 new_password_hash = generate_password_hash(new_password, "sha256")
                 with app.app_context():
-                    cursor = db.cursor
+                    cursor = db.cursor()
                     cursor.execute("UPDATE Users SET password_hash=? WHERE username=?", (new_password_hash, username))
                     db.commit()
                 flash("password changed successfully!")
@@ -317,18 +317,17 @@ def change_password_email():
         confirmation_code = request.form.get("confirmation_code")
         new_password = request.form.get("new_password")
         confirm_new_password = request.form.get("confirm_new_password")
-
+        
         #to change password you need to input correct confirmation code
         with app.app_context():
                 cursor = db.cursor()
-                cursor.execute("""SELECT confirmation_code FROM Users WHERE username=(?) """, (username,))
-                saved_confirmation_code = cursor.fetchone() 
-                flash(f"the content of the cursor is: {email}")
-        saved_confirmation_code = cursor.fetchone()
+                saved_confirmation_code = cursor.execute("""SELECT confirmation_code FROM Users WHERE username=(?) """, (username,)).fetchone()['confirmation_code']
+                flash(f"the content of the cursor is: {saved_confirmation_code}")
+    
         if saved_confirmation_code == None:
             flash("Information does not match!\n please try again")
             render_template("change_password_email.html")
-        if confirmation_code == saved_confirmation_code:
+        elif confirmation_code == saved_confirmation_code:
             #check if new passwords match
             if new_password == confirm_new_password:
                 new_password_hash = generate_password_hash(new_password, "sha256")
@@ -337,12 +336,11 @@ def change_password_email():
                     cursor.execute("""UPDATE Users SET password_hash=? WHERE username=?""", (new_password_hash, username))
                     db.commit()
                 flash("password changed successfully!")
-                redirect("/login")
+                return redirect("/login")
             else:
                 flash("New password and confirm new password must match!\n")
         else:
             flash("Incorrect confirmation code, please enter the latest Confirmation Code.")
-        return redirect("/login")
     return render_template("change_password_email.html")
 
 @app.route("/data_management")
