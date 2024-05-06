@@ -25,9 +25,9 @@
 {% endif %}
 {% endwith %}
 
-<body class="light_mode">
+<body class="{% if is_dark_mode %}dark_mode{% else %}light_mode{% endif %}">
 
-    <div class="wallpaper" style="background-image: url('{{ background_image_url }}')">
+    <div class="wallpaper" style="background-image: url('../static/image/setting_icon_dark.png')">
         <div class="transparent">
             <!-- {% block navbar %}
         <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>

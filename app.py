@@ -444,4 +444,25 @@ def upload():
     else:
         background_image_url = "../image/default-background.jpg"
     
-    return render_template('index.html', background_image_url=background_image_url)
+    return render_template('settings_page.html', background_image_url=background_image_url)
+
+@app.route('/dark_mode', methods = ["GET","POST"])
+def dark_mode():
+    if request.method=="POST":
+        theme_state = request.json
+        is_dark_mode = request.form.get('is_dark_mode')
+        with app.app_context():
+            cursor = db.cursor()
+            res = cursor.fetchone()
+            print(f"{res}")
+            if (res):
+                flash("This username already exists")
+                return render_template("user_register.html"), 400 # TODO: change to template rendering once frontend decides how they want to handle errors
+            query = """INSERT INTO Users (username, password_hash, email, first_name, last_name) VALUES (?, ?, ?, ?, ?)"""
+            
+            cursor.execute(query, (is_dark_mode))
+            db.commit()
+        
+        return redirect("/settings")
+    else:
+        return render_template('layout.html', is_dark_mode=is_dark_mode)
