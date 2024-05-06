@@ -6,8 +6,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="{{url_for('static', filename='api_access.js')}}"></script>
-    <link rel=" icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+    
+    <link rel=" icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     {% block head %}
     <title>{% block title %}{% endblock %} - Calendar++</title>
     {% endblock %}
@@ -27,7 +28,7 @@
 
 <body class="{% if is_dark_mode %}dark_mode{% else %}light_mode{% endif %}">
 
-    <div class="wallpaper" style="background-image: url('../static/image/setting_icon_dark.png')">
+    <div class="wallpaper" style="background-image: url('../static/image/siroicon2.png')">
         <div class="transparent">
             <!-- {% block navbar %}
         <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>

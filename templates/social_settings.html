@@ -6,15 +6,11 @@
     Securrity Settings
 </h1>
 <div class="container">
-    <a href="/change_email" class="WhiteButton">
-        Change My Email<!--Go to register page-->
-
-    </a><br>
-    <a href="/register" class="WhiteButton">
-        Adding Phone number <!--Go to register page-->
-    </a><br>
-    <a href="/forgot_password" class="WhiteButton">
-        Forgot Password<!--Go to the reset pasword page-->
-    </a>
+    <button type="button" id="mode_switch_button" class="BlackButton" >DarkMode</button>
 </div>
+
+<form action="/upload_wallpaper" method="POST" enctype="multipart/form-data">
+    <input type="file" name="wallpaper">
+    <button type="submit">Save It</button>
+</form>
 {% endblock %}

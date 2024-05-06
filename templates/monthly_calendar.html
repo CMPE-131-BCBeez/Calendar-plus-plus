@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} Monthly Calendar {% endblock %}
+{% block title %} Monthly++{% endblock %}
 
 {% block body %}
 <div class="button_header"> 
@@ -30,10 +30,6 @@
     </div>
   </div> -->
 
-  <button type="button" id="mode_switch_button" class="BlackButton">DarkMode</button>
-
-
-       
     <div id="pagination_monthly">
       <button id="prev_month"><</button>
       <h2 id="year_month_header"></h2>
@@ -46,6 +42,7 @@
     </div>
 
     <script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
+    <script src="{{url_for('static', filename='setting_menu_script.js')}}"></script>
     <!-- <script src="{{url_for('static', filename='api_access.js')}}"></script> -->
 
 {% endblock %}
