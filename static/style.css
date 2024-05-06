@@ -248,6 +248,7 @@ h1 {
     font-size: 30px; 
     cursor: pointer; 
     border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 #year_month_header{

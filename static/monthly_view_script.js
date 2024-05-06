@@ -9,15 +9,36 @@ let first_date_on_calendar = 0;
 let last_date_on_calendar = 0;
 let monthly_events = {};
 
+//get timestamp for first date and last date of the calendar
+function get_timestamp_monthly(year,month,timestamp_start_day, timestamp_last_day){
+  let first_date,last_date;
+  if(timestamp_start_day > 1){
+    first_date = new Date(Date.UTC(year, month - 2, timestamp_start_day)).getTime();
+  }
+  else{
+    first_date = new Date(Date.UTC(year, month - 1, timestamp_start_day)).getTime();
+  }
+
+    last_date = new Date(Date.UTC(year, month, timestamp_last_day)).getTime();
+  
+  let utc_start_timestamp = first_date / 1000;
+  let utc_end_timestamp = last_date / 1000;
+
+  return {
+    start: utc_start_timestamp,
+    end: utc_end_timestamp
+  };
+}
+
 function get_timestamp_for_event(current_year, current_month, event_day_cell) {
   let localDate = new Date(Date.UTC(current_year, current_month - 1, event_day_cell)).getTime();
-  let = UTC_timestamp_for_event = localDate/1000;
+  let = UTC_timestamp_for_event = localDate / 1000;
   return UTC_timestamp_for_event;
 }
 
 let timestamp_for_event = get_timestamp_for_event(current_year, current_month, event_day_cell);
 
-const timestamp = get_timestamp_monthly(current_year,current_month,first_date_on_calendar, last_date_on_calendar);
+const timestamp = get_timestamp_monthly(current_year, current_month, first_date_on_calendar, last_date_on_calendar);
 const timestamp_for_first_date_on_calendar = timestamp.start;
 const timestamp_for_last_date_on_calendar = timestamp.end;
 
@@ -42,14 +63,6 @@ function generate_calendar(year, month) {
   let prev_next_day_class = 'calendar_basic';
   last_date_on_calendar = next_month_mergin;
 
-  if(first_date.getDay() === 0){  
-    first_date_on_calendar = 1;
-  }
-  else{
-    first_date_on_calendar = prev_month_last_day.getDate() - day_of_Week + 1;
-  }
-  
-  event_day_cell = first_date_on_calendar;
 
   //Header of the calendar
 let monthly_calendar = '<table>';
@@ -232,27 +245,6 @@ document.getElementById('today_button_month').addEventListener('click', function
 
 year_month(current_month, current_year);
 generate_calendar(current_year, current_month);
-
-//get timestamp for first date and last date of the calendar
-function get_timestamp_monthly(year,month,timestamp_start_day, timestamp_last_day){
-  let first_date,last_date;
-  if(timestamp_start_day > 1){
-    first_date = new Date(Date.UTC(year, month - 2, timestamp_start_day)).getTime();
-  }
-  else{
-    first_date = new Date(Date.UTC(year, month - 1, timestamp_start_day)).getTime();
-  }
-
-    last_date = new Date(Date.UTC(year, month, timestamp_last_day)).getTime();
-  
-  let utc_start_timestamp = first_date / 1000;
-  let utc_end_timestamp = last_date / 1000;
-
-  return {
-    start: utc_start_timestamp,
-    end: utc_end_timestamp
-  };
-}
 
 //make the cell to button
 document.querySelectorAll('.calendar_basic').forEach(cell => {
