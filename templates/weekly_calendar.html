@@ -6,7 +6,7 @@
     <title>Weekly Calendar ++</title>
     <link rel="stylesheet" href="../static/style.css"> 
     <div class="top_buttons">
-      <button type="button" id="setting" class="BlackButton">Setting</button>
+      <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
       <button type="button" id="mode_switch_button" class="BlackButton">Dark Mode</button>
       <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
       <button type="button" id="event" class="BlackButton">Eevent</button>
@@ -59,7 +59,7 @@
         border-radius: 8px;
       }
       .navButton:hover {
-        background-color: #333;
+        background-color: #000000;
         color: white;
       }
       .selected {
@@ -79,8 +79,8 @@
 <h2>Weekly Calendar</h2>
 
 <div class="navButtonContainer">
-  <button class="navButton" onclick="previousWeek()">Previous 7 Days</button>
-  <button class="navButton" onclick="nextWeek()">Next 7 Days</button>
+  <button class="BlackButton" onclick="previousWeek()">Previous 7 Days</button>
+  <button class="BlackButton" onclick="nextWeek()">Next 7 Days</button>
 </div>
 
 <table id="calendar">
