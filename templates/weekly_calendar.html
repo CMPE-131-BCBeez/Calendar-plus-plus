@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weekly Calendar ++</title>
-    <link rel="stylesheet" href="../static/style.css"> 
-    <div class="top_buttons">
-      <button type="button" id="setting" class="BlackButton">Setting</button>
-      <button type="button" id="mode_switch_button" class="BlackButton">Dark Mode</button>
-      <button type="button" id="monthly_view" class="BlackButton">Monthly</button>
-      <button type="button" id="event" class="BlackButton">Eevent</button>
-      <button type="button" id="today_button" class="BlackButton">Today</button>
-    </div>
+{% extends "layout.html" %}
+{% block title %} Weekly++ {% endblock %}
+
+{% block body %}
+   
     <style>
       table {
         border-collapse: collapse;
@@ -75,12 +66,19 @@
     </style>
 </head>
 <body>
+  <div class="top_buttons">
+    <button type="button" id="setting" class="BlackButton">Setting</button>
+    <button type="button" id="mode_switch_button" class="BlackButton">Dark Mode</button>
+    <button type="button" id="monthly_view" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
+    <button type="button" id="event" class="BlackButton">Eevent</button>
+    <button type="button" id="today_button" class="BlackButton">Today</button>
+  </div>
 
 <h2>Weekly Calendar</h2>
 
 <div class="navButtonContainer">
-  <button class="navButton" onclick="previousWeek()">Previous 7 Days</button>
-  <button class="navButton" onclick="nextWeek()">Next 7 Days</button>
+  <button class="BlackButton" onclick="previousWeek()">Previous 7 Days</button>
+  <button class="BlackButton" onclick="nextWeek()">Next 7 Days</button>
 </div>
 
 <table id="calendar">
@@ -161,6 +159,5 @@
     generateWeeklyCalendar(startDate);
   };
 </script>
+{% endblock %}
 
-</body>
-</html>

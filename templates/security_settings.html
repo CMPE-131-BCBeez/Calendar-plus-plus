@@ -1,22 +1,46 @@
 {% extends "layout.html" %}
-{% block title %} Security {% endblock %}
+{% block title %} Security++ {% endblock %}
 
 {% block body %}
-<h1 class="top_h1">
-    Securrity Settings
+
+<h1>
+    Security settings
 </h1>
-<div class="container">
-    <a href="/change_email" class="WhiteButton">
-        Change My Email<!--Go to register page-->
+<body class="light_mode">
 
-    </a><br>
-   
-    <a href="/change_password_settings" class="WhiteButton">
-        Change Password<!--Go to the reset pasword page-->
-    </a><br>
+    <!--<button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>-->
+    <!--
+    <button onclick="dropDown()" class="dropbtn">Settings</button>
+    <div id="settings" class="dropdown-content">
+        <a href="/data_management" class="WhiteButton">
+            Manage my data< !--Go to the sign in page-- >
+        </a><br>
+        <a href="/security_settings" class="WhiteButton">
+            Security settings< !--Go to the sign in page-- >
+        </a><br>
+        <a href="/social_settings" class="WhiteButton">
+            Social settings< !--Go to the sign in page-- >
+        </a><br>
+    </div>-->
 
-    <a href="/register" class="WhiteButton">
-        Adding Phone number <!--Go to register page-->
-    </a><br>
-</div>
+    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/change_password_settings'">Change Password</button>
+    <h1>User Settings</h1>
+    <h2>Backup Email:</h2>
+    <ul>
+        {% for email in backup_emails %}
+            <li>{{ email }}</li>
+        {% endfor %}
+    </ul>
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/backup_email'">Add backup Email or Phone Number</button>
+    <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
+        View</button>
+    <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
+       
+    <button type="button" id="today_button" class="BlackButton">Today</button>
+
+
+    {% block body %}
+    {% endblock %}
+</body>
+
 {% endblock %}
