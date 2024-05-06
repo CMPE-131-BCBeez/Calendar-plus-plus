@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
 from utils import *
 import json
+import os
 import resend
 
 # Configure database
@@ -107,6 +108,7 @@ def register_page() -> str:
             cursor.execute("SELECT username, email FROM Users WHERE username = ? OR email = ?", (username, email))
             res = cursor.fetchone()
             print(f"{res}")
+            print(f"{res}")
             if (res):
                 flash("This username already exists")
                 return render_template("user_register.html"), 400 # TODO: change to template rendering once frontend decides how they want to handle errors
@@ -171,7 +173,13 @@ def weekly_calendar():
     return render_template('weekly_calendar.html')
 
 @app.route('/daily_calendar')
+@app.route('/weekly_calendar')
+def weekly_calendar():
+    return render_template('weekly_calendar.html')
+
+@app.route('/daily_calendar')
 def daily_calendar():
+    return render_template('daily_calendar.html')
     return render_template('daily_calendar.html')
 
 
@@ -414,3 +422,63 @@ def event_api():
     
     return json.dumps(output_dict)
 
+@app.route('/upload_wallpaper', methods = ["GET","POST"])
+def upload():
+    if request.method == "POST":
+        if 'image' not in request.files:         # error if there is no image selected
+            flash('wallpaper image is not selected') 
+            return redirect("/settings")
+    
+        file = request.files['image']
+        if file.filename == '':                  # error if image file was empty
+            flash('Can not find the wallpaper image') 
+            return redirect("/settings")
+    
+        filename = file.filename  #get the filename
+
+        file_path = os.path.join('static', 'image', filename)
+        file.save(file_path)
+
+        # try:
+        #     with app.app_context():
+        #         cursor = db.cursor()    #input the data to events
+        #         query = """INSERT INTO UserSettings () VALUES (?)"""
+        #         cursor.execute(query, (filename, type))
+        #         db.commit()
+        #         event_id = cursor.execute("SELECT last_insert_rowid() AS last").fetchone()['last']
+        #         db.commit()
+        # except sqlite3.Error as e:
+        #     db.rollback()
+        #     return f'Error: {e}'
+
+        with app.app_context():
+    
+            flash(f'The "{filename}" is now your wallpaper!!')
+    
+        background_image_url = f"../image/{filename}" 
+
+    else:
+        background_image_url = "../image/default-background.jpg"
+    
+    return render_template('settings_page.html', background_image_url=background_image_url)
+
+@app.route('/dark_mode', methods = ["GET","POST"])
+def dark_mode():
+    if request.method=="POST":
+        theme_state = request.json
+        is_dark_mode = request.form.get('is_dark_mode')
+        with app.app_context():
+            cursor = db.cursor()
+            res = cursor.fetchone()
+            print(f"{res}")
+            if (res):
+                flash("This username already exists")
+                return render_template("user_register.html"), 400 # TODO: change to template rendering once frontend decides how they want to handle errors
+            query = """INSERT INTO Users (username, password_hash, email, first_name, last_name) VALUES (?, ?, ?, ?, ?)"""
+            
+            cursor.execute(query, (is_dark_mode))
+            db.commit()
+        
+        return redirect("/settings")
+    else:
+        return render_template('layout.html', is_dark_mode=is_dark_mode)

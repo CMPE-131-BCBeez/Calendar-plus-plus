@@ -23,7 +23,7 @@
 
 .light_mode{
     color:#000000;
-    background-color: FFFFFF;
+    background-color: #FFFFFF;
 }
 
 .dark_mode{
@@ -34,9 +34,8 @@
 /*the body and form tag style*/
 body, form{   
     font-family: "CaviarDreams_Bold", sans-serif;     
-    font-size: 20px;     
-    background-color: #FFFFFF;   
-    color:#000000;  
+    font-size: 20px;      
+    color:#000000;
 }
 /* use dark/lightmode */
 
@@ -46,8 +45,34 @@ form input[type="email"],
 form input[type="tel"],
 form textarea {
     font-size: 23px; 
-    font-family: "CaviarDreams_Bold", sans-serif;    
+    font-family: "CaviarDreams_Bold", sans-serif;   
+    /* background-color: rgba(0, 0, 0, 0.0);   */
 }
+
+.label{
+    color:#000000;
+}
+.wallpaper{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+}
+
+.transparent{
+    background-color: rgba(255, 255, 255, 0.5); 
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+}
+
 
 /*the container class style*/
 .container {    
@@ -112,7 +137,8 @@ h1 {
     border-bottom: 1px solid black;
     outline: none; 
     width: 100%; 
-    margin-bottom: 20px;    
+    margin-bottom: 20px;   
+    background-color: rgba(255, 255, 255, 0);  
 }
  
 /*this will be used when the input-field is focused(clicked or selected)*/
@@ -126,9 +152,14 @@ h1 {
 }
 
 #monthly_calendar table{
-    width: 90vw;  
+    width: 95vw;  
     height: 70vh;
     border-collapse: collapse;
+}
+.button_header{
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 .monthly_view{
@@ -142,21 +173,23 @@ h1 {
 }
 
 .calendar_basic {
-    font-family: "CaviarDreams", sans-serif;
+    font-family: "CaviarDreams_Italic", sans-serif;
     margin: 0 auto;
     width: 100%;
     font-size: 15px; 
-    height: calc(70vh / 6);  
+    height: calc(80vh / 6);  
+    background-color: rgba(255, 255, 255, 0.5); 
+    border: 2px solid #000000; 
 }
 
 .calendar_day {
+    font-family: "CaviarDreams_BoldItalic", sans-serif;
     font-size: 20px;    
     width: calc(100% / 7);  
-    height: 30px;
     text-align: center;   
     border: 0px solid #000000;
     box-sizing: border-box; 
-    vertical-align: top;  
+    vertical-align: top; 
 }   
 
 .monthly_view tbody th,
@@ -164,7 +197,6 @@ h1 {
     width: calc(100% / 7); 
     box-sizing: border-box; 
     vertical-align: top;
-    border: 2px solid #000000; 
 }
 
 .today_cell {
@@ -174,6 +206,12 @@ h1 {
     display: border-box;
     border-collapse: collapse;
     border: 4px solid #000000;  
+    
+}
+
+.today{
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid #000000; 
 }
 
 .events{
@@ -199,16 +237,15 @@ h1 {
     display: flex;     
     justify-content: space-between;  
     align-items: center; 
-    margin-bottom: 15px; 
-    margin-top: 15px; 
+    /* margin-bottom: 10px;  */
 }
 
 #prev_month, #next_month,
 #prev_day, #next_day{ 
     font-family: "CaviarDreams_Bold", sans-serif;     
-    background-color: #000000; 
+    background-color: rgba(0, 0, 0, 0.0); 
     border: none;   
-    color: #ffffff; 
+    color: #000000; 
     padding: 5px 15px;   
     text-align: center; 
     text-decoration: none;  
@@ -236,13 +273,16 @@ h1 {
     display: flex;     
     justify-content: center;    
     align-items: center;  
+    
 }
 
 .daily_page_container{
     display: flex;
     flex-direction: row; 
     justify-content: center; 
-    margin-right: 20px;
+    margin-right: 10px;
+    margin-top:20px;
+    height:100vh;
     
 }
 
@@ -250,7 +290,7 @@ h1 {
     display: flex;
     flex-direction: column; 
     justify-content: center; 
-    height: 80vh;
+    height: 90vh;
     width: 70%;
 }
 
@@ -268,6 +308,8 @@ h1 {
     display: flex;
     flex-direction: row; 
     justify-content: center; 
+    margin-bottom: 10px;
+    height: 100%;
 }
 
 .daily_item_event{
@@ -292,20 +334,35 @@ h1 {
 }
 
 .time_cell{
+    font-family: "CaviarDreams_BoldItalic", sans-serif;
     background-color: #000000;
     color:#FFFFFF;
     font-size: 15px ;
     border: 1px solid #FFFFFF;
-    padding: 10px;
+    padding: 15px;
     width:10px;
 }
+
 .event_cell{
     background-color: #FFFFFF;
     color:#000000;
     font-size: 15px ;
     border: 1px solid #000000;
     width:100%;
-    
+    background-color: rgba(255, 255, 255, 0.5); 
+}
+
+input[type="color"] {
+    width: 30%; 
+    height: 30px;
+    border-radius: 5px; 
+    border: 2px solid rgba(0, 0, 0, 0); 
+    padding: 5px; 
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.event_select{
+    background-color: #FFFFFF;
 }
 
 /* buttons */
@@ -326,7 +383,7 @@ h1 {
 
 .WhiteButton{
     font-family: "CaviarDreams_Bold", sans-serif;   
-    background-color: #FFFFFF; 
+    background-color: rgba(255, 255, 255, 0); 
     border-bottom: 1px solid black; 
     color: #000000; 
     padding: 0px 2px; 

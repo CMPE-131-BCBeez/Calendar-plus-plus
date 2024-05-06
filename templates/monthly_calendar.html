@@ -2,9 +2,20 @@
 {% block title %} Monthly Calendar {% endblock %}
 
 {% block body %}
-<div class="monthly_header"> 
+<div class="button_header"> 
 
-  <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
+  <button onclick="dropDown()" class="dropbtn">Settings</button>
+  <div id="settings" class="dropdown-content">
+      <a href="/data_management" class="WhiteButton">
+          Manage my data<!--Go to the sign in page-->
+      </a>
+      <a href="/security_settings" class="WhiteButton">
+          Security settings<!--Go to the sign in page-->
+      </a>
+      <a href="/social_settings" class="WhiteButton">
+          Social settings<!--Go to the sign in page-->
+      </a>
+  </div>
 
   <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
        
@@ -19,7 +30,7 @@
     </div>
   </div> -->
 
-  <!-- <button type="button" id="mode_switch_button" class="BlackButton">DarkMode</button> -->
+  <button type="button" id="mode_switch_button" class="BlackButton">DarkMode</button>
 
 
        
@@ -35,8 +46,6 @@
     </div>
 
     <script src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
-    <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
-    <script src="{{url_for('static', filename='get_geolocation_script.js')}}"></script>
-    <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+    <!-- <script src="{{url_for('static', filename='api_access.js')}}"></script> -->
 
 {% endblock %}
