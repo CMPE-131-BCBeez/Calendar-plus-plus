@@ -168,18 +168,13 @@ def monthly_calendar():
 #     else:
 #         return redirect("/login")
 
-@app.route('/weekly_calendar')
-def weekly_calendar():
-    return render_template('weekly_calendar.html')
 
-@app.route('/daily_calendar')
 @app.route('/weekly_calendar')
 def weekly_calendar():
     return render_template('weekly_calendar.html')
 
 @app.route('/daily_calendar')
 def daily_calendar():
-    return render_template('daily_calendar.html')
     return render_template('daily_calendar.html')
 
 
