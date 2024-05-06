@@ -3,7 +3,18 @@
 
 {% block body %}
 <div class="button_header">
-    <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
+    <button onclick="dropDown()" class="dropbtn">Settings</button>
+    <div id="settings" class="dropdown-content">
+        <a href="/data_management" class="WhiteButton">
+            Manage my data<!--Go to the sign in page-->
+        </a>
+        <a href="/security_settings" class="WhiteButton">
+            Security settings<!--Go to the sign in page-->
+        </a>
+        <a href="/social_settings" class="WhiteButton">
+            Social settings<!--Go to the sign in page-->
+        </a>
+    </div>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
   
