@@ -177,7 +177,25 @@ document.addEventListener("DOMContentLoaded", function() {
         let input_field_line_color = '#FFFFFF';
         input_field.forEach(function(element){
             element.style.color = input_field_text_color;
-            element.style.borderBottom  = '1px solid ' + input_field_line_color;
+            element.style.borderBottom = '1px solid' + input_field_line_color;
+            element.addEventListener('focus', function() {
+                element.style.borderBottom = '2px solid' + input_field_line_color; 
+            });
+            element.addEventListener('blur', function() {
+                element.style.borderBottom = '1px solid' + input_field_line_color; 
+            });
+        });
+
+        let form_input  = document.querySelectorAll('form input[type="text"], form input[type="password"],form input[type="email"],form input[type="tel"],form textarea');
+        let form_input_color_text_color = '#FFFFFF';
+        form_input.forEach(function(element){
+            element.style.color = form_input_color_text_color;
+        });
+
+        let label  = document.querySelectorAll('label');
+        let label_text_color_text_color = '#FFFFFF';
+        label.forEach(function(element){
+            element.style.color = label_text_color_text_color;
         });
         
         let black_buttons = document.querySelectorAll('.BlackButton');
@@ -196,8 +214,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let white_buttons = document.querySelectorAll('.WhiteButton');
         let white_buttons_text_color = '#000000';
+        let white_buttons_line_color = '#000000';
         white_buttons.forEach(function(element){
             element.style.color = white_buttons_text_color;
+            element.style.borderBottom = '1px solid' + white_buttons_line_color;  
         }); 
 
         let cells = document.querySelectorAll('.monthly_view tbody th, .monthly_view tbody td');
@@ -258,7 +278,25 @@ document.addEventListener("DOMContentLoaded", function() {
         let input_field_line_color = '#FFFFFF';
         input_field.forEach(function(element){
             element.style.color = input_field_text_color;
-            element.style.borderBottom = '1px solid ' + input_field_line_color;
+            element.style.borderBottom = '1px solid' + input_field_line_color;
+            element.addEventListener('focus', function() {
+                element.style.borderBottom = '2px solid' + input_field_line_color; 
+            });
+            element.addEventListener('blur', function() {
+                element.style.borderBottom = '1px solid' + input_field_line_color; 
+            });
+        });
+
+        let form_input  = document.querySelectorAll('form input[type="text"], form input[type="password"],form input[type="email"],form input[type="tel"],form textarea');
+        let form_input_color_text_color = '#FFFFFF';
+        form_input.forEach(function(element){
+            element.style.color = form_input_color_text_color;
+        });
+
+        let label  = document.querySelectorAll('label');
+        let label_text_color_text_color = '#FFFFFF';
+        label.forEach(function(element){
+            element.style.color = label_text_color_text_color;
         });
 
         let form  = document.querySelectorAll('.form');
@@ -283,9 +321,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let white_buttons = document.querySelectorAll('.WhiteButton');
         let white_buttons_text_color = '#FFFFFF';
+        let white_buttons_line_color = '#FFFFFF';
         white_buttons.forEach(function(element){
-        element.style.color = white_buttons_text_color;
-        }); 
+            element.style.color = white_buttons_text_color;
+            element.style.borderBottom = '1px solid' + white_buttons_line_color;  
+        });  
 
         let cells = document.querySelectorAll('.monthly_view tbody th, .monthly_view tbody td');
         let borderColor = '#FFFFFF';
