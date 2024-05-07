@@ -6,8 +6,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="{{url_for('static', filename='api_access.js')}}"></script>
-    <link rel=" icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+    
+    <link rel=" icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     {% block head %}
     <title>{% block title %}{% endblock %} - Calendar++</title>
     {% endblock %}
@@ -26,26 +27,40 @@
 {% endwith %}
 
 <body class="{% if is_dark_mode %}dark_mode{% else %}light_mode{% endif %}">
+  <div class="wallpaper" style="background-image: url('../static/image/siroicon2.png')">
+    <div class="transparent">
+      {% block body %}
+        {% block navbar %}
+          <button onclick="dropDown()" class="dropbtn BlackButton">Settings</button>
+            <div id="settings" class="dropdown-content">
+              <a href="/data_management" class="WhiteButton">
+                Manage my data<!--Go to the sign in page-->
+              </a>
+              <a href="/security_settings" class="WhiteButton">
+                 Security Settings<!--Go to the sign in page-->
+              </a>
+              <a href="/social_settings" class="WhiteButton">
+                Social Settings<!--Go to the sign in page-->
+              </a>
+              <a href="/style_settings" class="WhiteButton">
+                Style Settings<!--Go to the sign in page-->
+              </a>
+            </div>
 
-    <div class="wallpaper" style="background-image: url('../static/image/setting_icon_dark.png')">
-        <div class="transparent">
-    {% block navbar %}
-    <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
-    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly
-        View</button>
-    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly
-        View</button>
-    <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
-        View</button>
-    <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
-    {% endblock %}
-
-    {% block body %}
-    {% endblock %}
+          <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
+            <div id="settings" class="dropdown-content">
+              <a href="../template/new_event" class="WhiteButton">
+                Security Settings<!--Go to the sign in page-->
+              </a>
+            </div>
+        {% endblock %}
+      {% endblock %}
+    </div>
+  </div>
 </body>
 
 <script>
-    /* When the user clicks on the button,
+/* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function dropDown() {
   document.getElementById("settings").classList.toggle("show");
