@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} Create Event {% endblock %}
+{% block title %} Security Settings++ {% endblock %}
 
 {% block body %}
 
@@ -22,25 +22,29 @@
             Social settings< !--Go to the sign in page-- >
         </a><br>
     </div>-->
-
-    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/change_password_settings'">Change Password</button>
-    <h1>User Settings</h1>
-    <h2>Backup Email:</h2>
+    <h1>Backup Emails:</h1>
     <ul>
-        {% for email in backup_emails %}
-            <li>{{ email }}</li>
-        {% endfor %}
+        {% if backup_emails %}
+            {% for email in backup_emails %}
+                <li>{{ email }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No backup emails found.</li>
+        {% endif %}
     </ul>
-    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/backup_email'">Add backup Email or Phone Number</button>
-    <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
-        View</button>
+    
+    <button onclick="dropDown()" class="dropbtn">Add Backup Email</button>
+    <div id="settings" class="dropdown-content">
+        <form action="/add_backup_email" method="POST">
+            <input type="email" id="backup_email" name="backup_email" class="input-field" required>
+            <input type="submit" value="Add" class="BlackButton">
+        </form>
+    </div>
+    <button type="button" id="daily" class="BlackButton" onclick="location.href='/change_password_settings'">Change Password</button>
     <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
        
-    <button type="button" id="today_button" class="BlackButton">Today</button>
+    <button type="button" id="today_button" class="BlackButton">Delete Account</button>
 
-
-    {% block body %}
-    {% endblock %}
 </body>
 
 {% endblock %}

@@ -61,3 +61,7 @@ function previousWeek() {
 window.onload = function() {
   generateWeeklyCalendar(startDate);
 };
+
+function dropDown() {
+  document.getElementById("settings").classList.toggle("show");
+}
