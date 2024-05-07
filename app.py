@@ -175,23 +175,13 @@ def monthly_calendar():
 def weekly_calendar():
     return render_template('weekly_calendar.html')
 
-@app.route('/daily_calendar')
-@app.route('/weekly_calendar')
-def weekly_calendar():
-    return render_template('weekly_calendar.html')
+
 
 @app.route('/daily_calendar')
 def daily_calendar():
     return render_template('daily_calendar.html')
-    return render_template('daily_calendar.html')
 
 
-# may not be needed
-# @app.route("/user_settings", methods = ["GET", "POST"])
-# @login_required
-# def user_settings():
-#     if req9uest.method == "POST":
-#         email
 
 @app.route("/forgot_password", methods = ["GET", "POST"])
 def forgot_password():
@@ -258,24 +248,28 @@ def new_event():
         #get event data from form
         title = request.form.get("title")
         description = request.form.get("description")
-        start_time = request.form.get("start_time")
-        end_time = request.form.get("end_time")
+        start_time = datetime.strptime(request.form.get("start_time"), "%Y-%m-%dT%H:%M")
+        end_time = datetime.strptime(request.form.get("end_time"), "%Y-%m-%dT%H:%M")
+        # print(f"start_time: {start_time}")
+        # print(f"end_time: {end_time}")
         location = request.form.get("location")
         color = request.form.get("color")
-        type = request.form.get("type")
+        event_type = request.form.get("type")
 
         is_valid, error_message = validate_event(title, start_time, end_time)
         if not is_valid:
             flash(error_message)
             return redirect("/new_event")
-     
-        #insert event into database 
+
+        # change start_time and end_time
+
+        #insert event into database
         with app.app_context():
             cursor = db.cursor()
             #input the data to events
             query = """INSERT INTO Events (title, description, start_time, end_time, location, color, type) VALUES (?, ?, ?, ?, ?, ?, ?)"""
             #we might need to modify this in the future
-            cursor.execute(query, (title, description, start_time, end_time, location, color, type))
+            cursor.execute(query, (title, description, start_time, end_time, location, color, event_type))
             db.commit()
             event_id = cursor.execute("SELECT last_insert_rowid() AS last").fetchone()['last']
             cursor.execute("INSERT INTO UsersEvents (user_id, event_id) VALUES (?, ?)", (session['user_id'], event_id))
@@ -424,15 +418,11 @@ def event_api():
     output_dict = defaultdict(lambda: [])
     
     for r in records:
-        date_ts = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%dT%H:%M").replace(hour=0, minute=0, second=0)))
-        r['start_time'] = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%dT%H:%M")))
-        r['end_time'] = int(datetime.timestamp(datetime.strptime(r['end_time'], "%Y-%m-%dT%H:%M")))
+        date_ts = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%d %H:%M:%S").replace(hour=0, minute=0, second=0)))
+        r['start_time'] = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%d %H:%M:%S")))
+        r['end_time'] = int(datetime.timestamp(datetime.strptime(r['end_time'], "%Y-%m-%d %H:%M:%S")))
         output_dict[date_ts].append(r)
-    
-
-    
         
-    
     return json.dumps(output_dict)
 
 @app.route('/upload_wallpaper', methods = ["GET","POST"])
@@ -451,18 +441,6 @@ def upload():
 
         file_path = os.path.join('static', 'image', filename)
         file.save(file_path)
-
-        # try:
-        #     with app.app_context():
-        #         cursor = db.cursor()    #input the data to events
-        #         query = """INSERT INTO UserSettings () VALUES (?)"""
-        #         cursor.execute(query, (filename, type))
-        #         db.commit()
-        #         event_id = cursor.execute("SELECT last_insert_rowid() AS last").fetchone()['last']
-        #         db.commit()
-        # except sqlite3.Error as e:
-        #     db.rollback()
-        #     return f'Error: {e}'
 
         with app.app_context():
     
