@@ -1,100 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weekly Calendar ++</title>
-    <link rel="stylesheet" href="../static/style.css"> 
-    <div class="top_buttons">
-      <button type="button" id="setting" class="BlackButton">Setting</button>
-      <button type="button" id="mode_switch_button" class="BlackButton">Dark Mode</button>
-      <button type="button" id="monthly_view" class="BlackButton">Monthly</button>
-      <button type="button" id="event" class="BlackButton">Eevent</button>
-      <button type="button" id="today_button" class="BlackButton">Today</button>
-    </div>
-    <style>
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: center;
-      }
-      th {
-        background-color: #f2f2f2;
-        position: relative;
-        height: 40px;
-      }
-      .dayInfo {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-      .dayName {
-        font-size: 14px;
-        font-weight: bold;
-      }
-      .dateNumber {
-        font-size: 20px;
-        font-weight: bold;
-      }
-      .navButtonContainer {
-        margin-bottom: 20px;
-      }
-      .navButton {
-        background-color: black;
-        border: none;
-        color: white;
-        padding: 10px 24px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        transition-duration: 0.4s;
-        cursor: pointer;
-        border-radius: 8px;
-      }
-      .navButton:hover {
-        background-color: #333;
-        color: white;
-      }
-      .selected {
-        background-color: lightblue;
-      }
-      td {
-        width: 100px;
-      }
-      tr:first-child th {
-        background-color: black;
-        color: white;
-      }
-    </style>
-</head>
+{% extends "layout.html" %}
+{% block title %} Weekly++ {% endblock %}
+
+{% block body %}
 <body>
+  <div class="button_header">
+    {% block navbar %}
+    {{ super() }}
+    {% endblock %}
 
-<h2>Weekly Calendar</h2>
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
-<div class="navButtonContainer">
-  <button class="navButton" onclick="previousWeek()">Previous 7 Days</button>
-  <button class="navButton" onclick="nextWeek()">Next 7 Days</button>
-</div>
+    <button type="button" id="weekly" class="BlackButton" onclick="this_week()" >Jump To This Week</button>
 
-<table id="calendar">
-  <tr>
-    <th>Time</th>
-    <th id="sunday"></th>
-    <th id="monday"></th>
-    <th id="tuesday"></th>
-    <th id="wednesday"></th>
-    <th id="thursday"></th>
-    <th id="friday"></th>
-    <th id="saturday"></th>
-  </tr>
-</table>
+      <div id="pagination_weekly">
+        <button onclick="previousWeek()" id="next_week"><</button>
+        <h2>Weekly Calendar</h2>
+        <button onclick="nextWeek()" id="prev_week">></button>
+      </div>
+  </div>
+<div class="overflow_container_weekly">
+  <table id="calendar" class="weekly_calendar">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th id="sunday"></th>
+        <th id="monday"></th>
+        <th id="tuesday"></th>
+        <th id="wednesday"></th>
+        <th id="thursday"></th>
+        <th id="friday"></th>
+        <th id="saturday"></th>
+      </tr>
+    </thead>
+    </table>
+<!-- </div> -->
+
 
 <script>
   var startDate = new Date();
@@ -157,10 +97,14 @@
     generateWeeklyCalendar(startDate);
   }
 
+  function this_week() {
+    startDate = new Date();
+    generateWeeklyCalendar(startDate);
+  }
+
   window.onload = function() {
     generateWeeklyCalendar(startDate);
   };
 </script>
+{% endblock %}
 
-</body>
-</html>

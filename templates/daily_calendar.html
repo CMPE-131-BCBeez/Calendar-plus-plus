@@ -1,52 +1,27 @@
 {% extends "layout.html" %}
-{% block title %} Daily Calendar++ {% endblock %}
+{% block title %} Daily++ {% endblock %}
 
 {% block body %}
-<div class="monthly_header">
-    <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
+<div class="button_header">
 
+    {% block navbar %}
+    {{ super() }}
+    {% endblock %}
+    
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
   
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
          
-    <button type="button" id="today_button_daily" class="BlackButton">Today</button>
+    <button type="button" id="today_button_daily" class="BlackButton">Jump To Today</button>
 </div>
 
 <div class="daily_page_container">
     <div class="daily_item_event">
         <h1 class="small_h1">
-            Create New Event
+            Today's Weather
         </h1>
         <div class="event_add_container">
-            <form action="/new_event" method="POST">
-        
-            <label for="title">Title:</label><br>
-            <input type="text" id="title" name="title" class="input-field" required><br>
-        
-            <label for="description">Description:</label><br>
-            <textarea id="description" name="description" class="input-field"></textarea><br>
-        
-            <label for="start_time">Start Time:</label><br>
-            <input type="datetime-local" id="start_time" name="start_time" class="input-field" required><br>
-        
-            <label for="end_time">End Time:</label><br>
-            <input type="datetime-local" id="end_time" name="end_time" class="input-field"required><br>
-        
-            <label for="location">Location:</label><br>
-            <input type="text" id="location" name="location" class="input-field"><br>
-        
-            <label for="color">Color:</label><br>
-            <input type="color" id="color" name="color" value="#000000"><br>
-        
-            <label for="type">Type:</label><br>
-            <select id="type" name="type">
-                <option value="EVENT">Event</option>
-                <option value="REMINDER">Reminder</option>
-                <option value="BIRTHDAY">Birthday</option>
-            </select><br>
-        
-            <input type="submit" value="Create Event" class="BlackButton">
-        </form>
+           
         </div>
     </div>
     
@@ -64,6 +39,7 @@
 </div>
 
 <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+<script src="{{url_for('static', filename='theme_script.js')}}"></script>
 
 {% endblock %}
 
