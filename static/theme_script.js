@@ -255,15 +255,15 @@ function change_theme(is_dark_mode){
         });
     }
 }
-function send_theme_state(is_dark_mode) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/dark_mode', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    const themeState = { is_dark_mode: is_dark_mode };
-    xhr.send(JSON.stringify(themeState));
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            console.log(xhr.responseText);
-        }
-    };
-}
+// function send_theme_state(is_dark_mode) {
+//     const xhr = new XMLHttpRequest();
+//     xhr.open('POST', '/dark_mode', true);
+//     xhr.setRequestHeader('Content-Type', 'application/json');
+//     const themeState = { is_dark_mode: is_dark_mode };
+//     xhr.send(JSON.stringify(themeState));
+//     xhr.onreadystatechange = function() {
+//         if (xhr.readyState === XMLHttpRequest.DONE) {
+//             console.log(xhr.responseText);
+//         }
+//     };
+// }

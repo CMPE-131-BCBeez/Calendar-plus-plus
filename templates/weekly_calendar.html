@@ -10,7 +10,7 @@
 
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
-    <button type="button" id="weekly" class="BlackButton" onclick="this_week()" >This Week</button>
+    <button type="button" id="weekly" class="BlackButton" onclick="this_week()" >Jump To This Week</button>
 
       <div id="pagination_weekly">
         <button onclick="previousWeek()" id="next_week"><</button>
@@ -18,19 +18,23 @@
         <button onclick="nextWeek()" id="prev_week">></button>
       </div>
   </div>
+<div class="overflow_container_weekly">
+  <table id="calendar" class="weekly_calendar">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th id="sunday"></th>
+        <th id="monday"></th>
+        <th id="tuesday"></th>
+        <th id="wednesday"></th>
+        <th id="thursday"></th>
+        <th id="friday"></th>
+        <th id="saturday"></th>
+      </tr>
+    </thead>
+    </table>
+<!-- </div> -->
 
-<table id="calendar" class="weekly_calendar">
-  <tr>
-    <th>Time</th>
-    <th id="sunday"></th>
-    <th id="monday"></th>
-    <th id="tuesday"></th>
-    <th id="wednesday"></th>
-    <th id="thursday"></th>
-    <th id="friday"></th>
-    <th id="saturday"></th>
-  </tr>
-</table>
 
 <script>
   var startDate = new Date();

@@ -12,20 +12,17 @@
         <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
     </div>
 
-    <!--<button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>-->
-    <!--
-    <button onclick="dropDown()" class="dropbtn">Settings</button>
-    <div id="settings" class="dropdown-content">
-        <a href="/data_management" class="WhiteButton">
-            Manage my data< !--Go to the sign in page-- >
-        </a><br>
-        <a href="/security_settings" class="WhiteButton">
-            Security settings< !--Go to the sign in page-- >
-        </a><br>
-        <a href="/social_settings" class="WhiteButton">
-            Social settings< !--Go to the sign in page-- >
-        </a><br>
-    </div>-->
+    
+<div class="button_header">
+
+    {% block navbar %}
+    {{ super() }}
+    {% endblock %}
+    
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
+
+    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
+</div>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/change_password_settings'">Change Password</button>
     <h1>User Settings</h1>
