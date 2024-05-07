@@ -192,8 +192,6 @@ let monthly_calendar = '<table>';
   last_date_on_calendar +=  7;
   count_colmn++;
   }
-  
-    
 
   monthly_calendar += '</tbody>';
   monthly_calendar += '</table>';
@@ -217,6 +215,7 @@ document.getElementById('prev_month').addEventListener('click', function() {
   }
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
+  // location.reload();  
 });
 
 //implement the button going forward to next month
@@ -229,6 +228,7 @@ document.getElementById('next_month').addEventListener('click', function() {
   }
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
+  // location.reload();
 });
 
 function year_month(month, year){
@@ -243,6 +243,7 @@ document.getElementById('today_button_month').addEventListener('click', function
   current_year = today.getFullYear();
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
+  // location.reload();
 });
 
 year_month(current_month, current_year);
@@ -262,6 +263,6 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 
 //load the get_location_and_send() when it finished loading page
 
-document.addEventListener('DOMContentLoaded', function() {
-  get_location_and_send();
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//   get_location_and_send();
+// });
