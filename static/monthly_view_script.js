@@ -35,6 +35,11 @@ function get_timestamp_monthly(year, month, timestamp_start_day, timestamp_last_
 //   let = UTC_timestamp_for_event = localDate / 1000;
 //   return UTC_timestamp_for_event;
 // }
+// function get_timestamp_for_event(current_year, current_month, event_day_cell) {
+//   let localDate = new Date(Date.UTC(current_year, current_month - 1, event_day_cell)).getTime();
+//   let = UTC_timestamp_for_event = localDate / 1000;
+//   return UTC_timestamp_for_event;
+// }
 
 
 const timestamp = get_timestamp_monthly(current_year, current_month, first_date_on_calendar, last_date_on_calendar);
@@ -132,6 +137,7 @@ function generate_calendar(year, month) {
     monthly_calendar += '</td>';
     event_day_cell++;
     console.log("before first date for loop running " + date_ts)
+    console.log("before first date for loop running " + date_ts)
   }
 
   event_day_cell = 1;
@@ -170,6 +176,11 @@ function generate_calendar(year, month) {
       //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
       //   }
       // }
+      // if (event_for_this_day) {
+      // for (envents of event_for_this_day){
+      //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+      //   }
+      // }
       monthly_calendar += '</ul>';
       monthly_calendar += '</div>';
       monthly_calendar += '</td>';
@@ -183,6 +194,11 @@ function generate_calendar(year, month) {
       monthly_calendar += '<td class="' + prev_next_day_class + '">' + (i + 1);
       monthly_calendar += '<div>';
       monthly_calendar += '<ul>';
+      // if (event_for_this_day) {
+      // for (envents of event_for_this_day){
+      //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+      //   }
+      // }
       // if (event_for_this_day) {
       // for (envents of event_for_this_day){
       //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
@@ -286,8 +302,8 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 
 //load the get_location_and_send() when it finished loading page
 
-// document.addEventListener('DOMContentLoaded', function() {
-//   get_location_and_send();
-// });
+// // document.addEventListener('DOMContentLoaded', function() {
+// //   get_location_and_send();
+// // });
 
 export { }
