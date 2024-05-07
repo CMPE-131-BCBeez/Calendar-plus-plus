@@ -30,13 +30,12 @@ function get_timestamp_monthly(year,month,timestamp_start_day, timestamp_last_da
   };
 }
 
-function get_timestamp_for_event(current_year, current_month, event_day_cell) {
-  let localDate = new Date(Date.UTC(current_year, current_month - 1, event_day_cell)).getTime();
-  let = UTC_timestamp_for_event = localDate / 1000;
-  return UTC_timestamp_for_event;
-}
+// function get_timestamp_for_event(current_year, current_month, event_day_cell) {
+//   let localDate = new Date(Date.UTC(current_year, current_month - 1, event_day_cell)).getTime();
+//   let = UTC_timestamp_for_event = localDate / 1000;
+//   return UTC_timestamp_for_event;
+// }
 
-let timestamp_for_event = get_timestamp_for_event(current_year, current_month, event_day_cell);
 
 const timestamp = get_timestamp_monthly(current_year, current_month, first_date_on_calendar, last_date_on_calendar);
 const timestamp_for_first_date_on_calendar = timestamp.start;
@@ -51,7 +50,19 @@ query_events(timestamp_for_first_date_on_calendar, timestamp_for_last_date_on_ca
     throw error; 
 });
 
-let event_for_this_day = monthly_events[get_timestamp_for_event(current_year, current_month, event_day_cell)];
+function get_event_array(ts_micro) {
+  let ceil_scaled_ts = Math.ceil(ts_micro / 1000)
+  let floor_scaled_ts = Math.floor(ts_micro / 1000)
+
+  if (floor_scaled_ts in monthly_events) {
+    return monthly_events[floor_scaled_ts]
+
+  } else if (ceil_scaled_ts in monthly_events) {
+    return monthly_events[ceil_scaled_ts]
+  }
+
+  return null
+}
 
 function generate_calendar(year, month) {
   let first_date = new Date(year, month - 1, 1);
@@ -87,19 +98,27 @@ let monthly_calendar = '<table>';
 
   //fill the blank before the 1st date 
   for (let i = 0; i < day_of_Week; i++) {
-    
-    monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (prev_month_last_day.getDate() - day_of_Week + 1 + i);
+    let date_num = prev_month_last_day.getDate() - day_of_Week + 1 + i
+    let date_in_month = new Date(prev_month_last_day.getTime())
+    date_in_month.setDate(date_num)
+    let date_ts = date_in_month.getTime()
+    let event_for_this_day = get_event_array(date_ts)
+    console.log("before first date for loop running " + date_ts)
+    monthly_calendar += '<td class="'+ prev_next_day_class +'">' + date_num;
     monthly_calendar += '<div>';
     monthly_calendar += '<ul>';
     if (event_for_this_day) {
-    for (envents of event_for_this_day){
-        monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-      }
+      console.log("event detected")
+      for (let e of event_for_this_day){
+          console.log(`Rendering Event: ${e['title']} at date ${new Date(e['start_time'])}`)
+          monthly_calendar += '<li>' + new Date(e['start_time'] * 1000).getHours() + ": " + e['title'] + '</li>';
+        }
     }
     monthly_calendar += '</ul>';
     monthly_calendar += '</div>';
     monthly_calendar += '</td>';
     event_day_cell++;
+    console.log("before first date for loop running " + date_ts)
   }
   
   event_day_cell = 1;
@@ -115,11 +134,11 @@ let monthly_calendar = '<table>';
     monthly_calendar += '<td class="' + cell_class + '">' + day;
     monthly_calendar += '<div>';
     monthly_calendar += '<ul>';
-    if (event_for_this_day) {
-    for (envents of event_for_this_day){
-        monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-      }
-    }
+    // if (event_for_this_day) {
+    // for (envents of event_for_this_day){
+    //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+    //   }
+    // }
     monthly_calendar += '</ul>';
     monthly_calendar += '</div>';
     monthly_calendar += '</td>';
@@ -139,11 +158,11 @@ let monthly_calendar = '<table>';
       monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1);
       monthly_calendar += '<div>';
       monthly_calendar += '<ul>';
-      if (event_for_this_day) {
-      for (envents of event_for_this_day){
-          monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-        }
-      }
+      // if (event_for_this_day) {
+      // for (envents of event_for_this_day){
+      //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+      //   }
+      // }
       monthly_calendar += '</ul>';
       monthly_calendar += '</div>';
       monthly_calendar += '</td>';
@@ -157,11 +176,11 @@ let monthly_calendar = '<table>';
       monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1);
       monthly_calendar += '<div>';
       monthly_calendar += '<ul>';
-      if (event_for_this_day) {
-      for (envents of event_for_this_day){
-          monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-        }
-      }
+      // if (event_for_this_day) {
+      // for (envents of event_for_this_day){
+      //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+      //   }
+      // }
       monthly_calendar += '</ul>';
       monthly_calendar += '</div>';
       monthly_calendar += '</td>';
@@ -178,11 +197,11 @@ let monthly_calendar = '<table>';
       monthly_calendar += '<td class="'+ prev_next_day_class +'">' + (i + 1);
       monthly_calendar += '<div>';
     monthly_calendar += '<ul>';
-    if (event_for_this_day) {
-    for (envents of event_for_this_day){
-        monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-      }
-    }
+    // if (event_for_this_day) {
+    // for (envents of event_for_this_day){
+    //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
+    //   }
+    // }
     monthly_calendar += '</ul>';
     monthly_calendar += '</div>';
       monthly_calendar += '</td>';
@@ -260,6 +279,6 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 
 //load the get_location_and_send() when it finished loading page
 
-document.addEventListener('DOMContentLoaded', function() {
-  get_location_and_send();
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//   get_location_and_send();
+// });
