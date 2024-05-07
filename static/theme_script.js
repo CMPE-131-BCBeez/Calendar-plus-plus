@@ -17,7 +17,33 @@ function get_theme_state() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-      let body = document.body;
+    change_theme(is_dark_mode);
+});
+
+
+const observer_callback = function(mutationsList, observer) {
+    for(let mutation of mutationsList) {
+        if (mutation.type === 'childList' || mutation.type === 'attributes') {
+            change_theme(is_dark_mode);
+        }
+    }
+};
+
+const targetNode = document.documentElement; 
+
+const observerConfig = { attributes: true, childList: true, subtree: true };
+
+const observer = new MutationObserver(observerCallback);
+
+observer.observe(targetNode, observerConfig);
+
+
+document.getElementById('mode_switch_button').addEventListener('click', function() {
+    change_theme(is_dark_mode);
+});
+
+function change_theme(is_dark_mode){
+    let body = document.body;
     
     if (is_dark_mode) {
         body.classList.remove('dark_mode');
@@ -245,12 +271,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 element.style.color = ''; 
             });
         });
-
-        
-
     }
-});
-
+}
 function send_theme_state(is_dark_mode) {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/dark_mode', true);

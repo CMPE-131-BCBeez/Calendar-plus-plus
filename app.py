@@ -4,8 +4,6 @@ from pytz import timezone
 from flask_session import Session
 from flask_mail import Mail, Message
 import tempfile
-import email
-import sqlite3
 from werkzeug.local import LocalProxy
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
@@ -176,15 +174,9 @@ def weekly_calendar():
     return render_template('weekly_calendar.html')
 
 @app.route('/daily_calendar')
-@app.route('/weekly_calendar')
-def weekly_calendar():
-    return render_template('weekly_calendar.html')
-
-@app.route('/daily_calendar')
 def daily_calendar():
     return render_template('daily_calendar.html')
-    return render_template('daily_calendar.html')
-
+ 
 
 # may not be needed
 # @app.route("/user_settings", methods = ["GET", "POST"])
@@ -379,6 +371,15 @@ def social_setting():
     #create calendar groups etc.
 
     return render_template("social_settings.html")
+
+@app.route("/style_settings")
+@login_required
+def style_settings():
+    #this will allow the users to share whole schedules/calendars
+    #this will also allow them to block or unblock other users
+    #create calendar groups etc.
+
+    return render_template("style_settings.html")
 
 
 

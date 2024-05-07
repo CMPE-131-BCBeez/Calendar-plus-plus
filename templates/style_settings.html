@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %} Style Setting++ {% endblock %}
+
+{% block body %}
+<div class="button_header">
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
+    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
+</div>
+
+
+
+<h1>
+    Style Settings
+</h1>
+
+<div class="container">
+
+    <button type="button" id="mode_switch_button" class="BlackButton" >DarkMode</button>
+
+    <form action="/upload_wallpaper" method="POST" enctype="multipart/form-data">
+        <label for="wallpaper">Choose Your Wallpaper</label>
+        <input type="file" id="wallpaper" name="wallpaper">
+
+        <button type="submit" class="BlackButton">Save It</button>
+    </form>
+
+</div>
+{% endblock %}

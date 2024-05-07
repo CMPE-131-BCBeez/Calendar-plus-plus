@@ -243,9 +243,6 @@ document.getElementById('today_button_month').addEventListener('click', function
   year_month(current_month, current_year);
 });
 
-year_month(current_month, current_year);
-generate_calendar(current_year, current_month);
-
 //make the cell to button
 document.querySelectorAll('.calendar_basic').forEach(cell => {
   cell.addEventListener('click', function() {
@@ -263,3 +260,6 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 document.addEventListener('DOMContentLoaded', function() {
   get_location_and_send();
 });
+
+year_month(current_month, current_year);
+generate_calendar(current_year, current_month);
