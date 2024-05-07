@@ -179,6 +179,10 @@ h1 {
     align-items: center;    
 }
 
+h2{
+    font-size: 35px; 
+}
+
 .top_h1 {
     margin: 0 auto;
     margin-bottom: 20px;   
