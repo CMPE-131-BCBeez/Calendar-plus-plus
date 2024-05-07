@@ -17,29 +17,10 @@ function get_theme_state() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    change_theme(is_dark_mode);
+    change_theme(is_dark_mode)
 });
 
-
-const observer_callback = function(mutationsList, observer) {
-    for(let mutation of mutationsList) {
-        if (mutation.type === 'childList' || mutation.type === 'attributes') {
-            change_theme(is_dark_mode);
-        }
-    }
-};
-
-const targetNode = document.documentElement; 
-
-const observerConfig = { attributes: true, childList: true, subtree: true };
-
-const observer = new MutationObserver(observerCallback);
-
-observer.observe(targetNode, observerConfig);
-
-
 document.getElementById('mode_switch_button').addEventListener('click', function() {
-    change_theme(is_dark_mode);
 });
 
 function change_theme(is_dark_mode){
