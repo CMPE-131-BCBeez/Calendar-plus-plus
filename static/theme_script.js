@@ -16,12 +16,13 @@ function get_theme_state() {
     xhr.send();
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    change_theme(is_dark_mode)
-});
+// document.addEventListener("DOMContentLoaded", function() {
+//     change_theme(is_dark_mode)
+// });
 
-document.getElementById('mode_switch_button').addEventListener('click', function() {
-});
+// document.getElementById('mode_switch_button').addEventListener('click', function() {
+//     change_theme(is_dark_mode)
+// });
 
 function change_theme(is_dark_mode){
     let body = document.body;
