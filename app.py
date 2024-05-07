@@ -377,6 +377,36 @@ def social_setting():
 
     return render_template("social_settings.html")
 
+@app.route("/delete_account", methods=["GET", "POST"])
+@login_required
+def delete_account():
+    if request.method == "POST":
+        # Handle account deletion
+        user_id = session.get("user_id")
+        with app.app_context():
+            cursor = db.cursor()
+            cursor.execute("DELETE FROM Users WHERE id = ?", (user_id,))
+            db.commit()
+            cursor.execute("DELETE FROM BackupEmails WHERE id = ?", (user_id,))
+            db.commit()
+            cursor.execute("DELETE FROM Calendars WHERE id = ?", (user_id,))
+            db.commit()
+            cursor.execute("DELETE FROM Events WHERE id = ?", (user_id,))
+            db.commit()
+            cursor.execute("DELETE FROM StyleSettings WHERE id = ?", (user_id,))
+            db.commit()
+            cursor.execute("DELETE FROM UsersEvents WHERE id = ?", (user_id,))
+            db.commit()
+            cursor.execute("DELETE FROM StyleSettings WHERE id = ?", (user_id,))
+            db.commit()
+            # Optionally, you can also delete associated data from other tables
+    
+            # Clear session and redirect to the login page
+            session.clear()
+            flash("Your account has been deleted successfully.")
+            return redirect("/login")
+    return render_template("delete_account.html")
+
 
 
 @app.route("/api/events")
