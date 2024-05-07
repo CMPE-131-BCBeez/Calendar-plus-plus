@@ -213,6 +213,7 @@ document.getElementById('prev_month').addEventListener('click', function() {
   if (current_month === 0) {
     current_year--;
     current_month = 12;
+    window.location.reload();
   }
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
@@ -224,6 +225,7 @@ document.getElementById('next_month').addEventListener('click', function() {
   if (current_month === 13) {
     current_year++;
     current_month = 1;
+    window.location.reload();
   }
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);

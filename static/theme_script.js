@@ -20,9 +20,9 @@ function get_theme_state() {
 //     change_theme(is_dark_mode)
 // });
 
-// document.getElementById('mode_switch_button').addEventListener('click', function() {
-//     change_theme(is_dark_mode)
-// });
+document.getElementById('mode_switch_button').addEventListener('change', function() {
+    change_theme(this.checked);
+});
 
 function change_theme(is_dark_mode){
     let body = document.body;
