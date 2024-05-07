@@ -375,9 +375,7 @@ def social_setting():
 @app.route("/style_settings")
 @login_required
 def style_settings():
-    #this will allow the users to share whole schedules/calendars
-    #this will also allow them to block or unblock other users
-    #create calendar groups etc.
+
 
     return render_template("style_settings.html")
 

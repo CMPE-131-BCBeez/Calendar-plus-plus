@@ -113,6 +113,7 @@ form textarea {
     background-repeat: no-repeat;
     background-size: cover;
     position: fixed;
+    overflow:auto;
 }
 
 .transparent{
@@ -122,6 +123,7 @@ form textarea {
     bottom:0;
     right:0;
     left:0;
+    overflow:auto;
 }
 
 
@@ -292,6 +294,7 @@ h1 {
 }
 
 #prev_month, #next_month,
+#prev_week, #next_week, 
 #prev_day, #next_day{ 
     font-family: "CaviarDreams_Bold", sans-serif;     
     background-color: rgba(0, 0, 0, 0.0); 
@@ -324,8 +327,77 @@ h1 {
     display: flex;     
     justify-content: center;    
     align-items: center;  
-    
 }
+
+#pagination_weekly{
+    margin: 0 auto;
+    width:40%;
+    display: flex;     
+    justify-content: space-between;  
+    align-items: center; 
+    /* margin-bottom: 10px;  */
+}
+
+.weekly_calendar{
+    border-collapse: collapse;
+    width: 100%;
+  }
+  .weekly_calendar th,
+  .weekly_calendar td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+  .weekly_calendar td {
+    width: 100px;
+  }
+  .weekly_calendar  tr:first-child th {
+    background-color: black;
+    color: white;
+  }
+  .weekly_calendar th {
+    background-color: #f2f2f2;
+    position: relative;
+    height: 40px;
+  }
+  .dayInfo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .dayName {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .dateNumber {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .navButtonContainer {
+    margin-bottom: 20px;
+  }
+  .navButton {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  .navButton:hover {
+    background-color: #333;
+    color: white;
+  }
+  .selected {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
 
 .daily_page_container{
     display: flex;

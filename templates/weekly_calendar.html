@@ -2,89 +2,24 @@
 {% block title %} Weekly++ {% endblock %}
 
 {% block body %}
-   
-    <style>
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: center;
-      }
-      th {
-        background-color: #f2f2f2;
-        position: relative;
-        height: 40px;
-      }
-      .dayInfo {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-      .dayName {
-        font-size: 14px;
-        font-weight: bold;
-      }
-      .dateNumber {
-        font-size: 20px;
-        font-weight: bold;
-      }
-      .navButtonContainer {
-        margin-bottom: 20px;
-      }
-      .navButton {
-        background-color: black;
-        border: none;
-        color: white;
-        padding: 10px 24px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        transition-duration: 0.4s;
-        cursor: pointer;
-        border-radius: 8px;
-      }
-      .navButton:hover {
-        background-color: #333;
-        color: white;
-      }
-      .selected {
-        background-color: lightblue;
-      }
-      td {
-        width: 100px;
-      }
-      tr:first-child th {
-        background-color: black;
-        color: white;
-      }
-    </style>
-</head>
 <body>
-  <div class="top_buttons">
-
+  <div class="button_header">
     {% block navbar %}
     {{ super() }}
     {% endblock %}
 
-    <button type="button" id="monthly_view" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
-    <button type="button" id="today_button" class="BlackButton">This Week</button>
+    <button type="button" id="weekly" class="BlackButton" onclick="this_week()" >This Week</button>
+
+      <div id="pagination_weekly">
+        <button onclick="previousWeek()" id="next_week"><</button>
+        <h2>Weekly Calendar</h2>
+        <button onclick="nextWeek()" id="prev_week">></button>
+      </div>
   </div>
 
-<h2>Weekly Calendar</h2>
-
-<div class="navButtonContainer">
-  <button class="BlackButton" onclick="previousWeek()">Previous 7 Days</button>
-  <button class="BlackButton" onclick="nextWeek()">Next 7 Days</button>
-</div>
-
-<table id="calendar">
+<table id="calendar" class="weekly_calendar">
   <tr>
     <th>Time</th>
     <th id="sunday"></th>
@@ -155,6 +90,11 @@
 
   function previousWeek() {
     startDate.setDate(startDate.getDate() - 7);
+    generateWeeklyCalendar(startDate);
+  }
+
+  function this_week() {
+    startDate = new Date();
     generateWeeklyCalendar(startDate);
   }
 
