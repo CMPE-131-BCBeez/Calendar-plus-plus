@@ -236,7 +236,6 @@ document.getElementById('prev_month').addEventListener('click', async function (
   if (current_month === 0) {
     current_year--;
     current_month = 12;
-    window.location.reload();
   }
 
   let prev_mon_ts = new Date(current_year, current_month, 1);
@@ -260,7 +259,6 @@ document.getElementById('next_month').addEventListener('click', async function (
   if (current_month === 13) {
     current_year++;
     current_month = 1;
-    window.location.reload();
   }
 
   let prev_mon_ts = new Date(current_year, current_month, 1);
@@ -327,3 +325,4 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 // // });
 
 export { }
+
