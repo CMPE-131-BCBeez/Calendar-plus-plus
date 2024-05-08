@@ -4,14 +4,15 @@ from pytz import timezone
 from flask_session import Session
 from flask_mail import Mail, Message
 import tempfile
-import email
-import sqlite3
 from werkzeug.local import LocalProxy
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
 from utils import *
 import json
 from collections import defaultdict
+import os
+import resend
+
 import os
 import resend
 
@@ -48,9 +49,18 @@ mail = Mail(app)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 resend.api_key = "re_FvWGLqJc_J1bw8bdwYMCV74gK5eCdEbJ2"
 
+resend.api_key = "re_FvWGLqJc_J1bw8bdwYMCV74gK5eCdEbJ2"
+
 #I have ben trying to get this to work with email but I cannot for the life of me make it work
 #the issue here is that the gmail I made for the class needs an app password but this option does 
 #not appear when I go to settings-security-2step verification
+#app.config['MAIL_SERVER']='smtp.gmail.com'
+#app.config['MAIL_PORT'] = 465
+#app.config['MAIL_USERNAME'] = ['calandarPlusPlus@gmail.com']
+#app.config['MAIL_PASSWORD'] = ['gfzq hpoy dzsr ivsk'] #ThisAintItFr2025
+#app.config['MAIL_USE_TLS'] = False
+#app.config['MAIL_USE_SSL'] = True
+#mail = Mail(app)
 #app.config['MAIL_SERVER']='smtp.gmail.com'
 #app.config['MAIL_PORT'] = 465
 #app.config['MAIL_USERNAME'] = ['calandarPlusPlus@gmail.com']
@@ -110,7 +120,6 @@ def register_page() -> str:
             cursor = db.cursor()
             cursor.execute("SELECT username, email FROM Users WHERE username = ? OR email = ?", (username, email))
             res = cursor.fetchone()
-            print(f"{res}")
             print(f"{res}")
             if (res):
                 flash("This username already exists")
@@ -180,7 +189,7 @@ def weekly_calendar():
 @app.route('/daily_calendar')
 def daily_calendar():
     return render_template('daily_calendar.html')
-
+ 
 
 
 @app.route("/forgot_password", methods = ["GET", "POST"])
@@ -223,9 +232,22 @@ def forgot_password():
                         "subject": "Confirm Your Email Address",
                         "html": f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
                     })  
+                    #msg = Message(subject, sender = sender, recipients=[email], body=body)
+                    #mail.send(msg)
+
+
+
+                    r = resend.Emails.send({
+                        "from": "onboarding@resend.dev",
+                        "to": "calandarplusplus@gmail.com",
+                        "subject": "Confirm Your Email Address",
+                        "html": f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
+                    })  
                     
                     #finally save it to your database
                     with app.app_context():
+                        cursor = db.cursor()
+                        cursor.execute("""UPDATE Users SET confirmation_code=(?) WHERE email=(?) OR username =(?)""", (confirmation_code, username_or_email, username_or_email))
                         cursor = db.cursor()
                         cursor.execute("""UPDATE Users SET confirmation_code=(?) WHERE email=(?) OR username =(?)""", (confirmation_code, username_or_email, username_or_email))
                         db.commit()
@@ -295,12 +317,14 @@ def change_password_settings():
         with app.app_context():
             cursor = db.cursor()
             username = cursor.execute("SELECT username FROM Users WHERE id = ?", (user_id,)).fetchone()['username']
+            username = cursor.execute("SELECT username FROM Users WHERE id = ?", (user_id,)).fetchone()['username']
         current_password_hash = generate_password_hash(username)
         if check_password_hash(current_password_hash, current_password):
             #check if new passwords match
             if new_password == confirm_new_password:
                 new_password_hash = generate_password_hash(new_password, "sha256")
                 with app.app_context():
+                    cursor = db.cursor()
                     cursor = db.cursor()
                     cursor.execute("UPDATE Users SET password_hash=? WHERE username=?", (new_password_hash, username))
                     db.commit()
@@ -323,9 +347,13 @@ def change_password_email():
         new_password = request.form.get("new_password")
         confirm_new_password = request.form.get("confirm_new_password")
         
+        
         #to change password you need to input correct confirmation code
         with app.app_context():
                 cursor = db.cursor()
+                saved_confirmation_code = cursor.execute("""SELECT confirmation_code FROM Users WHERE username=(?) """, (username,)).fetchone()['confirmation_code']
+                flash(f"the content of the cursor is: {saved_confirmation_code}")
+    
                 saved_confirmation_code = cursor.execute("""SELECT confirmation_code FROM Users WHERE username=(?) """, (username,)).fetchone()['confirmation_code']
                 flash(f"the content of the cursor is: {saved_confirmation_code}")
     
@@ -339,8 +367,10 @@ def change_password_email():
                 with app.app_context():
                     cursor = db.cursor
                     cursor.execute("""UPDATE Users SET password_hash=? WHERE username=?""", (new_password_hash, username))
+                    cursor.execute("""UPDATE Users SET password_hash=? WHERE username=?""", (new_password_hash, username))
                     db.commit()
                 flash("password changed successfully!")
+                return redirect("/login")
                 return redirect("/login")
             else:
                 flash("New password and confirm new password must match!\n")
@@ -364,6 +394,13 @@ def security_settings():
         cursor.execute("SELECT email FROM BackuoEmails WHERE id = ?", (user_id,))['email']
         backup_emails = [row[0] for row in cursor.fetchall()]
     return render_template("user_settings.html", backup_emails=backup_emails)
+    user_id = session.get("user_id")
+
+    with app.app_context():
+        cursor = db.cursor()
+        cursor.execute("SELECT email FROM BackuoEmails WHERE id = ?", (user_id,))['email']
+        backup_emails = [row[0] for row in cursor.fetchall()]
+    return render_template("user_settings.html", backup_emails=backup_emails)
 
 @app.route("/social_settings")
 @login_required
@@ -373,6 +410,13 @@ def social_setting():
     #create calendar groups etc.
 
     return render_template("social_settings.html")
+
+@app.route("/style_settings")
+@login_required
+def style_settings():
+
+
+    return render_template("style_settings.html")
 
 
 
@@ -422,7 +466,6 @@ def event_api():
         r['start_time'] = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%d %H:%M:%S")))
         r['end_time'] = int(datetime.timestamp(datetime.strptime(r['end_time'], "%Y-%m-%d %H:%M:%S")))
         output_dict[date_ts].append(r)
-        
     return json.dumps(output_dict)
 
 @app.route('/upload_wallpaper', methods = ["GET","POST"])
@@ -441,6 +484,18 @@ def upload():
 
         file_path = os.path.join('static', 'image', filename)
         file.save(file_path)
+
+        # try:
+        #     with app.app_context():
+        #         cursor = db.cursor()    #input the data to events
+        #         query = """INSERT INTO UserSettings () VALUES (?)"""
+        #         cursor.execute(query, (filename, type))
+        #         db.commit()
+        #         event_id = cursor.execute("SELECT last_insert_rowid() AS last").fetchone()['last']
+        #         db.commit()
+        # except sqlite3.Error as e:
+        #     db.rollback()
+        #     return f'Error: {e}'
 
         with app.app_context():
     

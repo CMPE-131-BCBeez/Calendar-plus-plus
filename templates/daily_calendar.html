@@ -1,54 +1,48 @@
 {% extends "layout.html" %}
 {% block title %} Daily++ {% endblock %}
+{% block title %} Daily++ {% endblock %}
 
 {% block body %}
 <div class="button_header">
-    <button onclick="dropDown()" class="dropbtn">Settings</button>
-    <div id="settings" class="dropdown-content">
-        <a href="/data_management" class="WhiteButton">
-            Manage my data<!--Go to the sign in page-->
-        </a>
-        <a href="/security_settings" class="WhiteButton">
-            Security settings<!--Go to the sign in page-->
-        </a>
-        <a href="/social_settings" class="WhiteButton">
-            Social settings<!--Go to the sign in page-->
-        </a>
-    </div>
+
+    {% block navbar %}
+    {{ super() }}
+    {% endblock %}
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
-  
+
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
-         
-    <button type="button" id="today_button_daily" class="BlackButton">Today</button>
-    <button type="button" id="mode_switch_button" class="BlackButton">DarkMode</button>
+
+    <button type="button" id="today_button_daily" class="BlackButton">Jump To Today</button>
 </div>
 
 <div class="daily_page_container">
     <div class="daily_item_event">
         <h1 class="small_h1">
             Today's Weather
+            Today's Weather
         </h1>
         <div class="event_add_container">
-           
+
+
         </div>
     </div>
-    
+
     <div class="daily_container">
         <div id="pagination_daily">
-            <button id="prev_day"><</button>
-            <h2 id="year_month_day_header"></h2>
-            <button id="next_day">></button>
+            <button id="prev_day">
+                << /button>
+                    <h2 id="year_month_day_header"></h2>
+                    <button id="next_day">></button>
         </div>
         <div class="daily_view_container">
             <div id="am_daily_view"></div>
             <div id="pm_daily_view"></div>
         </div>
-    </div>    
+    </div>
 </div>
 
 <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
 <script src="{{url_for('static', filename='theme_script.js')}}"></script>
 
 {% endblock %}
-

@@ -3,38 +3,13 @@
 
 {% block body %}
 <div class="button_header">
-
-  <button onclick="dropDown()" class="dropbtn BlackButton">Settings</button>
-  <div id="settings" class="dropdown-content">
-    <a href="/data_management" class="WhiteButton">
-      Manage my data<!--Go to the sign in page-->
-    </a>
-    <a href="/security_settings" class="WhiteButton">
-      Security settings<!--Go to the sign in page-->
-    </a>
-    <a href="/social_settings" class="WhiteButton">
-      Social settings<!--Go to the sign in page-->
-    </a>
-  </div>
+  {% block navbar %}
+  {{ super() }}
+  {% endblock %}
 
   <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
 
-  <button type="button" id="today_button_month" class="BlackButton">Today</button>
-
-  <button type="button" id="today_button_month" class="BlackButton">New Event</button>
-  <button onclick="dropDown()" class="dropbtn BlackButton">New Event</button>
-  <div id="add_new_event" class="dropdown-content">
-    <a href="../templates/new_event.html">
-    </a>
-
-  </div>
-
-  <!-- 
-  <div id="myModal" class="modal">
-    <div class="modal-content">
-      <div id="event_window"></div>
-    </div>
-  </div> -->
+  <button type="button" id="today_button_month" class="BlackButton">Jump To This Month</button>
 
   <div id="pagination_monthly">
     <button id="prev_month">
@@ -49,7 +24,4 @@
 </div>
 
 <script type="module" src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
-<script src="{{url_for('static', filename='setting_menu_script.js')}}"></script>
-<!-- <script src="{{url_for('static', filename='api_access.js')}}"></script> -->
-
 {% endblock %}

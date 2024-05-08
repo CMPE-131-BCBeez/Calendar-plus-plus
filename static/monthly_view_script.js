@@ -210,8 +210,6 @@ function generate_calendar(year, month) {
     count_colmn++;
   }
 
-
-
   monthly_calendar += '</tbody>';
   monthly_calendar += '</table>';
 
@@ -241,7 +239,7 @@ document.getElementById('prev_month').addEventListener('click', async function (
   }
 
   let prev_mon_ts = new Date(current_year, current_month, 1);
-  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 1)
+  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 2)
   prev_mon_ts /= 1000
 
   let next_mon_ts = new Date(current_year, current_month + 1, 0);
@@ -252,6 +250,7 @@ document.getElementById('prev_month').addEventListener('click', async function (
 
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
+  // location.reload();  
 });
 
 //implement the button going forward to next month
@@ -263,7 +262,7 @@ document.getElementById('next_month').addEventListener('click', async function (
   }
 
   let prev_mon_ts = new Date(current_year, current_month, 1);
-  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 1)
+  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 2)
   prev_mon_ts /= 1000
 
   let next_mon_ts = new Date(current_year, current_month + 1, 0);
@@ -275,6 +274,7 @@ document.getElementById('next_month').addEventListener('click', async function (
 
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
+  // location.reload();
 });
 
 function year_month(month, year) {
@@ -300,6 +300,7 @@ document.getElementById('today_button_month').addEventListener('click', async fu
   monthly_events = await query_events(prev_mon_ts, next_mon_ts)
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
+  // location.reload();
 });
 
 year_month(current_month, current_year);
@@ -324,3 +325,4 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
 // // });
 
 export { }
+

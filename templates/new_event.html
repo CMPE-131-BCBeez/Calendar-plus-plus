@@ -1,11 +1,20 @@
 {% extends "layout.html" %}
 {% block title %} Create Event++ {% endblock %}
+{% block title %} Create Event++ {% endblock %}
 
 {% block body %}
+<div class="button_header">
 
-<script src="{{url_for('static', filename='convert_to_utc.js')}}"></script>
+    {% block navbar %}
+    {{ super() }}
+    {% endblock %}
 
-<h1 class="small_h1">
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
+
+    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
+</div>
+
+<h1 class="event_h1">
     Create New Event
 </h1>
 <div class="event_add_container">
@@ -30,11 +39,13 @@
         <input type="color" id="color" name="color" value="#000000"><br>
 
         <label for="type">Type:</label><br>
-        <select class="event_select" id="type" name="type">
-            <option value="EVENT">Event</option>
-            <option value="REMINDER">Reminder</option>
-            <option value="BIRTHDAY">Birthday</option>
-        </select><br>
+        <select class="event_select" id="type" name="type" class="event_select">
+            <option value="EVENT" class="event_select">Event</option>
+            <option value="REMINDER" class="event_select">Reminder</option>
+            <option value="BIRTHDAY" class="event_select"> Birthday</option>
+        </select>
+        <br>
+
         <input type="submit" value="Create Event" class="BlackButton">
     </form>
 </div>
