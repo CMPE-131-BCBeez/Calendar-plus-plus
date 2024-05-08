@@ -381,30 +381,54 @@ def social_setting():
 @login_required
 def delete_account():
     if request.method == "POST":
-        # Handle account deletion
         user_id = session.get("user_id")
+        password = request.form.get("current_password")
+        users_reason = request.form.get("description")
+
+        #Retreive hashed password from database but we can move this to
+        #the database funtions so that the devices dont get the hashed passwords
         with app.app_context():
             cursor = db.cursor()
-            cursor.execute("DELETE FROM Users WHERE id = ?", (user_id,))
-            db.commit()
-            cursor.execute("DELETE FROM BackupEmails WHERE id = ?", (user_id,))
-            db.commit()
-            cursor.execute("DELETE FROM Calendars WHERE id = ?", (user_id,))
-            db.commit()
-            cursor.execute("DELETE FROM Events WHERE id = ?", (user_id,))
-            db.commit()
-            cursor.execute("DELETE FROM StyleSettings WHERE id = ?", (user_id,))
-            db.commit()
-            cursor.execute("DELETE FROM UsersEvents WHERE id = ?", (user_id,))
-            db.commit()
-            cursor.execute("DELETE FROM StyleSettings WHERE id = ?", (user_id,))
-            db.commit()
-            # Optionally, you can also delete associated data from other tables
+            cursor.execute("SELECT id, username, password_hash FROM Users WHERE username=?", (user_id,))
+            user = cursor.fetchone()
+            
+        #Check if user exists and verify password
+        if user and check_password_hash(user["password_hash"], password):
+            #right password so we will go ahead and delete all the data we have related to this user_id
+            with app.app_context():
+                cursor = db.cursor()
+                try:
+                    cursor.execute("BEGIN TRANSACTION")
+
+                    # Delete user data from various tables
+                    cursor.execute("DELETE FROM Users WHERE id = ?", (user_id,))
+                    cursor.execute("DELETE FROM BackupEmails WHERE id = ?", (user_id,))
+                    cursor.execute("DELETE FROM Calendars WHERE id = ?", (user_id,))
+                    cursor.execute("DELETE FROM Events WHERE id = ?", (user_id,))
+                    cursor.execute("DELETE FROM StyleSettings WHERE id = ?", (user_id,))
+                    cursor.execute("DELETE FROM UsersEvents WHERE id = ?", (user_id,))
+
+                    # Commit the transaction
+                    cursor.execute("COMMIT")
+
+                    # Insert reason into EndTies table
+                    cursor.execute("INSERT INTO EndTies (reasons) VALUES (?)", (users_reason,))
+                    db.commit()
+                except Exception as e:
+                    # Rollback the transaction if an error occurs
+                    cursor.execute("ROLLBACK")
+                    flash("An error occurred while deleting your account. Please try again.")
     
+            flash("Sorry to see you go!")
             # Clear session and redirect to the login page
             session.clear()
             flash("Your account has been deleted successfully.")
             return redirect("/login")
+
+        #if login fails then redirect to the same login page
+        else:
+            flash("Invalid password")
+    #load html           
     return render_template("delete_account.html")
 
 

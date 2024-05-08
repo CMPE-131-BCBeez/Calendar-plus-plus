@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %} Data Management {% endblock %}
+
+{% block body %}
+<h1 class="top_h1">
+    Data Management
+</h1>
+<div class="container">
+    <a href="/delete_account" class="WhiteButton">
+        Delete my account<!--delete account-->
+    </a><br>
+    <a href="/register" class="WhiteButton">
+        Adding Phone number <!--Go to register page-->
+    </a><br>
+    <a href="/forgot_password" class="WhiteButton">
+        Forgot Password<!--Go to the reset pasword page-->
+    </a>
+</div>
+{% endblock %}

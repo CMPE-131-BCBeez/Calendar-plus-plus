@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS UsersEvents (
     FOREIGN KEY (event_id) REFERENCES Events(id)
 );
 
-CREATE TABLE IF NOT EXISTS Test (
-    id INTEGER PRIMARY KEY,
-    name TEXT
+CREATE TABLE IF NOT EXISTS EndTies (
+    usersLeft INTEGER PRIMARY KEY,
+    reasons TEXT
 );
