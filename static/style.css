@@ -590,7 +590,7 @@ input[type="file"] {
 
 .WhiteButton{
     font-family: "CaviarDreams_Bold", sans-serif;   
-    background-color: #FFFFFF; 
+    background-color: rgba(0, 0, 0, 0); 
     border-bottom: 1px solid black; 
     color: #000000; 
     padding: 0px 2px; 
