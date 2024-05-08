@@ -9,7 +9,7 @@
     {% endblock %}
     
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
-  
+
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
          
     <button type="button" id="today_button_daily" class="BlackButton">Jump To Today</button>
@@ -24,22 +24,22 @@
            
         </div>
     </div>
-    
+
     <div class="daily_container">
         <div id="pagination_daily">
-            <button id="prev_day"><</button>
-            <h2 id="year_month_day_header"></h2>
-            <button id="next_day">></button>
+            <button id="prev_day">
+                << /button>
+                    <h2 id="year_month_day_header"></h2>
+                    <button id="next_day">></button>
         </div>
         <div class="daily_view_container">
             <div id="am_daily_view"></div>
             <div id="pm_daily_view"></div>
         </div>
-    </div>    
+    </div>
 </div>
 
 <script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
 <script src="{{url_for('static', filename='theme_script.js')}}"></script>
 
 {% endblock %}
-

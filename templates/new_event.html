@@ -19,23 +19,23 @@
 <div class="event_add_container">
     <form action="/new_event" method="POST">
 
-    <label for="title">Title:</label><br>
-    <input type="text" id="title" name="title" class="input-field" required><br>
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" class="input-field" required><br>
 
-    <label for="description">Description:</label><br>
-    <textarea id="description" name="description" class="input-field"></textarea><br>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" class="input-field"></textarea><br>
 
-    <label for="start_time">Start Time:</label><br>
-    <input type="datetime-local" id="start_time" name="start_time" class="input-field" required><br>
+        <label for="start_time">Start Time:</label><br>
+        <input type="datetime-local" id="start_time" name="start_time" class="input-field" required><br>
 
-    <label for="end_time">End Time:</label><br>
-    <input type="datetime-local" id="end_time" name="end_time" class="input-field"required><br>
+        <label for="end_time">End Time:</label><br>
+        <input type="datetime-local" id="end_time" name="end_time" class="input-field" required><br>
 
-    <label for="location">Location:</label><br>
-    <input type="text" id="location" name="location" class="input-field"><br>
+        <label for="location">Location:</label><br>
+        <input type="text" id="location" name="location" class="input-field"><br>
 
-    <label for="color">Color:</label><br>
-    <input type="color" id="color" name="color" value="#000000"><br>
+        <label for="color">Color:</label><br>
+        <input type="color" id="color" name="color" value="#000000"><br>
 
     <label for="type">Type:</label><br>
     <select class="event_select" id="type" name="type" class="event_select">
@@ -45,9 +45,10 @@
     </select>
     <br>
 
-    <input type="submit" value="Create Event" class="BlackButton">
-</form>
+        <input type="submit" value="Create Event" class="BlackButton">
+    </form>
 </div>
+
 
 
 {% endblock %}
