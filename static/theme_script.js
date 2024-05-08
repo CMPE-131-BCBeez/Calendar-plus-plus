@@ -59,8 +59,8 @@ function change_theme(is_dark_mode){
         body.classList.add('light_mode');
 
         let input_field  = document.querySelectorAll('.input-field ');
-        let input_field_text_color = '#FFFFFF';
-        let input_field_line_color = '#FFFFFF';
+        let input_field_text_color = '#000000';
+        let input_field_line_color = '#000000';
         input_field.forEach(function(element){
             element.style.color = input_field_text_color;
             element.style.borderBottom = '1px solid' + input_field_line_color;
@@ -73,15 +73,21 @@ function change_theme(is_dark_mode){
         });
 
         let form_input  = document.querySelectorAll('form input[type="text"], form input[type="password"],form input[type="email"],form input[type="tel"],form textarea');
-        let form_input_color_text_color = '#FFFFFF';
+        let form_input_color_text_color = '#000000';
         form_input.forEach(function(element){
             element.style.color = form_input_color_text_color;
         });
 
         let label  = document.querySelectorAll('label');
-        let label_text_color_text_color = '#FFFFFF';
+        let label_text_color_text_color = '#000000';
         label.forEach(function(element){
             element.style.color = label_text_color_text_color;
+        });
+
+        let paragraph  = document.querySelectorAll('p');
+        let paragraph_text_color_text_color = '#000000';
+        paragraph.forEach(function(element){
+            element.style.color = paragraph_text_color_text_color;
         });
         
         let black_buttons = document.querySelectorAll('.BlackButton');
@@ -191,6 +197,12 @@ function change_theme(is_dark_mode){
             element.style.color = label_text_color_text_color;
         });
 
+        let paragraph  = document.querySelectorAll('p');
+        let paragraph_text_color_text_color = '#FFFFFF';
+        paragraph.forEach(function(element){
+            element.style.color = paragraph_text_color_text_color;
+        });
+
         let form  = document.querySelectorAll('.form');
         let form_text_color_text_color = '#FFFFFF';
         form.forEach(function(element){
@@ -273,13 +285,15 @@ function change_theme(is_dark_mode){
         let dropdown_content_background_color = 'rgba(255, 255, 255, 1)';
         dropdown_content.forEach(function(element){
             element.style.backgroundColor  = dropdown_content_color;
-            element.addEventListener('mouseenter', function() {
+            element.addEventListener('a:hover ', function() {
                 element.style.color =  dropdown_content_color; 
             });
             element.addEventListener('mouseleave', function() {
                 element.style.color = ''; 
             });
         });
+
+        // .dropdown-content a:hover {background-color: #ddd;}
     }
 }
 // function send_theme_state(is_dark_mode) {

@@ -62,7 +62,6 @@
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -70,14 +69,16 @@
   
   /* Links inside the dropdown */
   .dropdown-content a {
-    color: black;
+    color: #000000;
     padding: 12px;
     text-decoration: none;
     display: block;
   }
   
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #ddd;}
+  .dropdown-content a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
   
   /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
   .show {display:block;}
@@ -651,21 +652,6 @@ input[type="file"] {
     transform: translateX(26px);
     background-color: #000000;
   }
-
-.picture_select{
-    font-family: "CaviarDreams_Bold", sans-serif;     
-    background-color: #FFFFFF; 
-    border: none;   
-    color: #000000; 
-    padding: 5px 15px;   
-    text-align: center; 
-    text-decoration: none;  
-    display: inline-block;  
-    font-size: 16px; 
-    margin-bottom: 10px; 
-    cursor: pointer; 
-    border-radius: 5px; 
-}
 
 .dark_mode_container{
     display:flex;
