@@ -1,50 +1,278 @@
-let mode_button = document.getElementById('mode_switch_button');
-
-mode_button.addEventListener('click', function() {
-    let body = document.body;
-    let is_darkMode = body.classList.contains('dark_mode');
-    
-    if (is_darkMode) {
-        body.classList.remove('dark_mode');
-        body.classList.add('light_mode');
-    } 
-    else {
-        body.classList.remove('light_mode');
-        body.classList.add('dark_mode');
+function change_theme_by_cookie(){
+    // document.cookie = "dark_mode=" + is_dark_mode + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; SameSite=strict";
+    let is_darkmode_by_cookie = document.cookie.split("; ");
+    for(let i = 0; i < is_darkmode_by_cookie.length; i++){
+        let cookie_parameter = is_darkmode_by_cookie[i].split("=");
+        if (cookie_parameter[0] === "dark_mode"){
+            if(cookie_parameter[1].trim() === "true"){
+                let its_dark_mode = true;
+                change_theme(its_dark_mode);
+            }
+            else{
+                let its_dark_mode = false;
+                change_theme(its_dark_mode);
+            }
+            break;
+        }
     }
+}
 
-    let black_buttons = document.querySelectorAll('.BlackButton,#prev_month, #next_month');
-    let black_buttons_text_color = is_darkMode ? '#FFFFFF' : '#000000';
-    let black_buttons_color = is_darkMode ? '#000000' : '#FFFFFF';
-    black_buttons.forEach(function(black_button){
-        black_button.style.color = black_buttons_text_color;
-        black_button.style.background = black_buttons_color;
-    });
-
-    let white_buttons = document.querySelectorAll('.WhiteButton');
-    let white_buttons_text_color = is_darkMode ? '#000000' : '#FFFFFF';
-    let white_buttons_color = is_darkMode ? '#FFFFFF' : '#000000';
-    white_buttons.forEach(function(white_button){
-        white_button.style.color = white_buttons_text_color;
-        white_button.style.background = white_buttons_color;
-    });
-
-    let cells = document.querySelectorAll('.monthly_view tbody th, .monthly_view tbody td');
-    let borderColor = is_darkMode ? '#000000' : '#FFFFFF';
-
-    cells.forEach(function(cell) {
-        cell.style.border = '2px solid ' + borderColor;
-    });
-
-    let today = document.querySelectorAll('.today_cell');
-    let today_text_color = is_darkMode ? '#FFFFFF' : '#000000';
-    let today_color = is_darkMode ? '#000000' : '#FFFFFF';
-    today.forEach(function(todays){
-        todays.style.color = today_text_color;
-        todays.style.background = today_color;
-        todays.style.border = '4px solid ' + borderColor;
-
-    });
+document.addEventListener("DOMContentLoaded", function() {
+    if (window.location.pathname === "/style_settings") {
+        let dark_mode_switch = document.getElementById('mode_switch_button');
+        
+        let is_darkmode_by_cookie = document.cookie.split("; ");
+        for(let i = 0; i < is_darkmode_by_cookie.length; i++){
+            let cookie_parameter = is_darkmode_by_cookie[i].split("=");
+            if (cookie_parameter[0] === "dark_mode"){
+                if(cookie_parameter[1].trim() === "true"){
+                    if(!dark_mode_switch.checked){
+                        dark_mode_switch.checked =! dark_mode_switch.checked;
+                    }
+                    let its_dark_mode = true;
+                    change_theme(its_dark_mode);
+                }
+                else{
+                    let its_dark_mode = false;
+                    change_theme(its_dark_mode);
+                }
+                break;
+            }
+        }
+        
+        dark_mode_switch.addEventListener('change', function(){
+            let is_dark_mode = dark_mode_switch.checked;
+            change_theme(is_dark_mode);
+        
+            document.cookie = "dark_mode=" + is_dark_mode + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; SameSite=Strict";
+        });
+    }
+    else{
+        change_theme_by_cookie();
+    }
 });
 
-    
+let black    = '#000000';
+let half_black = 'rgba(0, 0, 0, 0.5)'
+let white = '#FFFFFF';
+let half_white = 'rgba(255, 255, 255, 0.5)'
+
+let input_field  = document.querySelectorAll('.input-field ');
+
+let form_input  = document.querySelectorAll('form input[type="text"], form input[type="password"],form input[type="email"],form input[type="tel"],form textarea');
+
+let label  = document.querySelectorAll('label');
+
+let paragraph  = document.querySelectorAll('p');
+
+let form  = document.querySelectorAll('.form');
+
+let black_buttons = document.querySelectorAll('.BlackButton');
+
+let pagenation_buttons = document.querySelectorAll('#prev_month, #next_month, #prev_day, #next_day');
+
+let white_buttons = document.querySelectorAll('.WhiteButton');
+
+let cells = document.querySelectorAll('.monthly_view tbody th, .monthly_view tbody td');
+
+let calendar_basic = document.querySelectorAll('.calendar_basic');
+
+let calendar_basic_today = document.querySelectorAll('.today'); 
+
+let today_cell = document.querySelectorAll('.today_cell');
+
+let transparent = document.querySelectorAll('.transparent');
+
+let event_cell = document.querySelectorAll('.event_cell');
+
+let time_cell = document.querySelectorAll('.time_cell');
+
+let dropdown_content = document.querySelectorAll('.dropdown-content');
+
+let setting_content = document.querySelectorAll('.setting_content');
+
+function change_theme(is_dark_mode){
+    let body = document.body;
+    if (is_dark_mode) {
+        body.classList.remove('light_mode');
+        body.classList.add('dark_mode');
+
+        input_field.forEach(function(element){
+            element.style.color = white;
+            element.style.borderBottom = '1px solid' + white;
+            element.addEventListener('focus', function() {
+                element.style.borderBottom = '2px solid' + white; 
+            });
+            element.addEventListener('blur', function() {
+                element.style.borderBottom = '1px solid' + white; 
+            });
+        });
+
+        form_input.forEach(function(element){
+            element.style.color = white;
+        });
+
+        label.forEach(function(element){
+            element.style.color = white;
+        });
+
+        paragraph.forEach(function(element){
+            element.style.color = white;
+        });
+
+        form.forEach(function(element){
+            element.style.color = white;
+        });
+
+        black_buttons.forEach(function(element){
+        element.style.color = black;
+        element.style.backgroundColor  = white;
+        });
+
+        pagenation_buttons.forEach(function(element){
+        element.style.color = white;
+        });
+
+        white_buttons.forEach(function(element){
+            element.style.color = white;
+            element.style.borderBottom = '1px solid' + white;  
+        });  
+
+        cells.forEach(function(element) {
+        element.style.border = '2px solid ' + white;
+        });
+
+        calendar_basic.forEach(function(element) {
+            element.style.backgroundColor = half_black;
+        });
+
+        calendar_basic_today.forEach(function(element) {
+            element.style.backgroundColor = half_black;
+        });
+
+        today_cell.forEach(function(element){
+            element.style.color = black;
+            element.style.backgroundColor  = white;
+            element.style.border = '4px solid ' + white;
+        });
+
+        transparent.forEach(function(element){
+            element.style.backgroundColor  = half_black;
+        });
+
+        event_cell.forEach(function(element){
+            element.style.backgroundColor  = half_black;
+            element.style.border = '1px solid ' + half_white;
+        });
+
+        time_cell.forEach(function(element){
+            element.style.color  = black;
+            element.style.backgroundColor  = half_white;
+            element.style.border = '1px solid ' + half_black;
+        });
+
+        dropdown_content.forEach(function(element){
+            element.style.backgroundColor  = black;
+            element.addEventListener('a', function() {
+                element.style.color = white; 
+            });
+            element.addEventListener('a:hover ', function() {
+                element.style.color =  'rgba(255, 255, 255, 0.2)'; 
+            });
+           
+        });
+
+        setting_content.forEach(function(element){
+            element.style.color  = white;
+            element.style.borderBottom = '1px solid ' + white;
+        });
+
+      
+
+        // .dropdown-content a:hover {background-color: #ddd;}
+    } 
+    else {
+        body.classList.remove('dark_mode');
+        body.classList.add('light_mode');
+
+        input_field.forEach(function(element){
+            element.style.color = black;
+            element.style.borderBottom = '1px solid' + black;
+            element.addEventListener('focus', function() {
+                element.style.borderBottom = '2px solid' + black; 
+            });
+            element.addEventListener('blur', function() {
+                element.style.borderBottom = '1px solid' + black; 
+            });
+        });
+
+        form_input.forEach(function(element){
+            element.style.color = black;
+        });
+
+        label.forEach(function(element){
+            element.style.color = black;
+        });
+
+        paragraph.forEach(function(element){
+            element.style.color = black;
+        });
+
+        black_buttons.forEach(function(element){
+            element.style.color = white;
+            element.style.backgroundColor  = black;
+        });
+
+        pagenation_buttons.forEach(function(element){
+            element.style.color = black;
+        });
+
+        white_buttons.forEach(function(element){
+            element.style.color = black;
+            element.style.borderBottom = '1px solid' + black;  
+        }); 
+
+        cells.forEach(function(element) {
+            element.style.border = '2px solid ' + black;
+        });
+
+        calendar_basic.forEach(function(element) {
+            element.style.backgroundColor = half_white;
+        });
+
+        calendar_basic_today.forEach(function(element) {
+            element.style.backgroundColor = half_white;
+        });
+
+        today_cell.forEach(function(element){
+            element.style.color = white;
+            element.style.backgroundColor  = black;
+            element.style.border = '4px solid ' + black;
+        });
+
+        transparent.forEach(function(transparent){
+            transparent.style.backgroundColor  = half_white;
+        });
+
+        event_cell.forEach(function(element){
+            element.style.backgroundColor  = half_white;
+            element.style.border = '1px solid ' + half_black;
+        });
+
+        time_cell.forEach(function(element){
+            element.style.color  = white;
+            element.style.backgroundColor  = half_black;
+            element.style.border = '1px solid ' + half_white;
+        });
+
+        dropdown_content.forEach(function(element){
+            element.style.backgroundColor  = white;
+        });
+
+        setting_content.forEach(function(element){
+            element.style.color  = black;
+            element.style.borderBottom = '1px solid ' + black;
+        });
+        
+    }
+}
