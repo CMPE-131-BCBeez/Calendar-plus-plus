@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="{{url_for('static', filename='api_access.js')}}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     <script src="{{url_for('static', filename='theme_script.js')}}"></script>
 
-    <link rel=" icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     {% block head %}
     <title>{% block title %}{% endblock %} - Calendar++</title>
     {% endblock %}
@@ -22,28 +22,44 @@
     {% for message in messages %}
     <li>{{ message }}</li>
     {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
+</ul>
+{% endif %}
+{% endwith %}
+  
+<body class="light_mode">
+  <div class="wallpaper" style="background-image: url('../static/image/siroicon2.png')">
+    <div class="transparent">
+      {% block body %}
+        {% block navbar %}
+          <button onclick="dropDown()" class="dropbtn BlackButton">Settings</button>
+            <div id="settings" class="dropdown-content">
+              <a href="/data_management" class="setting_content">
+                Manage my data<!--Go to the sign in page-->
+              </a>
+              <a href="/security_settings" class="setting_content">
+                 Security Settings<!--Go to the sign in page-->
+              </a>
+              <a href="/social_settings" class="setting_content">
+                Social Settings<!--Go to the sign in page-->
+              </a>
+              <a href="/style_settings" class="setting_content">
+                Style Settings<!--Go to the sign in page-->
+              </a>
+            </div>
 
-  <body class="light_mode">
-    <!-- {% block navbar %}
-    <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
-    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly
-        View</button>
-    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly
-        View</button>
-    <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
-        View</button>
-    <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
-       
-    <button type="button" id="today_button" class="BlackButton">Today</button>
-    {% endblock %} -->
+          <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
+            <div id="settings" class="dropdown-content">
+              <a href="../template/new_event" class="WhiteButton">
+                Security Settings<!--Go to the sign in page-->
+              </a>
+            </div>
+        {% endblock %}
+      {% endblock %}
+      <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+    </div>
+  </div>
+</body>
 
-
-    {% block body %}
-    {% endblock %}
-  </body>
 
   <script>
     /* When the user clicks on the button,
