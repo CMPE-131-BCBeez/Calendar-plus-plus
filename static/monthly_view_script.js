@@ -211,7 +211,6 @@ document.getElementById('prev_month').addEventListener('click', function() {
   if (current_month === 0) {
     current_year--;
     current_month = 12;
-    window.location.reload();
   }
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
@@ -224,7 +223,6 @@ document.getElementById('next_month').addEventListener('click', function() {
   if (current_month === 13) {
     current_year++;
     current_month = 1;
-    window.location.reload();
   }
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
@@ -260,9 +258,3 @@ document.querySelectorAll('.calendar_basic').forEach(cell => {
     window.daily_view_url = daily_view_url;
   });
 });
-
-//load the get_location_and_send() when it finished loading page
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   get_location_and_send();
-// });
