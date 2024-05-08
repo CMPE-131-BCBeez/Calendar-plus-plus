@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -19,10 +18,6 @@
   <script async src="{{url_for('static', filename='api_access.js')}}"></script>
   <script src="{{url_for('static', filename='theme_script.js')}}"></script>
 
-  <link rel=" icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
-  {% block head %}
-  <title>{% block title %}{% endblock %} - Calendar++</title>
-  {% endblock %}
 
 </head>
 
@@ -33,29 +28,11 @@
   {% for message in messages %}
   <li>{{ message }}</li>
   {% endfor %}
-  {% for message in messages %}
-  <li>{{ message }}</li>
-  {% endfor %}
 </ul>
 {% endif %}
 {% endwith %}
 
-<!-- <body class="{% if is_dark_mode %}dark_mode{% else %}light_mode{% endif %}"> -->
 
-<!-- <body class="light_mode"></body> -->
-
-<!-- <div class="wallpaper" style="background-image: url('../static/image/siroicon2.png')">
-  <div class="transparent">  -->
-<!-- {% block navbar %}
-    <button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>
-    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly
-        View</button>
-    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly
-        View</button>
-    <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
-        View</button>
-    <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
-    {% endblock %} -->
 
 {% block body %}
 {% endblock %}

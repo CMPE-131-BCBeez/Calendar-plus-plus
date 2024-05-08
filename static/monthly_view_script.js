@@ -30,25 +30,21 @@ function get_timestamp_monthly(year, month, timestamp_start_day, timestamp_last_
   };
 }
 
-// function get_timestamp_for_event(current_year, current_month, event_day_cell) {
-//   let localDate = new Date(Date.UTC(current_year, current_month - 1, event_day_cell)).getTime();
-//   let = UTC_timestamp_for_event = localDate / 1000;
-//   return UTC_timestamp_for_event;
-// }
-// function get_timestamp_for_event(current_year, current_month, event_day_cell) {
-//   let localDate = new Date(Date.UTC(current_year, current_month - 1, event_day_cell)).getTime();
-//   let = UTC_timestamp_for_event = localDate / 1000;
-//   return UTC_timestamp_for_event;
-// }
-
-
 const timestamp = get_timestamp_monthly(current_year, current_month, first_date_on_calendar, last_date_on_calendar);
 const timestamp_for_first_date_on_calendar = timestamp.start;
 const timestamp_for_last_date_on_calendar = timestamp.end;
 
 
 try {
-  monthly_events = await query_events(timestamp_for_first_date_on_calendar, timestamp_for_last_date_on_calendar)
+  let prev_mon_ts = new Date(timestamp_for_first_date_on_calendar * 1000);
+  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 1)
+  prev_mon_ts /= 1000
+
+  let next_mon_ts = new Date(timestamp_for_last_date_on_calendar * 1000);
+  next_mon_ts.setMonth(next_mon_ts.getMonth() + 1)
+  next_mon_ts /= 1000
+
+  monthly_events = await query_events(prev_mon_ts, next_mon_ts)
 } catch (error) {
   console.error("Failed to get event data:", error);
   throw error;
@@ -110,13 +106,20 @@ function generate_calendar(year, month) {
 
   let render_event = (ts_key) => {
     let events = get_event_array(ts_key)
-    monthly_calendar += '<div>';
+    monthly_calendar += "<div>";
     monthly_calendar += '<ul>';
     if (events) {
       for (let e of events) {
         // console.log(`Rendering Event: ${e['title']} at date ${new Date(e['start_time'])}`)
-        let start_date = new Date(e['start_time'] * 1000).getHours()
-        monthly_calendar += '<li>' + start_date + " - " + new Date(e['end_time'] * 1000).getHours() + ": " + e['title'] + '</li>';
+        let start_date = new Date(e['start_time'] * 1000)
+        let end_date = new Date(e['end_time'] * 1000)
+        let event_list_item = '<li style="' + 'color:' + e['color'] + ';">' + start_date.getHours() + " - " + end_date.getHours()
+        if (start_date.getDate() != end_date.getDate()) {
+          event_list_item += " (on " + (end_date.getMonth() + 1) + "/" + end_date.getDate() + ")";
+        }
+
+        event_list_item += ": " + e['title'] + '</li>';
+        monthly_calendar += event_list_item
       }
     }
     monthly_calendar += '</ul>';
@@ -130,14 +133,10 @@ function generate_calendar(year, month) {
     let date_in_month = new Date(prev_month_last_day.getTime())
     date_in_month.setDate(date_num)
     let date_ts = date_in_month.getTime()
-    let event_for_this_day = get_event_array(date_ts)
-    console.log("before first date for loop running " + date_ts + " " + event_for_this_day)
     monthly_calendar += '<td class="' + prev_next_day_class + '">' + date_num;
     render_event(date_ts)
     monthly_calendar += '</td>';
     event_day_cell++;
-    console.log("before first date for loop running " + date_ts)
-    console.log("before first date for loop running " + date_ts)
   }
 
   event_day_cell = 1;
@@ -147,9 +146,7 @@ function generate_calendar(year, month) {
     if (year === this_year && month === this_month && day === this_day) {
       cell_class = 'today';
     }
-    else {
-      cell_class = 'calendar_basic';
-    }
+
     let date_ts = new Date(last_day.getTime())
     date_ts.setDate(day)
     monthly_calendar += '<td class="' + cell_class + '">' + day;
@@ -168,21 +165,12 @@ function generate_calendar(year, month) {
   //fill the blank after the last day
   if (last_day.getDay() !== 6 || next_month_mergin > 0) {
     for (let i = 0; i < next_month_mergin; i++) {
+      let date_ts = new Date(last_day.getTime())
+      date_ts.setDate(i + 1)
+      date_ts.setMonth(date_ts.getMonth() + 1)
       monthly_calendar += '<td class="' + prev_next_day_class + '">' + (i + 1);
-      monthly_calendar += '<div>';
-      monthly_calendar += '<ul>';
-      // if (event_for_this_day) {
-      // for (envents of event_for_this_day){
-      //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-      //   }
-      // }
-      // if (event_for_this_day) {
-      // for (envents of event_for_this_day){
-      //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-      //   }
-      // }
-      monthly_calendar += '</ul>';
-      monthly_calendar += '</div>';
+      //monthly_calendar += "<h4> Hello! I am in the first for loop! (iter" + i + ")</h4>"
+      render_event(date_ts)
       monthly_calendar += '</td>';
       event_day_cell++;
     }
@@ -191,21 +179,12 @@ function generate_calendar(year, month) {
 
   if (count_colmn < 6 || last_day.getDay() === 6) {
     for (let i = next_month_mergin; i < next_month_mergin + 7; i++) {
+      let date_ts = new Date(last_day.getTime())
+      date_ts.setDate(i + 1)
+      date_ts.setMonth(date_ts.getMonth() + 1)
       monthly_calendar += '<td class="' + prev_next_day_class + '">' + (i + 1);
-      monthly_calendar += '<div>';
-      monthly_calendar += '<ul>';
-      // if (event_for_this_day) {
-      // for (envents of event_for_this_day){
-      //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-      //   }
-      // }
-      // if (event_for_this_day) {
-      // for (envents of event_for_this_day){
-      //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-      //   }
-      // }
-      monthly_calendar += '</ul>';
-      monthly_calendar += '</div>';
+      //monthly_calendar += "<h4> Hello! I am in the second for loop! (iter" + i + ")</h4>"
+      render_event(date_ts)
       monthly_calendar += '</td>';
       event_day_cell++;
     }
@@ -217,16 +196,12 @@ function generate_calendar(year, month) {
   if (count_colmn < 6) {
     monthly_calendar += '<tr>'
     for (let i = next_month_mergin + 7; i < next_month_mergin + 14; i++) {
+      let date_ts = new Date(last_day.getTime())
+      date_ts.setDate(i + 1)
+      date_ts.setMonth(date_ts.getMonth() + 1)
       monthly_calendar += '<td class="' + prev_next_day_class + '">' + (i + 1);
-      monthly_calendar += '<div>';
-      monthly_calendar += '<ul>';
-      // if (event_for_this_day) {
-      // for (envents of event_for_this_day){
-      //     monthly_calendar += '<li>' + envents[start_time] + envents[title] + '</li>';
-      //   }
-      // }
-      monthly_calendar += '</ul>';
-      monthly_calendar += '</div>';
+      //monthly_calendar += "<h4> Hello! I am in the third for loop! (iter" + i + ")</h4>"
+      render_event(date_ts)
       monthly_calendar += '</td>';
       event_day_cell++;
     }
@@ -242,31 +217,62 @@ function generate_calendar(year, month) {
 
   document.getElementById('monthly_calendar').innerHTML = monthly_calendar;
 
-  // let todayCell = document.querySelector('.today');
-  // if (todayCell) {
-  //   let todayCellNumber = todayCell.innerText;
-  //   todayCell.innerHTML = '<span class="today_cell">' + todayCellNumber + '</span>';
-  // }
+  let todayCell = document.querySelector('.today');
+  if (todayCell) {
+    let event_div = Array.from(todayCell.children).filter((el) => el.tagName.toLowerCase() == 'div')[0]
+    event_div.style['border'] = "2px"
+    event_div.style['font-size'] = "15px"
+
+    let todayCellHTML = todayCell.innerHTML;
+    const regex = /^\d/
+    const today_date = todayCellHTML.match(regex)[0]
+    let bold_html = '<span class="today_cell">' + today_date + '</span>'
+    let new_html = bold_html + todayCellHTML.substring(today_date.length)
+    todayCell.innerHTML = new_html
+  }
 }
 
 //implement the button going back to previous month
-document.getElementById('prev_month').addEventListener('click', function () {
+document.getElementById('prev_month').addEventListener('click', async function () {
   current_month--;
   if (current_month === 0) {
     current_year--;
     current_month = 12;
   }
+
+  let prev_mon_ts = new Date(current_year, current_month, 1);
+  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 1)
+  prev_mon_ts /= 1000
+
+  let next_mon_ts = new Date(current_year, current_month + 1, 0);
+  next_mon_ts.setMonth(next_mon_ts.getMonth() + 1)
+  next_mon_ts /= 1000
+
+  monthly_events = await query_events(prev_mon_ts, next_mon_ts)
+
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
 });
 
 //implement the button going forward to next month
-document.getElementById('next_month').addEventListener('click', function () {
+document.getElementById('next_month').addEventListener('click', async function () {
   current_month++;
   if (current_month === 13) {
     current_year++;
     current_month = 1;
   }
+
+  let prev_mon_ts = new Date(current_year, current_month, 1);
+  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 1)
+  prev_mon_ts /= 1000
+
+  let next_mon_ts = new Date(current_year, current_month + 1, 0);
+  next_mon_ts.setMonth(next_mon_ts.getMonth() + 1)
+  next_mon_ts /= 1000
+
+  monthly_events = await query_events(prev_mon_ts, next_mon_ts)
+
+
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
 });
@@ -278,9 +284,20 @@ function year_month(month, year) {
 }
 
 //go to the month that have today
-document.getElementById('today_button_month').addEventListener('click', function () {
+document.getElementById('today_button_month').addEventListener('click', async function () {
   current_month = today.getMonth() + 1;
   current_year = today.getFullYear();
+
+  let prev_mon_ts = new Date(today.getFullYear(), today.getMonth(), 1);
+  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 1)
+  prev_mon_ts /= 1000
+
+  let next_mon_ts = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  next_mon_ts.setMonth(next_mon_ts.getMonth() + 1)
+  next_mon_ts /= 1000
+
+
+  monthly_events = await query_events(prev_mon_ts, next_mon_ts)
   generate_calendar(current_year, current_month);
   year_month(current_month, current_year);
 });
@@ -291,7 +308,7 @@ generate_calendar(current_year, current_month);
 //make the cell to button
 document.querySelectorAll('.calendar_basic').forEach(cell => {
   cell.addEventListener('click', function () {
-    let day = this.innerText;
+    let day = Number(this.innerText.match(/^\d/));
     let start_timestamp = new Date(current_year, current_month - 1, day, 0, 0, 0).getTime() / 1000;
     let end_timestamp = start_timestamp + (24 * 60 * 60);
     let daily_view_url = '/daily_calendar?start=' + start_timestamp + '&end=' + end_timestamp;
