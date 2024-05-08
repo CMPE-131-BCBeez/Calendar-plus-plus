@@ -19,8 +19,27 @@ function change_theme_by_cookie(){
 
 document.addEventListener("DOMContentLoaded", function() {
     if (window.location.pathname === "/style_settings") {
-        change_theme_by_cookie();
         let dark_mode_switch = document.getElementById('mode_switch_button');
+        
+        let is_darkmode_by_cookie = document.cookie.split("; ");
+        for(let i = 0; i < is_darkmode_by_cookie.length; i++){
+            let cookie_parameter = is_darkmode_by_cookie[i].split("=");
+            if (cookie_parameter[0] === "dark_mode"){
+                if(cookie_parameter[1].trim() === "true"){
+                    if(!dark_mode_switch.checked){
+                        dark_mode_switch.checked =! dark_mode_switch.checked;
+                    }
+                    let its_dark_mode = true;
+                    change_theme(its_dark_mode);
+                }
+                else{
+                    let its_dark_mode = false;
+                    change_theme(its_dark_mode);
+                }
+                break;
+            }
+        }
+        
         dark_mode_switch.addEventListener('change', function(){
             let is_dark_mode = dark_mode_switch.checked;
             change_theme(is_dark_mode);

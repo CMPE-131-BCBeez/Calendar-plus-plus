@@ -230,9 +230,9 @@ h2{
 }
 
 /* used for the monthly view page */
-.top_buttons{
+/* .top_buttons{
     align-items: right;  
-}
+} */
 
 #monthly_calendar table{
     width: 95vw;  
@@ -286,7 +286,7 @@ h2{
     background-color: #000000;
     color:#FFFFFF;
     font-size: 15px ;
-    display: border-box;
+    /* display: border-box; */
     border-collapse: collapse;
     border: 4px solid #000000;  
     
@@ -551,13 +551,13 @@ input[type="file"] {
     display: none;
   }
 
-input[type="file"]::-webkit-file-upload-button {
+/* input[type="file"]::-webkit-file-upload-button {
     background-color: #FFFFFF;
   }
   
   input[type="file"]::-ms-browse {
     background-color: #FFFFFF;
-  }
+  } */
 
 /* buttons */
 .BlackButton{   
