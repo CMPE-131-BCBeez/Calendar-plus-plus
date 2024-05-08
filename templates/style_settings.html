@@ -1,11 +1,5 @@
 {% extends "layout.html" %}
 {% block title %} Style Setting++ {% endblock %}
-<script>
-    function save_button(){
-        document.getElementById("dark_mode_form").submit();
-        document.getElementById("wallpaper_form").submit();
-    }
-</script>
 
 {% block body %}
 
@@ -40,7 +34,7 @@
         </div>
     </form>
     <div class="save_it">
-        <button type="button" onclick="save_button()" class="BlackButton">Save It</button>
+        <input type="submit" value="Save It" class="BlackButton"><br>
     </div>
 </div>
 {% endblock %}

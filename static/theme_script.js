@@ -1,36 +1,40 @@
-// document.getElementById('mode_switch_button').addEventListener('click', function() {
-// }
+function change_theme_by_cookie(){
+    // document.cookie = "dark_mode=" + is_dark_mode + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; SameSite=strict";
+    let is_darkmode_by_cookie = document.cookie.split("; ");
+    for(let i = 0; i < is_darkmode_by_cookie.length; i++){
+        let cookie_parameter = is_darkmode_by_cookie[i].split("=");
+        if (cookie_parameter[0] === "dark_mode"){
+            if(cookie_parameter[1].trim() === "false"){
+                let its_dark_mode = false;
+                change_theme(its_dark_mode);
+            }
+            else{
+                let its_dark_mode = true;
+                change_theme(its_dark_mode);
+            }
+            break;
+        }
+    }
+}
 
-
-//get the is_dark_mode state from backend and chane the variable here
-// function get_theme_state() {
-//     const xhr = new XMLHttpRequest();
-//     xhr.open('GET', '/dark_mode', true);
-//     xhr.onreadystatechange = function() {
-//         if (xhr.readyState === XMLHttpRequest.DONE) {
-//             const response = JSON.parse(xhr.responseText);
-//             is_dark_mode = response.is_dark_mode;
-//         }
-//     };
-//     xhr.send();
-// }
-
-document.addEventListener("DOMContentLoaded", function(){
-    change_theme(is_dark_mode)
-});
-
-let dark_mode_switch = document.getElementById('mode_switch_button');
-
-dark_mode_switch.addEventListener('change', function(){
-    let = is_dark_mode = dark_mode_switch.checked;
-    change_theme(is_dark_mode);
-
-    document.cookie = "dark_mode=" + is_dark_mode + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+document.addEventListener("DOMContentLoaded", function() {
+    if (window.location.pathname === "/style_settings") {
+        change_theme_by_cookie();
+        let dark_mode_switch = document.getElementById('mode_switch_button');
+        dark_mode_switch.addEventListener('change', function(){
+            let is_dark_mode = dark_mode_switch.checked;
+            change_theme(is_dark_mode);
+        
+            document.cookie = "dark_mode=" + is_dark_mode + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; SameSite=Strict";
+        });
+    }
+    else{
+        change_theme_by_cookie();
+    }
 });
 
 function change_theme(is_dark_mode){
     let body = document.body;
-    
     if (!is_dark_mode) {
         body.classList.remove('dark_mode');
         body.classList.add('light_mode');

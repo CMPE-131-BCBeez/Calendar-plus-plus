@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="{{url_for('static', filename='api_access.js')}}"></script>
-    <script src="{{url_for('static', filename='theme_script.js')}}"></script>
     
     <link rel=" icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     {% block head %}
@@ -25,10 +24,8 @@
 </ul>
 {% endif %}
 {% endwith %}
-
-<!-- <body class="{% if is_dark_mode %}dark_mode{% else %}light_mode{% endif %}"> -->
   
-<body class="dark_mode">
+<body class="light_mode">
   <div class="wallpaper" style="background-image: url('../static/image/siroicon2.png')">
     <div class="transparent">
       {% block body %}
@@ -57,6 +54,7 @@
             </div>
         {% endblock %}
       {% endblock %}
+      <script src="{{url_for('static', filename='theme_script.js')}}"></script>
     </div>
   </div>
 </body>
