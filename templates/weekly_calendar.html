@@ -2,6 +2,10 @@
 {% block title %} Weekly++ {% endblock %}
 
 {% block body %}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 195d14c53190d54b68563a76ec943406e5d5a589
 <body>
   <div class="button_header">
     {% block navbar %}
@@ -10,30 +14,39 @@
 
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
+<<<<<<< HEAD
     <button type="button" id="weekly" class="BlackButton" onclick="this_week()" >Jump To This Week</button>
+=======
+    <button type="button" id="weekly" class="BlackButton" onclick="this_week()">Jump To This Week</button>
+>>>>>>> 195d14c53190d54b68563a76ec943406e5d5a589
 
-      <div id="pagination_weekly">
-        <button onclick="previousWeek()" id="next_week"><</button>
-        <h2>Weekly Calendar</h2>
-        <button onclick="nextWeek()" id="prev_week">></button>
-      </div>
+    <div id="pagination_weekly">
+      <button onclick="previousWeek()" id="next_week">
+        << /button>
+          <h2>Weekly Calendar</h2>
+          <button onclick="nextWeek()" id="prev_week">></button>
+    </div>
   </div>
-<div class="overflow_container_weekly">
-  <table id="calendar" class="weekly_calendar">
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th id="sunday"></th>
-        <th id="monday"></th>
-        <th id="tuesday"></th>
-        <th id="wednesday"></th>
-        <th id="thursday"></th>
-        <th id="friday"></th>
-        <th id="saturday"></th>
-      </tr>
-    </thead>
+  <div class="overflow_container_weekly">
+    <table id="calendar" class="weekly_calendar">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th id="sunday"></th>
+          <th id="monday"></th>
+          <th id="tuesday"></th>
+          <th id="wednesday"></th>
+          <th id="thursday"></th>
+          <th id="friday"></th>
+          <th id="saturday"></th>
+        </tr>
+      </thead>
     </table>
+<<<<<<< HEAD
 <!-- </div> -->
+=======
+    <!-- </div> -->
+>>>>>>> 195d14c53190d54b68563a76ec943406e5d5a589
 
 
     <script>
@@ -91,20 +104,22 @@
         startDate.setDate(startDate.getDate() + 7);
         generateWeeklyCalendar(startDate);
       }
+<<<<<<< HEAD
+=======
 
-  function previousWeek() {
-    startDate.setDate(startDate.getDate() - 7);
-    generateWeeklyCalendar(startDate);
-  }
+      function previousWeek() {
+        startDate.setDate(startDate.getDate() - 7);
+        generateWeeklyCalendar(startDate);
+      }
+>>>>>>> 195d14c53190d54b68563a76ec943406e5d5a589
 
-  function this_week() {
-    startDate = new Date();
-    generateWeeklyCalendar(startDate);
-  }
+      function this_week() {
+        startDate = new Date();
+        generateWeeklyCalendar(startDate);
+      }
 
-  window.onload = function() {
-    generateWeeklyCalendar(startDate);
-  };
-</script>
-{% endblock %}
-
+      window.onload = function () {
+        generateWeeklyCalendar(startDate);
+      };
+    </script>
+    {% endblock %}

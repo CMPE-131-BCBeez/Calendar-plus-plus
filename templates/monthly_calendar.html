@@ -2,12 +2,17 @@
 {% block title %} Monthly++{% endblock %}
 
 {% block body %}
+<<<<<<< HEAD
 <div class="button_header"> 
+=======
+<div class="button_header">
+>>>>>>> 195d14c53190d54b68563a76ec943406e5d5a589
   {% block navbar %}
   {{ super() }}
   {% endblock %}
 
   <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
+<<<<<<< HEAD
        
   <button type="button" id="today_button_month" class="BlackButton">Jump To This Month</button>
 
@@ -21,6 +26,22 @@
   <div class="monthly_view">
     <div id="monthly_calendar"></div> 
   </div>
+=======
+
+  <button type="button" id="today_button_month" class="BlackButton">Jump To This Month</button>
+
+  <div id="pagination_monthly">
+    <button id="prev_month">
+      < </button>
+        <h2 id="year_month_header"></h2>
+        <button id="next_month">></button>
+  </div>
+</div>
+
+<div class="monthly_view">
+  <div id="monthly_calendar"></div>
+</div>
+>>>>>>> 195d14c53190d54b68563a76ec943406e5d5a589
 
 <script type="module" src="{{url_for('static', filename='monthly_view_script.js')}}"></script>
 {% endblock %}

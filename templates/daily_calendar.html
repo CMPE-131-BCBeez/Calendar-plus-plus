@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block title %} Daily++ {% endblock %}
+{% block title %} Daily++ {% endblock %}
 
 {% block body %}
 <div class="button_header">
@@ -7,11 +8,15 @@
     {% block navbar %}
     {{ super() }}
     {% endblock %}
-    
+
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
 
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
+<<<<<<< HEAD
          
+=======
+
+>>>>>>> 195d14c53190d54b68563a76ec943406e5d5a589
     <button type="button" id="today_button_daily" class="BlackButton">Jump To Today</button>
 </div>
 
@@ -19,17 +24,20 @@
     <div class="daily_item_event">
         <h1 class="small_h1">
             Today's Weather
+            Today's Weather
         </h1>
         <div class="event_add_container">
-           
+
+
         </div>
     </div>
 
     <div class="daily_container">
         <div id="pagination_daily">
-            <button id="prev_day"><</button>
-            <h2 id="year_month_day_header"></h2>
-            <button id="next_day">></button>
+            <button id="prev_day">
+                << /button>
+                    <h2 id="year_month_day_header"></h2>
+                    <button id="next_day">></button>
         </div>
         <div class="daily_view_container">
             <div id="am_daily_view"></div>

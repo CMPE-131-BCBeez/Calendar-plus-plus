@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="{{url_for('static', filename='api_access.js')}}"></script>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+    <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+
     {% block head %}
     <title>{% block title %}{% endblock %} - Calendar++</title>
     {% endblock %}
@@ -58,26 +60,33 @@
   </div>
 </body>
 
-<script>
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function dropDown() {
-  document.getElementById("settings").classList.toggle("show");
-}
 
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
+  <script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function dropDown() {
+      document.getElementById("settings").classList.toggle("show");
+    }
+
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function (event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
       }
     }
+<<<<<<< HEAD
   }
 }
 </script>
+=======
+  </script>
+>>>>>>> 195d14c53190d54b68563a76ec943406e5d5a589
 
   </html>
