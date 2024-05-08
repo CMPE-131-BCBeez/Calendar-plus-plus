@@ -67,7 +67,7 @@ let paragraph  = document.querySelectorAll('p');
 
 let form  = document.querySelectorAll('.form');
 
-let BlackButton = document.querySelectorAll('.BlackButton');
+let black_buttons = document.querySelectorAll('.BlackButton');
 
 let pagenation_buttons = document.querySelectorAll('#prev_month, #next_month, #prev_day, #next_day');
 
@@ -75,7 +75,7 @@ let white_buttons = document.querySelectorAll('.WhiteButton');
 
 let cells = document.querySelectorAll('.monthly_view tbody th, .monthly_view tbody td');
 
-let  calendar_basic = document.querySelectorAll('.calendar_basic');
+let calendar_basic = document.querySelectorAll('.calendar_basic');
 
 let calendar_basic_today = document.querySelectorAll('.today'); 
 
@@ -88,6 +88,8 @@ let event_cell = document.querySelectorAll('.event_cell');
 let time_cell = document.querySelectorAll('.time_cell');
 
 let dropdown_content = document.querySelectorAll('.dropdown-content');
+
+let setting_content = document.querySelectorAll('.setting_content');
 
 function change_theme(is_dark_mode){
     let body = document.body;
@@ -122,7 +124,7 @@ function change_theme(is_dark_mode){
             element.style.color = white;
         });
 
-        BlackButton.forEach(function(element){
+        black_buttons.forEach(function(element){
         element.style.color = black;
         element.style.backgroundColor  = white;
         });
@@ -164,19 +166,28 @@ function change_theme(is_dark_mode){
         });
 
         time_cell.forEach(function(element){
+            element.style.color  = black;
             element.style.backgroundColor  = half_white;
             element.style.border = '1px solid ' + half_black;
         });
 
         dropdown_content.forEach(function(element){
             element.style.backgroundColor  = black;
+            element.addEventListener('a', function() {
+                element.style.color = white; 
+            });
             element.addEventListener('a:hover ', function() {
-                element.style.color =  black; 
+                element.style.color =  'rgba(255, 255, 255, 0.2)'; 
             });
-            element.addEventListener('mouseleave', function() {
-                element.style.color = ''; 
-            });
+           
         });
+
+        setting_content.forEach(function(element){
+            element.style.color  = white;
+            element.style.borderBottom = '1px solid ' + white;
+        });
+
+      
 
         // .dropdown-content a:hover {background-color: #ddd;}
     } 
@@ -249,12 +260,18 @@ function change_theme(is_dark_mode){
         });
 
         time_cell.forEach(function(element){
+            element.style.color  = white;
             element.style.backgroundColor  = half_black;
             element.style.border = '1px solid ' + half_white;
         });
 
         dropdown_content.forEach(function(element){
             element.style.backgroundColor  = white;
+        });
+
+        setting_content.forEach(function(element){
+            element.style.color  = black;
+            element.style.borderBottom = '1px solid ' + black;
         });
         
     }
