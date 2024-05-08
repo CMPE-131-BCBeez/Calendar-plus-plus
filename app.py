@@ -116,7 +116,6 @@ def register_page() -> str:
             cursor.execute("SELECT username, email FROM Users WHERE username = ? OR email = ?", (username, email))
             res = cursor.fetchone()
             print(f"{res}")
-            print(f"{res}")
             if (res):
                 flash("This username already exists")
                 return render_template("user_register.html"), 400 # TODO: change to template rendering once frontend decides how they want to handle errors
