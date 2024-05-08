@@ -1,33 +1,37 @@
 // document.getElementById('mode_switch_button').addEventListener('click', function() {
 // }
-let is_dark_mode;
 
 
 //get the is_dark_mode state from backend and chane the variable here
-function get_theme_state() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/dark_mode', true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            const response = JSON.parse(xhr.responseText);
-            is_dark_mode = response.is_dark_mode;
-        }
-    };
-    xhr.send();
-}
+// function get_theme_state() {
+//     const xhr = new XMLHttpRequest();
+//     xhr.open('GET', '/dark_mode', true);
+//     xhr.onreadystatechange = function() {
+//         if (xhr.readyState === XMLHttpRequest.DONE) {
+//             const response = JSON.parse(xhr.responseText);
+//             is_dark_mode = response.is_dark_mode;
+//         }
+//     };
+//     xhr.send();
+// }
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     change_theme(is_dark_mode)
-// });
+document.addEventListener("DOMContentLoaded", function(){
+    change_theme(is_dark_mode)
+});
 
-document.getElementById('mode_switch_button').addEventListener('change', function() {
-    change_theme(this.checked);
+let dark_mode_switch = document.getElementById('mode_switch_button');
+
+dark_mode_switch.addEventListener('change', function(){
+    let = is_dark_mode = dark_mode_switch.checked;
+    change_theme(is_dark_mode);
+
+    document.cookie = "dark_mode=" + is_dark_mode + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
 });
 
 function change_theme(is_dark_mode){
     let body = document.body;
     
-    if (is_dark_mode) {
+    if (!is_dark_mode) {
         body.classList.remove('dark_mode');
         body.classList.add('light_mode');
 
