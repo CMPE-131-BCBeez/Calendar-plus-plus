@@ -34,9 +34,9 @@
 /* Dropdown Button */
 .dropbtn {
     font-family: "CaviarDreams_Bold", sans-serif;     
-    background-color: #000000; 
+    /* background-color: #000000;  */
     border: none;   
-    color: #ffffff; 
+    /* color: #ffffff;  */
     padding: 5px 15px;   
     text-align: center; 
     text-decoration: none;  
@@ -62,23 +62,24 @@
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f1f1f1;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
     z-index: 1;
   }
   
   /* Links inside the dropdown */
   .dropdown-content a {
-    color: black;
+    /* color: #FFFFFF; */
     padding: 12px;
     text-decoration: none;
     display: block;
   }
   
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #ddd;}
-  
+  /* .dropdown-content a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+   */
   /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
   .show {display:block;}
 
@@ -86,7 +87,7 @@
 body, form{   
     font-family: "CaviarDreams_Bold", sans-serif;     
     font-size: 20px;      
-    color:#000000;
+    /* color:#000000; */
 }
 /* use dark/lightmode */
 
@@ -100,9 +101,10 @@ form textarea {
     /* background-color: rgba(0, 0, 0, 0.0);   */
 }
 
-.label{
+/* .label{
     color:#000000;
-}
+} */
+
 .wallpaper{
     top: 0;
     left: 0;
@@ -151,15 +153,13 @@ form textarea {
     top:0;
     left:0;
     right:0;
-    
-
 }
 
 .setting_content{
     font-family: "CaviarDreams_Bold", sans-serif;   
     background-color: rgba(255, 255, 255, 0); 
     border-bottom: 1px solid black; 
-    color: #000000; 
+    /* color: #000000;  */
     padding: 0px 2px; 
     text-align: center; 
     text-decoration: none;  
@@ -230,9 +230,9 @@ h2{
 }
 
 /* used for the monthly view page */
-.top_buttons{
+/* .top_buttons{
     align-items: right;  
-}
+} */
 
 #monthly_calendar table{
     width: 95vw;  
@@ -261,7 +261,7 @@ h2{
     width: 100%;
     font-size: 15px; 
     height: calc(80vh / 6);  
-    background-color: rgba(255, 255, 255, 0.5); 
+    /* background-color: rgba(255, 255, 255, 0.5);  */
     border: 2px solid #000000; 
 }
 
@@ -283,23 +283,23 @@ h2{
 }
 
 .today_cell {
-    background-color: #000000;
-    color:#FFFFFF;
+    /* background-color: #000000;
+    color:#FFFFFF; */
     font-size: 15px ;
-    display: border-box;
+    /* display: border-box; */
     border-collapse: collapse;
     border: 4px solid #000000;  
     
 }
 
 .today{
-    background-color: rgba(255, 255, 255, 0.5);
+    /* background-color: rgba(255, 255, 255, 0.5); */
     border: 2px solid #000000; 
 }
 
 .events{
     font-family: "CaviarDreams", sans-serif;
-    color:#000000;
+    /* color:#000000; */
 }
 
 .five_cells_height{
@@ -322,8 +322,8 @@ h2{
 .event_select {
     font-family: "CaviarDreams_Bold", sans-serif;   
     background-color: rgba(255, 255, 255, 0); 
-    border-bottom: 1px solid black; 
-    color: #000000; 
+    /* border-bottom: 1px solid black;  */
+    /* color: #000000;  */
     padding: 0px 2px; 
     text-align: center; 
     text-decoration: none;  
@@ -352,7 +352,7 @@ h2{
     font-family: "CaviarDreams_Bold", sans-serif;     
     background-color: rgba(0, 0, 0, 0.0); 
     border: none;   
-    color: #000000; 
+    /* color: #000000;  */
     padding: 5px 15px;   
     text-align: center; 
     text-decoration: none;  
@@ -416,7 +416,7 @@ h2{
     color: white;
   }
   .weekly_calendar th {
-    background-color: #f2f2f2;
+    /* background-color: #f2f2f2; */
     position: relative;
     height: 40px;
   }
@@ -438,7 +438,7 @@ h2{
     margin-bottom: 20px;
   }
   .navButton {
-    background-color: black;
+    /* background-color: black; */
     border: none;
     color: white;
     padding: 10px 24px;
@@ -517,8 +517,8 @@ h2{
 
 .time_cell{
     font-family: "CaviarDreams_BoldItalic", sans-serif;
-    background-color: #000000;
-    color:#FFFFFF;
+    /* background-color: #000000; */
+    /* color:#FFFFFF; */
     font-size: 15px ;
     border: 1px solid #FFFFFF;
     padding: 15px;
@@ -526,8 +526,8 @@ h2{
 }
 
 .event_cell{
-    background-color: #FFFFFF;
-    color:#000000;
+    /* background-color: #FFFFFF; */
+    /* color:#000000; */
     font-size: 15px ;
     border: 1px solid #000000;
     width:100%;
@@ -543,28 +543,20 @@ input[type="color"] {
     background-color: rgba(0, 0, 0, 0);
 }
 
-.event_select{
+/* .event_select{
     background-color: #FFFFFF;
-}
+} */
 
 input[type="file"] {
     display: none;
   }
 
-input[type="file"]::-webkit-file-upload-button {
-    background-color: #FFFFFF;
-  }
-  
-  input[type="file"]::-ms-browse {
-    background-color: #FFFFFF;
-  }
-
 /* buttons */
 .BlackButton{   
     font-family: "CaviarDreams_Bold", sans-serif;     
-    background-color: #000000; 
+    /* background-color: #000000;  */
     border: none;   
-    color: #ffffff; 
+    /* color: #ffffff;  */
     padding: 5px 15px;   
     text-align: center; 
     text-decoration: none;  
@@ -577,9 +569,9 @@ input[type="file"]::-webkit-file-upload-button {
 
 .WhiteButton{
     font-family: "CaviarDreams_Bold", sans-serif;   
-    background-color: rgba(255, 255, 255, 0); 
-    border-bottom: 1px solid black; 
-    color: #000000; 
+    /* background-color: rgba(255, 255, 255, 0);  */
+    /* border-bottom: 1px solid black;  */
+    /* color: #000000;  */
     padding: 0px 2px; 
     text-align: center; 
     text-decoration: none;  
@@ -652,21 +644,6 @@ input[type="file"]::-webkit-file-upload-button {
     background-color: #000000;
   }
 
-.picture_select{
-    font-family: "CaviarDreams_Bold", sans-serif;     
-    background-color: #FFFFFF; 
-    border: none;   
-    color: #000000; 
-    padding: 5px 15px;   
-    text-align: center; 
-    text-decoration: none;  
-    display: inline-block;  
-    font-size: 16px; 
-    margin-bottom: 10px; 
-    cursor: pointer; 
-    border-radius: 5px; 
-}
-
 .dark_mode_container{
     display:flex;
     justify-content: left;   
@@ -681,8 +658,3 @@ input[type="file"]::-webkit-file-upload-button {
     justify-content: right;   
     align-items: center;  
 }
-
-
-
-
-

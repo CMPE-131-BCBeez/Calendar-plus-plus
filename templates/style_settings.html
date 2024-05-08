@@ -1,11 +1,5 @@
 {% extends "layout.html" %}
 {% block title %} Style Setting++ {% endblock %}
-<script>
-    function save_button(){
-        document.getElementById("dark_mode_form").submit();
-        document.getElementById("wallpaper_form").submit();
-    }
-</script>
 
 {% block body %}
 
@@ -25,24 +19,22 @@
 </h1>
 
 <div class="container">
-    <form action="/" method="POST" id="dark_mode_form">
         <div class="dark_mode_container">
-            <label for="mode_switch_button">Dark Mode</label>
+            <p>Dark Mode:</p>
         <label class="switch">
             <input type="checkbox" id="mode_switch_button" name="mode_switch_button">
             <span class="slider"></span>
         </label>
         </div>
-    </form>
     <form action="/upload_wallpaper" method="POST" enctype="multipart/form-data" id="wallpaper_form">
         <div class="dark_mode_container">
-            <p>Choose Your Wallpaper</p>
-        <label for="wallpaper" class="picture_select">Upload...</label>
+            <p>Choose Your Wallpaper:</p>
+        <label for="wallpaper" class="BlackButton">Upload...</label>
         <input type="file" id="wallpaper" name="wallpaper">
         </div>
     </form>
     <div class="save_it">
-        <button type="button" onclick="save_button()" class="BlackButton">Save It</button>
+        <input type="submit" value="Save It" class="BlackButton"><br>
     </div>
 </div>
 {% endblock %}
