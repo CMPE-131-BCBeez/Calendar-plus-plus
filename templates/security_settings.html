@@ -3,6 +3,20 @@
 
 {% block body %}
 
+<div class="button_header">
+    <button onclick="dropDown()" class="dropbtn">Settings</button>
+    <div id="settings" class="dropdown-content">
+        <a href="/security_settings" class="WhiteButton">
+            Security settings<!--Go to the sign in page-->
+        </a>
+    </div>
+
+    <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
+  
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
+         
+</div>
+
 <h1>
     Security settings
 </h1>
