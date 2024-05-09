@@ -21,11 +21,28 @@
     Data Management
 </h1>
 <div class="container">
-    <form action="/data_management" method="POST">
+    <button onclick="toggleDropdown('usernameDropdown')" class="dropbtn">Change Username</button>
+    <div id="usernameDropdown" class="dropdown-content" style="display: none;">
+        <form action="/data_management" method="POST">
+            <label for="new_username">New Username:</label><br>
+            <input type="text" id="new_username" name="new_username" required><br>
+            <input type="submit" value="Change Username">
+        </form>
+    </div>
+    
+    <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Verify Password</button>
+    <div id="passwordDropdown" class="dropdown-content" style="display: none;">
+        <form action="/verify_password" method="POST">
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <input type="submit" value="Verify Password">
+        </form>
+    </div>
+    <!--<form action="/data_management" method="POST">
         <label for="new_username">New Username:</label><br>
         <input type="text" id="new_username" name="new_username" required><br>
         <input type="submit" value="Change Username">
-    </form>
+    </form>-->
     <a href="/delete_account" class="WhiteButton">
         Delete my account<!--delete account-->
     </a><br>
