@@ -46,7 +46,7 @@ form input[type="tel"],
 form textarea {
     font-size: 23px; 
     font-family: "CaviarDreams_Bold", sans-serif;   
-    /* background-color: rgba(0, 0, 0, 0.0);   */
+    background-color: rgba(0, 0, 0, 0.0);  
 }
 
 .label{

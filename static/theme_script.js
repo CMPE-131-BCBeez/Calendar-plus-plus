@@ -168,7 +168,7 @@ function get_theme_state() {
 document.addEventListener("DOMContentLoaded", function() {
       let body = document.body;
     
-    if (is_dark_mode) {
+    if (!is_dark_mode) {
         body.classList.remove('dark_mode');
         body.classList.add('light_mode');
 

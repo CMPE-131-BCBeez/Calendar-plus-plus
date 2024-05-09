@@ -346,10 +346,29 @@ def change_password_email():
             flash("Incorrect confirmation code, please enter the latest Confirmation Code.")
     return render_template("change_password_email.html")
 
-@app.route("/data_management")
+@app.route("/data_management", methods = ["GET", "POST"])
 @login_required
 def data_management():
     #This will allow the user to download their data or delete/edit
+    if request.method == "POST":
+        new_username = request.form.get("new_username")
+        with app.app_context():
+            cursor = db.cursor()
+            query ="""SELECT confirmation_code FROM Users WHERE username=(?) """
+            cursor.execute(query, (new_username,))
+            user = cursor.fetchone()
+        
+        if not user:
+            # Update the username in the database
+            with app.app_context():
+                cursor = db.cursor()
+                cursor.execute("""UPDATE Users SET username = ? WHERE id = ?""", (new_username, session.get("user_id")))
+                db.commit()
+                flash("Username changed successfully!")
+                return redirect("/data_management")  # Redirect to the same page after username change
+        else:
+            flash("That username already exists, try another one.")
+            return redirect("/data_management")  
     return render_template("data_management.html")
 
 @app.route("/security_settings")

@@ -6,12 +6,15 @@
     Data Management
 </h1>
 <div class="container">
+    <form action="/data_management" method="POST">
+        <label for="new_username">New Username:</label><br>
+        <input type="text" id="new_username" name="new_username" required><br>
+        <input type="submit" value="Change Username">
+    </form>
     <a href="/delete_account" class="WhiteButton">
         Delete my account<!--delete account-->
     </a><br>
-    <a href="/register" class="WhiteButton">
-        Adding Phone number <!--Go to register page-->
-    </a><br>
+    
     <a href="/forgot_password" class="WhiteButton">
         Forgot Password<!--Go to the reset pasword page-->
     </a>
