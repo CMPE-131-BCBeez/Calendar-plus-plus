@@ -679,3 +679,11 @@ input[type="file"] {
     justify-content: right;   
     align-items: center;  
 }
+
+.flashes {
+    position: relative;
+    top: 30px; /* Adjust the distance from the top */
+    right: 20px; /* Adjust the distance from the right */
+    z-index: 9999; /* Ensure it's above other elements */
+    /* Additional styling as needed */  
+}
