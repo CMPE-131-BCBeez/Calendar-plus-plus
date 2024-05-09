@@ -85,13 +85,26 @@
   .show {display:block;}
 
 /*the body and form tag style*/
-body, form{   
+html, body, form{   
     font-family: "CaviarDreams_Bold", sans-serif;     
     font-size: 20px;      
     color:#000000;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    
+}
+
+body {
+    max-height: 100vh;
+    overflow: hidden; /* スクロールを防止する */
 }
 /* use dark/lightmode */
-
 form input[type="text"],     
 form input[type="password"], 
 form input[type="email"], 
@@ -125,6 +138,7 @@ form textarea {
     bottom:0;
     right:0;
     left:0;
+    overflow-y:auto;
 }
 
 /*the container class style*/
@@ -145,8 +159,7 @@ form textarea {
     margin: 0 auto;
     border-collapse: collapse; 
     margin-top: 10%; 
-    height: 1000%;
-    height: 1000%;
+    height: 100%;
     width: 80%;
     margin-bottom: 20px;   
     text-align: left;   
@@ -155,6 +168,64 @@ form textarea {
     top:0;
     left:0;
     right:0;
+}
+
+.color_button_cotainer{
+    display:flex;
+    justify-content: center;   
+    align-items: center;   
+    width:100%; 
+}
+
+.black_button_for_event{
+    background-color: #000000;
+    width: calc(100%/5);
+    height:25px;
+    border-radius: 5px;
+    border: 2px solid #FFFFFF; 
+    margin: 0px; 
+    cursor: pointer; 
+    padding:0px;
+}
+.red_button_for_event{
+    background-color: #820000;
+    width: calc(100%/5);
+    height:25px;
+    border-radius: 5px;
+    border: 2px solid #FFFFFF; 
+    margin: 0px; 
+    cursor: pointer; 
+    padding:0px;
+}
+.green_button_for_event{
+    background-color: #008200;
+    width: calc(100%/5);
+    height:25px;
+    border-radius: 5px;
+    border: 2px solid #FFFFFF; 
+    margin: 0px; 
+    cursor: pointer; 
+    padding:0px;
+}
+.blue_button_for_event{
+    background-color: #000082;
+    width: calc(100%/5);
+    height:25px;
+    border-radius: 5px;
+    border: 2px solid #FFFFFF; 
+    margin: 0px; 
+    cursor: pointer; 
+    padding:0px;
+}
+.yellow_button_for_event{
+    background-color: #828200;
+    width: calc(100%/5);
+    height:25px;
+    border-radius: 5px;
+    border: 2px solid #FFFFFF; 
+    margin: 0px; 
+    cursor: pointer; 
+    padding:0px;
 }
 
 .setting_content{
@@ -276,24 +347,21 @@ h2{
 
 .calendar_basic {
     font-family: "CaviarDreams_Italic", sans-serif;
-    font-family: "CaviarDreams_Italic", sans-serif;
     margin: 0 auto;
     width: 100%;
     font-size: 15px; 
-    height: calc(80vh / 6);  
+    max-height: calc(80vh / 6);  
     background-color: rgba(255, 255, 255, 0.5); 
     border: 2px solid #000000; 
 }
 
 .calendar_day {
     font-family: "CaviarDreams_BoldItalic", sans-serif;
-    font-family: "CaviarDreams_BoldItalic", sans-serif;
     font-size: 20px;    
     width: calc(100% / 7);  
     text-align: center;   
     border: 0px solid #000000;
     box-sizing: border-box; 
-    vertical-align: top; 
     vertical-align: top; 
 }   
 
@@ -355,6 +423,34 @@ h2{
     margin-bottom: 20px;
 }
 
+ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    height: calc(80vh / 6);  
+}
+
+li {
+    position:relative;
+    top:0;
+    margin-left: 20px;
+    padding: 0;
+    height:20px;
+    width:100%;
+}
+
+.event_for_monthly_ul{
+    text-align: left; 
+
+}
+/* 
+li::before {
+    content: "•";
+    margin-right: 0; 
+    font-size: 5em; 
+    vertical-align: top;
+} */
+
 /* .event_select option {
     padding: 5px;
 } */
@@ -415,7 +511,7 @@ h2{
 
 .overflow_container_weekly{
     overflow-y:auto; 
-    max-height: 100vh;
+    /* max-height: 100vh; */
 }
 
 .weekly_calendar{
