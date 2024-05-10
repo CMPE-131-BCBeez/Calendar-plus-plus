@@ -2,11 +2,12 @@
 {% block title %} Weekly++ {% endblock %}
 
 {% block body %}
-<body>
-  <div class="button_header">
-    {% block navbar %}
-    {{ super() }}
-    {% endblock %}
+  <div class="button_header_month">
+    <div class="right_head_buttons">
+      {% block navbar %}
+      {{ super() }}
+      {% endblock %}
+    </div>
 
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
@@ -14,13 +15,13 @@
 
       <div id="pagination_weekly">
         <button onclick="previousWeek()" id="next_week"><</button>
-        <h2>Weekly Calendar</h2>
+        <h2 class="weekly_header">Weekly Calendar</h2>
         <button onclick="nextWeek()" id="prev_week">></button>
       </div>
   </div>
 <div class="overflow_container_weekly">
   <table id="calendar" class="weekly_calendar">
-    <thead>
+    <thead class="weekly_header">
       <tr>
         <th>Time</th>
         <th id="sunday"></th>

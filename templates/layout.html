@@ -16,7 +16,7 @@
   <!--Handle flashing-->
   {% with messages = get_flashed_messages() %}
   {% if messages %}
-  <ul class=flashes>
+  <ul class="flashes">
     {% for message in messages %}
     <li>{{ message }}</li>
     {% endfor %}
@@ -29,6 +29,14 @@
     <div class="transparent">
       {% block body %}
         {% block navbar %}
+
+        <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
+            <!-- <div id="settings" class="dropdown-content">
+              <a href="../template/new_event" class="WhiteButton">
+                Security Settings<!--Go to the sign in page-->
+              <!-- </a>
+            </div> -->
+
           <button onclick="dropDown()" class="dropbtn BlackButton">Settings</button>
             <div id="settings" class="dropdown-content">
               <a href="/data_management" class="setting_content">
@@ -45,12 +53,7 @@
               </a>
             </div>
 
-          <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
-            <div id="settings" class="dropdown-content">
-              <a href="../template/new_event" class="WhiteButton">
-                Security Settings<!--Go to the sign in page-->
-              </a>
-            </div>
+          
         {% endblock %}
       {% endblock %}
       <script src="{{url_for('static', filename='theme_script.js')}}"></script>

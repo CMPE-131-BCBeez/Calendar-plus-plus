@@ -2,14 +2,15 @@
 {% block title %} Monthly++{% endblock %}
 
 {% block body %}
-<div class="button_header"> 
-  {% block navbar %}
-  {{ super() }}
-  {% endblock %}
-
+<div class="button_header_month"> 
   <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
        
   <button type="button" id="today_button_month" class="BlackButton">Jump To This Month</button>
+  <div class="right_head_buttons">
+    {% block navbar %}
+    {{ super() }}
+    {% endblock %}
+  </div>
 
     <div id="pagination_monthly">
       <button id="prev_month"><</button>

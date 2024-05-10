@@ -85,26 +85,13 @@
   .show {display:block;}
 
 /*the body and form tag style*/
-html, body, form{   
+body, form{   
     font-family: "CaviarDreams_Bold", sans-serif;     
     font-size: 20px;      
     color:#000000;
-    max-height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-    
-}
-
-body {
-    max-height: 100vh;
-    overflow: hidden; /* スクロールを防止する */
 }
 /* use dark/lightmode */
+
 form input[type="text"],     
 form input[type="password"], 
 form input[type="email"], 
@@ -129,6 +116,12 @@ form textarea {
     background-repeat: no-repeat;
     background-size: cover;
     position: fixed;
+    z-index: 0;
+}
+
+.flashes{
+    position:relative;
+    z-index: 9999;
 }
 
 .transparent{
@@ -138,7 +131,7 @@ form textarea {
     bottom:0;
     right:0;
     left:0;
-    overflow-y:auto;
+    overflow: hidden;
 }
 
 /*the container class style*/
@@ -280,16 +273,6 @@ h2{
     align-items: center;   
 }
 
-.event_h1 {
-    margin: 0 auto;
-    margin-top: 30px;   
-    text-align: left;   
-    width: 100%;
-    display: flex;      
-    justify-content: center;    
-    align-items: center;   
-}
-
 .small_h1 {
     font-size: 30px; 
     margin: 0 auto;
@@ -317,22 +300,36 @@ h2{
 .input-field:focus {    
     border-bottom: 2px solid black; 
 }
+#monthly_calendar{
+    width: 97vw;   
+    height: 100%;
+}
 
 #monthly_calendar table{
-    width: 95vw;  
-    width: 95vw;  
-    height: 70vh;
     border-collapse: collapse;
+    width:100%;
+    height:100%;
+    margin-bottom: 15px;
+
 }
 .button_header{
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
+    height:15vh;
 }
-.button_header{
+
+.button_header_month{
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
+    height:8vh;
+}
+
+.right_head_buttons{
+    position:absolute;
+    top:10px;
+    right:30px;
 }
 
 .monthly_view{
@@ -343,6 +340,7 @@ h2{
     align-items: center;     
     flex-direction: column; 
     margin-bottom: 15px;
+    height:85vh;
 }
 
 .calendar_basic {
@@ -350,7 +348,7 @@ h2{
     margin: 0 auto;
     width: 100%;
     font-size: 15px; 
-    max-height: calc(80vh / 6);  
+    height: calc(100% / 6);  
     background-color: rgba(255, 255, 255, 0.5); 
     border: 2px solid #000000; 
 }
@@ -362,7 +360,10 @@ h2{
     text-align: center;   
     border: 0px solid #000000;
     box-sizing: border-box; 
-    vertical-align: top; 
+    /* vertical-align: top;  */
+    height: 20px;
+    padding:0;
+    margin:0;
 }   
 
 .monthly_view tbody th,
@@ -392,9 +393,6 @@ h2{
     color:#000000;
 }
 
-.five_cells_height{
-    height: calc(70vh / 6);
-}
 .spacing_for_month_head{
     margin-left: 30px;
     margin-right: 30px;
@@ -426,8 +424,6 @@ h2{
 ul{
     margin: 0;
     padding: 0;
-    list-style-type: none;
-    height: calc(80vh / 6);  
 }
 
 li {
@@ -435,13 +431,11 @@ li {
     top:0;
     margin-left: 20px;
     padding: 0;
-    height:20px;
-    width:100%;
 }
 
 .event_for_monthly_ul{
     text-align: left; 
-
+    margin-top:3px;
 }
 /* 
 li::before {
@@ -461,7 +455,10 @@ li::before {
     display: flex;     
     justify-content: space-between;  
     align-items: center; 
-    /* margin-bottom: 10px;  */
+    position:absolute;
+    top:15px;
+    right:0;
+    left:0;  
 }
 
 #prev_month, #next_month,
@@ -488,6 +485,20 @@ li::before {
     display: flex;     
     justify-content: center;    
     align-items: center;    
+    /* position:absolute;
+    top:0; */
+}
+
+.weekly_header{
+    font-size: 40px; 
+    margin: 0 auto;
+    text-align: center;  
+    width: 70%;
+    display: flex;     
+    justify-content: center;    
+    align-items: center;    
+    /* position:absolute;
+    top:0; */
 }
 
 #year_month_day_header{
@@ -506,7 +517,10 @@ li::before {
     display: flex;     
     justify-content: space-between;  
     align-items: center; 
-    margin-bottom: 10px; 
+    position:absolute;
+    top:15px;
+    right:0;
+    left:0;
 }
 
 .overflow_container_weekly{
@@ -516,45 +530,57 @@ li::before {
 
 .weekly_calendar{
     border-collapse: collapse;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+    width: 97%;
+    margin:auto;
   }
   
-  .weekly_calendar th,
   .weekly_calendar td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
   }
+
   .weekly_calendar td {
     width: 100px;
   }
+
+  /* .weekly_calendar td{
+    background-color: rgba(0, 0, 0, 0);
+  } */
+
   .weekly_calendar  tr:first-child th {
-    background-color: black;
-    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    color:#000000;
   }
-  .weekly_calendar th {
-    background-color: #f2f2f2;
-    position: relative;
-    height: 40px;
+
+  .weekly_header{
+    height:10vh;
+    width:100%;
+
   }
-  .dayInfo {
+
+  /* .dayInfo {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
   }
+
   .dayName {
     font-size: 14px;
     font-weight: bold;
   }
+
   .dateNumber {
     font-size: 20px;
     font-weight: bold;
   }
+
   .navButtonContainer {
     margin-bottom: 20px;
   }
+
   .navButton {
     background-color: black;
     border: none;
@@ -569,10 +595,12 @@ li::before {
     cursor: pointer;
     border-radius: 8px;
   }
+
   .navButton:hover {
     background-color: #333;
     color: white;
   }
+  
   .selected {
     background-color: rgba(255, 255, 255, 0.5);
   }

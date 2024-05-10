@@ -17,7 +17,8 @@ function change_theme_by_cookie(){
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+// document.addEventListener("DOMContentLoaded", function() {
+    function dark_mode(){
     if (window.location.pathname === "/style_settings") {
         let dark_mode_switch = document.getElementById('mode_switch_button');
         
@@ -50,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
     else{
         change_theme_by_cookie();
     }
-});
+}
 
 let black    = '#000000';
 let half_black = 'rgba(0, 0, 0, 0.5)'
@@ -90,6 +91,8 @@ let time_cell = document.querySelectorAll('.time_cell');
 let dropdown_content = document.querySelectorAll('.dropdown-content');
 
 let setting_content = document.querySelectorAll('.setting_content');
+
+let flashes = document.querySelectorAll('flashes');
 
 function change_theme(is_dark_mode){
     let body = document.body;
@@ -187,9 +190,14 @@ function change_theme(is_dark_mode){
             element.style.borderBottom = '1px solid ' + white;
         });
 
-      
+        setting_content.forEach(function(element){
+            element.style.color  = white;
+            element.style.borderBottom = '1px solid ' + white;
+        });
 
-        // .dropdown-content a:hover {background-color: #ddd;}
+        flashes.forEach(function(element){
+            element.style.color = black;
+        })
     } 
     else {
         body.classList.remove('dark_mode');
@@ -273,6 +281,11 @@ function change_theme(is_dark_mode){
             element.style.color  = black;
             element.style.borderBottom = '1px solid ' + black;
         });
-        
+
+        flashes.forEach(function(element){
+            element.style.color = white;
+        })
     }
 }
+
+dark_mode();
