@@ -421,18 +421,18 @@ def style_settings():
 @app.route("/api/events")
 def event_api():
     if session.get("user_id") is None:
-        return json.dumps({"error_msg":"Not logged in.", "user_id": None}), 403
+        return {"error_msg":"Not logged in.", "user_id": None}, 403
 
     # Args should be: start_date, end_date
     get_args = request.args
     if len(get_args) < 2 or (not (request.args.get('start_time') and request.args.get('end_time'))):
-        return json.dumps({"error_msg":"Invalid arguments.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
+        return {"error_msg":"Invalid arguments.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}, 400
     
     try:
         start_time_ts = int(request.args['start_time'])
         end_time_ts = int(request.args['end_time'])
     except ValueError:
-        return json.dumps({"error_msg":"Invalid timestamp format.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
+        return {"error_msg":"Invalid timestamp format.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}, 400
 
     start_datetime = datetime.fromtimestamp(start_time_ts)
     end_datetime = datetime.fromtimestamp(end_time_ts)
@@ -454,7 +454,7 @@ def event_api():
         records = cursor.fetchall()
     
     if not records:
-        return json.dumps({}), 404
+        return {}, 404
     
 
     output_dict = defaultdict(lambda: [])
@@ -466,19 +466,19 @@ def event_api():
         output_dict[date_ts].append(r)
     
 
-    return json.dumps(output_dict)
+    return output_dict
 
 
 
 @app.route("/api/weather")
 def weather_api():
     if session.get("user_id") is None:
-        return json.dumps({"error_msg":"Not logged in.", "user_id": None}), 403
+        return {"error_msg":"Not logged in.", "user_id": None}, 403
 
     # Args should be: start_date, end_date
     get_args = request.args
     if len(get_args) < 4 or (not (request.args.get('start_time') and request.args.get('end_time') and request.args.get('lat') and request.args.get('lng'))):
-        return json.dumps({"error_msg":"Invalid arguments.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
+        return {"error_msg":"Invalid arguments.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}, 400
     
     try:
         start_time_ts = int(request.args['start_time'])
@@ -486,13 +486,12 @@ def weather_api():
         lat = float(request.args['lat'])
         lng = float(request.args['lng'])
     except ValueError:
-        return json.dumps({"error_msg":"Invalid timestamp format.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}), 400
+        return {"error_msg":"Invalid timestamp format.", "start_time": get_args.get("start_time"), "end_time": get_args.get("end_time")}, 400
 
     start_datetime = datetime.fromtimestamp(start_time_ts)
     end_datetime = datetime.fromtimestamp(end_time_ts)
 
     return weather.getWeather(lat, lng, start_datetime, end_datetime)
-    return json.dumps(output_dict)
 
 @app.route('/upload_wallpaper', methods = ["GET","POST"])
 def upload():

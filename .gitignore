@@ -472,3 +472,5 @@ pip-selfcheck.json
 calendar.db
 __pycache__
 __pypackages__
+
+.cache.sqlite

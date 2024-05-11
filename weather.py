@@ -4,7 +4,6 @@ import requests_cache
 import pandas as pd
 from retry_requests import retry
 from datetime import datetime
-import json
 
 # Setup the Open-Meteo API client with cache and retry on error
 cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
@@ -20,8 +19,8 @@ def getWeather(latitude: float, longitude: float, start_time: datetime, end_time
     params = {
         "latitude": latitude,
         "longitude": longitude,
-        "current": ["temperature_2m", "is_day", "weather_code"],
-        "hourly": ["temperature_2m", "relative_humidity_2m", "weather_code"],
+        "current": ["temperature_2m", "is_day", "weather_code", "relative_humidity_2m"],
+        "hourly": ["temperature_2m", "weather_code"],
         "daily": ["weather_code", "temperature_2m_max"],
         "temperature_unit": "fahrenheit",
         "timezone": "America/Los_Angeles",
@@ -42,21 +41,21 @@ def getWeather(latitude: float, longitude: float, start_time: datetime, end_time
     current_temperature_2m = current.Variables(0).Value()
     current_is_day = current.Variables(1).Value()
     current_weather_code = current.Variables(2).Value()
+    current_humidity = current.Variables(3).Value()
 
     # print(f"Current time {type(current.Time())}")
     # print(f"Current temperature_2m {current_temperature_2m}")
     # print(f"Current is_day {current_is_day}")
     # print(f"Current weather_code {current_weather_code}")
-    current_dict = {"current": {"current_timestamp": current.Time(), "current_temp": current_temperature_2m, 
-                          "current_is_day": current_is_day, "current_wc": current_weather_code}}
+    current_dict = {"current": {"timestamp": current.Time(), "temperature_2m": current_temperature_2m, 
+                          "s_day": current_is_day, "weather_code": current_weather_code, "relative_humidity_2m": current_humidity}}
     if mode == "current":
-        return json.dumps(current_dict)
+        return current_dict
 
     # Process hourly data. The order of variables needs to be the same as requested.
     hourly = response.Hourly()
     hourly_temperature_2m = hourly.Variables(0).ValuesAsNumpy()
-    hourly_relative_humidity_2m = hourly.Variables(1).ValuesAsNumpy()
-    hourly_weather_code = hourly.Variables(2).ValuesAsNumpy()
+    hourly_weather_code = hourly.Variables(1).ValuesAsNumpy()
 
     hourly_data = {"date": pd.date_range(
         start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
@@ -65,15 +64,14 @@ def getWeather(latitude: float, longitude: float, start_time: datetime, end_time
         inclusive = "left"
     )}
     hourly_data["temperature_2m"] = hourly_temperature_2m
-    hourly_data["relative_humidity_2m"] = hourly_relative_humidity_2m
     hourly_data["weather_code"] = hourly_weather_code
 
     hourly_dataframe = pd.DataFrame(data = hourly_data)
-    hourly_dataframe['date'] = hourly_dataframe['date'].astype(str)
-    hour_dict = {"hourly": hourly_dataframe.to_dict(orient='dict')}
+    hourly_dataframe['date'] = hourly_dataframe['date'].astype(int) // (10 ** 9)
+    hour_dict = {"hourly": hourly_dataframe.to_dict(orient='list')}
     hour_dict.update(current_dict)
     if mode == "hourly":
-        return json.dumps(hour_dict)
+        return hour_dict
     
     # print(hourly_dataframe)
 
@@ -92,11 +90,10 @@ def getWeather(latitude: float, longitude: float, start_time: datetime, end_time
     daily_data["temperature_2m_max"] = daily_temperature_2m_max
 
     daily_dataframe = pd.DataFrame(data = daily_data)
-    daily_dataframe['date'] = daily_dataframe['date'].astype(str)
-
-    daily_dict = {"daily": daily_dataframe.to_dict('dict')}
+    daily_dataframe['date'] = daily_dataframe['date'].astype(int) // (10 ** 9)
+    daily_dict = {"daily": daily_dataframe.to_dict('list')}
     daily_dict.update(hour_dict)
-    return json.dumps(daily_dict)
+    return daily_dict
 
 
 if __name__ == "__main__":
