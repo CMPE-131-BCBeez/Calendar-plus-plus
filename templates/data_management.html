@@ -1,48 +1,54 @@
 {% extends "layout.html" %}
-{% block title %} Style Setting++ {% endblock %}
-<script>
-    function save_button(){
-        document.getElementById("dark_mode_form").submit();
-        document.getElementById("wallpaper_form").submit();
-    }
-</script>
+{% block title %} Data Management {% endblock %}
 
 {% block body %}
 
 <div class="button_header">
-
-    {% block navbar %}
-    {{ super() }}
-    {% endblock %}
-    
-    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
+    <button onclick="dropDown()" class="dropbtn">Settings</button>
+    <div id="settings" class="dropdown-content">
+        <a href="/security_settings" class="WhiteButton">
+            Security settings<!--Go to the sign in page-->
+        </a>
+    </div>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
+
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
+
 </div>
 
-<h1>
-    Style Settings
+<h1 class="top_h1">
+    Data Management
 </h1>
-
 <div class="container">
-    <form action="/" method="POST" id="dark_mode_form">
-        <div class="dark_mode_container">
-            <label for="mode_switch_button">Dark Mode</label>
-        <label class="switch">
-            <input type="checkbox" id="mode_switch_button" name="mode_switch_button">
-            <span class="slider"></span>
-        </label>
-        </div>
-    </form>
-    <form action="/upload_wallpaper" method="POST" enctype="multipart/form-data" id="wallpaper_form">
-        <div class="dark_mode_container">
-            <p>Choose Your Wallpaper</p>
-        <label for="wallpaper" class="picture_select">Upload...</label>
-        <input type="file" id="wallpaper" name="wallpaper">
-        </div>
-    </form>
-    <div class="save_it">
-        <button type="button" onclick="save_button()" class="BlackButton">Save It</button>
+    <button onclick="toggleDropdown('usernameDropdown')" class="dropbtn">Change Username</button>
+    <div id="usernameDropdown" class="dropdown-content" style="display: none;">
+        <form action="/data_management" method="POST">
+            <label for="new_username">New Username:</label><br>
+            <input type="text" id="new_username" name="new_username" required><br>
+            <input type="submit" value="Change Username">
+        </form>
     </div>
+
+    <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Verify Password</button>
+    <div id="passwordDropdown" class="dropdown-content" style="display: none;">
+        <form action="/verify_password" method="POST">
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <input type="submit" value="Verify Password">
+        </form>
+    </div>
+    <!--<form action="/data_management" method="POST">
+        <label for="new_username">New Username:</label><br>
+        <input type="text" id="new_username" name="new_username" required><br>
+        <input type="submit" value="Change Username">
+    </form>-->
+    <a href="/delete_account" class="WhiteButton">
+        Delete my account<!--delete account-->
+    </a><br>
+
+    <a href="/forgot_password" class="WhiteButton">
+        Forgot Password<!--Go to the reset pasword page-->
+    </a>
 </div>
 {% endblock %}
