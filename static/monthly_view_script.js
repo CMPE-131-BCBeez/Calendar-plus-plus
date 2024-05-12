@@ -59,18 +59,17 @@ try {
   let end_ts = two_weeks_ahead < next_mon_ts ? two_weeks_ahead : next_mon_ts
   let got_pos = false
 
-  // if (sessionStorage.getItem('lat') && sessionStorage.getItem('lng')) {
-  //   lat = sessionStorage.getItem('lat')
-  //   lng = sessionStorage.getItem('lng')
-  // } 
-  if (navigator.geolocation) {
+  if (sessionStorage.getItem('lat') && sessionStorage.getItem('lng')) {
+    lat = sessionStorage.getItem('lat')
+    lng = sessionStorage.getItem('lng')
+  } else if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(async (pos) => {
       lat = pos.coords.latitude
       lng = pos.coords.longitude
       fetched_weather_data = await get_weather(lat, lng, prev_mon_ts, end_ts)
       got_pos = true
-      // sessionStorage.setItem("lat", lat)
-      // sessionStorage.setItem("lng", lng)
+      sessionStorage.setItem("lat", lat)
+      sessionStorage.setItem("lng", lng)
     })
   }
 
@@ -80,10 +79,8 @@ try {
   }
 
   if (!fetched_weather_data) {
-    console.log("race condition")
     throw new ErrorEvent("race condition")
   }
-  console.log(`Past: ${JSON.stringify(fetched_weather_data)}`)
   monthly_events = await query_events(prev_mon_ts, next_mon_ts)
 } catch (error) {
   console.error("Failed to get event data:", error);
@@ -105,7 +102,6 @@ function get_event_array(ts_micro) {
 }
 
 function generate_calendar(year, month) {
-  console.log("generate is running")
   let first_date = new Date(year, month - 1, 1);
   let last_day = new Date(year, month, 0);
   let prev_month_last_day = new Date(year, month - 1, 0);
@@ -143,7 +139,6 @@ function generate_calendar(year, month) {
     monthly_calendar += '<ul>';
     if (events) {
       for (let e of events) {
-        // console.log(`Rendering Event: ${e['title']} at date ${new Date(e['start_time'])}`)
         let start_date = new Date(e['start_time'] * 1000)
         let end_date = new Date(e['end_time'] * 1000)
         let event_list_item = '<li style="' + 'color:' + e['color'] + ';">' + start_date.getHours() + " - " + end_date.getHours()
@@ -161,11 +156,8 @@ function generate_calendar(year, month) {
 
   let render_weather = (ts_key) => {
     if (ts_key > (two_weeks_ahead * 1000)) {
-      console.log(`skipping: ${ts_key}`)
       return;
     }
-    console.log(ts_key.getTime())
-    console.log("render weather is running")
     let weather_data_idx = undefined;
     let daily_date = fetched_weather_data['daily']
     for (let i = 0; i < daily_date['date'].length; i++) {
@@ -176,7 +168,6 @@ function generate_calendar(year, month) {
     }
 
     if (!weather_data_idx) {
-      console.log(ts_key)
       throw new TypeError("API fetched wrong, invalid timestamp given")
     }
 
@@ -197,7 +188,7 @@ function generate_calendar(year, month) {
     }
     monthly_calendar += `<div style="position: absolute; top: 0; right: 0;">`
     monthly_calendar += `<p>${Math.round(daily_date['temperature_2m_max'][weather_data_idx])}F</p>`
-    monthly_calendar += `<img src="static/Image/${weather_img_src}" alt="Image" style="width: 20px; height: 20px;">`
+    monthly_calendar += `<img src="static/Image/${weather_img_src}" style="width: 20px; height: 20px;">`
     monthly_calendar += `</div>`
   }
 

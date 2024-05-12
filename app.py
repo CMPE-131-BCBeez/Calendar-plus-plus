@@ -386,19 +386,17 @@ def data_management():
 @login_required
 def security_settings():
     user_id = session.get("user_id")
-
+    flash(f'user: {user_id}')
     with app.app_context():
         cursor = db.cursor()
-        cursor.execute("SELECT email FROM BackuoEmails WHERE id = ?", (user_id,))['email']
-        backup_emails = [row[0] for row in cursor.fetchall()]
-    return render_template("user_settings.html", backup_emails=backup_emails)
-    user_id = session.get("user_id")
-
-    with app.app_context():
-        cursor = db.cursor()
-        cursor.execute("SELECT email FROM BackuoEmails WHERE id = ?", (user_id,))['email']
-        backup_emails = [row[0] for row in cursor.fetchall()]
-    return render_template("user_settings.html", backup_emails=backup_emails)
+        cursor.execute("""SELECT email FROM BackupEmails WHERE id = ?""", (user_id,))
+        backup_emails = cursor.fetchall()
+        flash (f"Backup Emails:{backup_emails}")
+    if not backup_emails:
+        return render_template("security_settings.html", backup_emails=None)  # Pass None if no emails found
+    else:
+        backUp = backup_emails['email']
+        return render_template("security_settings.html", backup_emails=backUp)  # Pass the list of emails
 
 @app.route("/social_settings")
 @login_required
