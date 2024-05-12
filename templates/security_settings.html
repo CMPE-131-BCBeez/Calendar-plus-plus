@@ -35,12 +35,14 @@
         <button type="button" id="weekly" class="BlackButton" onclick="location.href='/change_password_settings'">Change
             Password</button>
         <h1>User Settings</h1>
+        {% if backup_emails %}
         <h2>Backup Email:</h2>
         <ul>
             {% for email in backup_emails %}
             <li>{{ email }}</li>
             {% endfor %}
         </ul>
+        {% endif %}
         <button type="button" id="monthly" class="BlackButton" onclick="location.href='/backup_email'">Add backup Email
             or Phone Number</button>
         <button type="button" id="daily" class="BlackButton" onclick="location.href='/daily_calendar'">Daily
@@ -50,8 +52,7 @@
         <button type="button" id="today_button" class="BlackButton">Today</button>
 
 
-        {% block body %}
-        {% endblock %}
+
     </body>
 
     {% endblock %}
