@@ -1,4 +1,4 @@
-from flask import Flask, g, Response, request, redirect, session, flash, render_template
+from flask import Flask, g, Response, request, redirect, session, flash, render_template, send_file
 from datetime import datetime
 from pytz import timezone
 from flask_session import Session
@@ -362,7 +362,7 @@ def data_management():
     #This will allow the user to download their data or delete/edit  
     return render_template("data_management.html")
 
-@app.route("/change_username", ["GET", "POST"])
+@app.route("/change_username", methods = ["GET", "POST"])
 @login_required
 def change_username():
     if request.method == "POST":
@@ -430,7 +430,7 @@ def add_backup_email():
 def delete_user_data():
     if request.method == "POST":
         user_id = session.get("user_id")
-        password = request.form.get("current_password")
+        password = request.form.get("password")
 
         #Retreive hashed password from database but we can move this to
         #the database funtions so that the devices dont get the hashed passwords
@@ -471,6 +471,43 @@ def delete_user_data():
     #load html           
     return redirect("/data_management")
 
+@app.route("/download_data", methods = ["GET", "POST"])
+@login_required
+def download_data():
+    user_id = session.get("user_id")
+    #retrieve user data
+    with app.app_context():
+                cursor = db.cursor()
+                try:
+                    cursor.execute("BEGIN TRANSACTION")
+
+                    # Delete user data from various tables
+                    query = """
+                    SELECT * FROM BackupEmails WHERE id = ?;
+                    SELECT * FROM Calendars WHERE id = ?;
+                    SELECT * FROM Events WHERE id = ?;
+                    SELECT * FROM StyleSettings WHERE id = ?;
+                    SELECT * FROM UsersEvents WHERE id = ?;
+                    """
+                    cursor.execute(query, (user_id, user_id, user_id, user_id, user_id,))
+                    user_data = cursor.fetchall()
+                except Exception as e:
+                    # Rollback the transaction if an error occurs
+                    cursor.execute("ROLLBACK")
+                    flash("An error occurred while deleting your account. Please try again.")
+    
+    # Write the data to a temporary file on the server
+    with tempfile.NamedTemporaryFile(mode="w", delete=False) as users_data:
+        for row in user_data:
+            users_data.write(str(row) + "\n")
+
+    # Send the file to the user for download
+    try:
+        return send_file(users_data.name, as_attachment=True, attachment_filename="user_data.txt")
+    finally:
+        # Clean up the temporary file after the download
+        users_data.close()
+        return redirect("/data_management")
 
 @app.route("/social_settings", methods = ["GET"])
 @login_required
