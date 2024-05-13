@@ -192,6 +192,17 @@ h3 {
     justify-content: center;   
     align-items: center;   
 }
+h4 {
+    font-size: 30px;
+    margin: 0 auto;
+    margin-bottom: 20px;    
+    margin-top: 20px; 
+    text-align: left; 
+    width: 100%;
+    display: flex;      
+    justify-content: center;   
+    align-items: center; 
+}
 
 h2{
     font-size: 35px; 
@@ -695,4 +706,12 @@ input[type="file"] {
     right: 20px; /* Adjust the distance from the right */
     z-index: 9999; /* Ensure it's above other elements */
     /* Additional styling as needed */  
+}
+
+.vertial_button_container{
+    display:flex;
+    justify-content: center;   
+    align-items: center;  
+    flex-direction: column;
+    margin: 20px;
 }

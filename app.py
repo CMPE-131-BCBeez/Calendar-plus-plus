@@ -386,7 +386,8 @@ def security_settings():
     if not backup_emails:
         return render_template("security_settings.html", backup_emails=None)  # Pass None if no emails found
     else:
-        backUp = backup_emails['email']
+        #get the emails as a list now if more than one.
+        backUp = [entry["email"] for entry in backup_emails]
         return render_template("security_settings.html", backup_emails=backUp)  # Pass the list of emails
 
 @app.route('/add_backup_email', methods = ["GET","POST"])

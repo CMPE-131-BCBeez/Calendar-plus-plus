@@ -6,9 +6,9 @@
 <div class="button_header">
     <button onclick="dropDown()" class="dropbtn">Settings</button>
     <div id="settings" class="dropdown-content">
-        <a href="/security_settings" class="WhiteButton">
-            Security settings<!--Go to the sign in page-->
-        </a>
+        <a href="/data_management" class="WhiteButton">
+            Data Management<!--Go to the sign in page-->
+        </a>s
     </div>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
@@ -36,7 +36,7 @@
             Social settings< !--Go to the sign in page-- >
         </a><br>
     </div>-->
-    <h1>Backup Emails:</h1>
+    <h4>Backup Emails:</h4>
     <ul>
         {% if backup_emails %}
             {% for email in backup_emails %}
@@ -46,17 +46,31 @@
             <h3>No backup emails found.</h3>
         {% endif %}
     </ul>
-    
-    <button onclick="dropDown()" class="dropbtn">Add Backup Email</button>
-    <div id="settings" class="dropdown-content">
+    <!--This is a vertical container to align the contents, rest in css-->
+    <div class="vertial_button_container">
+    <button onclick="toggleDropdown('backup_email_dd')" class="dropbtn">Add Email:</button>
+    <div id="backup_email_dd" class="dropdown-content" style="display: none;">
         <form action="/add_backup_email" method="POST">
-            <input type="email" id="backup_email" name="backup_email" class="input-field" required>
-            <input type="submit" value="Add" class="BlackButton">
+            <label for="email">Add New Email:</label><br>
+            <input type="email" id="backup_email" name="backup_email" class="input-field" required><br>
+            <input type="submit" value="add_backup_email">
         </form>
     </div>
+
+    <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Verify Password</button>
+    <div id="passwordDropdown" class="dropdown-content" style="display: none;">
+        <form action="/verify_password" method="POST">
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <input type="submit" value="Verify Password">
+        </form>
+    </div>
+
     <button type="button" id="daily" class="BlackButton" onclick="location.href='/change_password_settings'">Change Password</button>
     <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
     <button type="button" id="today_button" class="BlackButton">Delete Account</button>
+    </div>
+    
 
 </body>
 
