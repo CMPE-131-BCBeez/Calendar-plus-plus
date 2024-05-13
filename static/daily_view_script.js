@@ -19,6 +19,7 @@ let this_hours = parseInt(date.getHours());
 let fetched_json = await query_events(beginning_day, start_and_end.end)
 let daily_events = fetched_json[beginning_day]
 
+
 function render_event(event_data) {
 
   let start_date = new Date(event_data['start_time'] * 1000)
@@ -52,6 +53,7 @@ function render_event(event_data) {
   start_cell.appendChild(event_block)
 
 }
+
 
 function display_events() {
   let valid_events = []

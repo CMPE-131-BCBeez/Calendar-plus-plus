@@ -690,6 +690,7 @@ input:checked+.slider:before {
 
 .dynamic-rectangle {
     position: absolute;
+    overflow-x: auto;
     background-color: rgba(255, 0, 0, 0.5);
     /* Red with 50% opacity */
     border: 1px solid black;
