@@ -94,6 +94,9 @@ let setting_content = document.querySelectorAll('.setting_content');
 
 let flashes = document.querySelectorAll('flashes');
 
+let time_col_body = document.querySelectorAll('time_col_body');
+
+let day_col = document.querySelectorAll('day_col');
 
 
 function change_theme(is_dark_mode){
@@ -149,10 +152,12 @@ function change_theme(is_dark_mode){
 
         calendar_basic.forEach(function(element) {
             element.style.backgroundColor = half_black;
+            element.style.border = '1px solid' + white; 
         });
 
         calendar_basic_today.forEach(function(element) {
             element.style.backgroundColor = half_black;
+            element.style.border = '1px solid' + white; 
         });
 
         today_cell.forEach(function(element){
@@ -184,7 +189,6 @@ function change_theme(is_dark_mode){
             element.addEventListener('a:hover ', function() {
                 element.style.color =  'rgba(255, 255, 255, 0.2)'; 
             });
-           
         });
 
         setting_content.forEach(function(element){
@@ -199,7 +203,19 @@ function change_theme(is_dark_mode){
 
         flashes.forEach(function(element){
             element.style.color = black;
-        })
+        });
+
+        time_col_body.forEach(function(element){
+            element.style.color = black;
+            element.style.backgroundColor = half_white;
+            element.style.border = '2px solid' + black;
+        });
+
+        day_col.forEach(function(element){
+            element.style.color = white;
+            element.style.backgroundColor = half_black;
+            element.style.border = '2px solid' + white;
+        });
     } 
     else {
         body.classList.remove('dark_mode');
@@ -286,8 +302,25 @@ function change_theme(is_dark_mode){
 
         flashes.forEach(function(element){
             element.style.color = white;
-        })
+        });
+        
+        time_col_body.forEach(function(element){
+            element.style.color = white;
+            element.style.backgroundColor = half_black;
+            element.style.border = '2px solid' + white;
+        });
+
+        day_col.forEach(function(element){
+            element.style.color = black;
+            element.style.backgroundColor = half_white
+            element.style.border = '2px solid' + black;
+        });
     }
 }
 
-dark_mode();
+
+
+//monitor the dom on the html and change the style as the dom changes
+document.addEventListener('DOMContentLoaded', function() {
+    dark_mode();
+});
