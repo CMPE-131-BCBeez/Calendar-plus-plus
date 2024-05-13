@@ -152,6 +152,14 @@ def login():
     
     return render_template("login_page.html")
     
+#logout the current user
+@app.route("logout", methods = ["GET", "POST"])
+@login_required
+def logout():
+    session.clear()
+    return redirect("/login")
+
+
 #implement the homecalendar page which will be the main user calendar
 #this calendar includes all saved and shared events user has
 @app.route("/monthly_calendar", methods = ["GET"])
