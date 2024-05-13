@@ -94,7 +94,8 @@ function generate_am_daily_view() {
       time_num = this_hours + i;
     }
     am_daily_view += '<td class="time_cell">' + (time_num + ":00") + '</td>';
-    am_daily_view += `<td id="${new String(time_num).trim().substring(1)}" class="event_cell">` + (" ") + '</td>';
+    let td_id = + time_num
+    am_daily_view += `<td id="${td_id}" class="event_cell">` + (" ") + '</td>';
     am_daily_view += '</tr>';
   }
   am_daily_view += '</tbody>';

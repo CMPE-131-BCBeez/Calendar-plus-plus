@@ -24,7 +24,7 @@ function render_event(event_data) {
     if (end_date.getDate() > start_date.getDate()) {
         end_pos = new Number(start_pos.height) * (24 - hour_idx)
     } else {
-        end_pos = new Number(start_pos.height) * (end_date.getHours() - hour_idx)
+        end_pos = 46 * (end_date.getHours() - hour_idx)
     }
 
     let event_block = document.createElement("div")
@@ -33,8 +33,8 @@ function render_event(event_data) {
     event_block.style.height = end_pos + "px"
     event_block.style.backgroundColor = event_data['color']
 
-    event_block.style.left = start_pos.left + "px"
-    event_block.style.top = start_pos.top + "px"
+    // event_block.style.left = start_pos.left + "px"
+    event_block.style.top = 0 + "%"
 
     let event_text = document.createTextNode(`${hour_idx} - ${event_data['title']}`)
     let desc = document.createTextNode(`\n\n\n${event_data['description']}`)
