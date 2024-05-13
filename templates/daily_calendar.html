@@ -9,12 +9,10 @@
        
     <button type="button" id="today_button_daily" class="BlackButton">Jump To Today</button>
     <div class="right_head_buttons">
-        {% block navbar %}
-        {{ super() }}
-        {% endblock %}
-      </div>
 
-      <div id="pagination_daily">
+    </div>
+
+    <div id="pagination_daily">
         <button id="prev_day"><</button>
         <h2 id="year_month_day_header"></h2>
         <button id="next_day">></button>
@@ -26,10 +24,10 @@
         <div class="daily_h1">
             Today's Weather
 
-        </h1>
-        <br>
-        <iframe id="dailyWeather" src="../static/weather.html" width="500" height="500" frameborder="0"></iframe>
-        <div class="event_add_container">
+            </h1>
+            <br>
+            <iframe id="dailyWeather" src="../static/weather.html" width="500" height="500" frameborder="0"></iframe>
+            <div class="event_add_container">
 
         <div class="daily_view_container">
             <div id="am_daily_view"></div>
@@ -38,7 +36,7 @@
     </div>
 </div>
 
-<script type="module" src="{{url_for('static', filename='daily_view_script.js')}}"></script>
-<script src="{{url_for('static', filename='theme_script.js')}}"></script>
+        <script type="module" src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+        <script src="{{url_for('static', filename='theme_script.js')}}"></script>
 
-{% endblock %}
+        {% endblock %}
