@@ -2,7 +2,7 @@
 {% block title %} Daily++ {% endblock %}
 
 {% block body %}
-<div class="button_header">
+<div class="daily_button_header">
 
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
@@ -14,24 +14,26 @@
         {{ super() }}
         {% endblock %}
       </div>
+
+      <div id="pagination_daily">
+        <button id="prev_day"><</button>
+        <h2 id="year_month_day_header"></h2>
+        <button id="next_day">></button>
+    </div>
 </div>
 
 <div class="daily_page_container">
     <div class="daily_item_event">
-        <h1 class="small_h1">
+        <div class="daily_h1">
             Today's Weather
-        </h1>
+        </div>
         <div class="event_add_container">
            
         </div>
     </div>
 
     <div class="daily_container">
-        <div id="pagination_daily">
-            <button id="prev_day"><</button>
-            <h2 id="year_month_day_header"></h2>
-            <button id="next_day">></button>
-        </div>
+        
         <div class="daily_view_container">
             <div id="am_daily_view"></div>
             <div id="pm_daily_view"></div>

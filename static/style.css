@@ -243,6 +243,11 @@ h1 {
     display: flex;      
     justify-content: center;   
     align-items: center;    
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+
 }
 
 h2{
@@ -284,6 +289,11 @@ h2{
     align-items: center;   
 }
 
+.daily_h1 {
+    font-size: 30px;   
+    margin-left:5vw;
+}
+
 /* used for input field for every page */
 .input-field {  
     border: none;   
@@ -312,18 +322,21 @@ h2{
     margin-bottom: 15px;
 
 }
+
 .button_header{
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    height:15vh;
+    height:8vh;
+    z-index:-9999;
 }
 
-.button_header_month{
+.daily_button_header{
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    height:8vh;
+    height:5vh;
+    z-index:-9999;
 }
 
 .right_head_buttons{
@@ -349,7 +362,7 @@ h2{
     width: 100%;
     font-size: 15px; 
     height: calc(100% / 6);  
-    background-color: rgba(255, 255, 255, 0.5); 
+    background-color: rgba(255, 255, 255, 0.5) !important;
     border: 2px solid #000000; 
 }
 
@@ -497,8 +510,10 @@ li::before {
     display: flex;     
     justify-content: center;    
     align-items: center;    
-    /* position:absolute;
-    top:0; */
+}
+
+#weekly_calendar_header{
+    margin-left:2vw;
 }
 
 #year_month_day_header{
@@ -523,65 +538,83 @@ li::before {
     left:0;
 }
 
-.overflow_container_weekly{
-    overflow-y:auto; 
-    /* max-height: 100vh; */
+.overflow_container_weekly {
+    overflow-y: auto; 
+    max-height: 80vh; 
+    display: block; 
 }
 
 .weekly_calendar{
     border-collapse: collapse;
-    width: 97%;
+    width: 97vw;
     margin:auto;
-  }
-  
-  .weekly_calendar td {
+}
+.weekly_calendar thead{
+    height: 8vh;
+}
+
+.weekly_calendar td {
     border: 1px solid black;
-    padding: 8px;
+    
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.5);
-  }
+    color:#FFFFFF;
+}
 
-  .weekly_calendar td {
-    width: 100px;
-  }
-
-  /* .weekly_calendar td{
+/* .weekly_calendar  tr:first-child {
     background-color: rgba(0, 0, 0, 0);
-  } */
-
-  .weekly_calendar  tr:first-child th {
-    background-color: rgba(0, 0, 0, 0);
+    width:10px;
     color:#000000;
-  }
 
-  .weekly_header{
+} */
+
+.weekly_header{
     height:10vh;
     width:100%;
+}
 
-  }
+/* .dayInfo {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%); */
+/* } */
+.time_col_header{
+    font-family: "CaviarDreams_BoldItalic", sans-serif;
+    width:30px;
+    font-size: 20px;
+}
 
-  /* .dayInfo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
-  }
+.time_col_body{
+    font-family: "CaviarDreams_BoldItalic", sans-serif;
+    width:30px;
+    font-size: 20px;
+    padding:7px;    
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
-  .dayName {
+.day_col{
+    width:calc(97%/7);
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dayName {
+    font-family: "CaviarDreams_BoldItalic", sans-serif;
     font-size: 14px;
     font-weight: bold;
-  }
+}
 
-  .dateNumber {
+.dateNumber {
+    font-family: "CaviarDreams_BoldItalic", sans-serif;
     font-size: 20px;
     font-weight: bold;
-  }
+}
 
-  .navButtonContainer {
+.navButtonContainer {
     margin-bottom: 20px;
-  }
+}
 
-  .navButton {
+.navButton {
     background-color: black;
     border: none;
     color: white;
@@ -594,31 +627,31 @@ li::before {
     transition-duration: 0.4s;
     cursor: pointer;
     border-radius: 8px;
-  }
+}
 
-  .navButton:hover {
+.navButton:hover {
     background-color: #333;
     color: white;
-  }
-  
-  .selected {
+}
+
+.selected {
     background-color: rgba(255, 255, 255, 0.5);
-  }
+}
 
 .daily_page_container{
     display: flex;
     flex-direction: row; 
-    justify-content: center; 
+    justify-content: space-between; 
     margin-right: 10px;
     margin-top:20px;
-    height:100vh;
+    height:92vh;
 }
 
 .daily_container {
     display: flex;
     flex-direction: column; 
     justify-content: center; 
-    height: 90vh;
+    height: 100%;
     width: 70%;
 }
 
@@ -629,22 +662,25 @@ li::before {
     justify-content: space-between;  
     align-items: center; 
     margin-bottom: 15px; 
-    margin-top: 15px; 
+    position:absolute;
+    top:15px;
+    right:0;
+    left:0;  
 }
 
 .daily_view_container{
     display: flex;
-    flex-direction: row; 
-    justify-content: center; 
-    margin-bottom: 10px;
-    height: 100%;
+    justify-content: flex-end;
+    align-items: center; 
+    height: 87vh;
 }
 
 .daily_item_event{
-    margin-top: 15px; 
+    margin-left: 5vw; 
     flex-grow: 1; 
     max-width: 30%;
     border-collapse: collapse;
+    justify-content: flex-start;
 }
 
 #am_daily_view,
@@ -652,11 +688,11 @@ li::before {
     flex-grow: 1; 
     max-width: 45%;
     border-collapse: collapse;
+    height: 100%;
 }
 
 #am_daily_view table,
 #pm_daily_view table{ 
-    height: 80vh;
     border-collapse: collapse;
     margin-right: 5%;
 }
@@ -664,10 +700,11 @@ li::before {
 .time_cell{
     background-color: #000000;
     color:#FFFFFF;
-    font-size: 15px ;
+    font-size: 20px ;
     border: 1px solid #FFFFFF;
     padding: 15px;
     width:10px;
+    height:calc(100%/12);
 }
 
 .event_cell{
@@ -676,17 +713,17 @@ li::before {
     font-size: 15px ;
     border: 1px solid #000000;
     width:100%;
-    background-color: rgba(255, 255, 255, 0.5); 
+    height:calc(100%/12);
 }
 
-input[type="color"] {
+/* input[type="color"] {
     width: 30%; 
     height: 30px;
     border-radius: 5px; 
     border: 2px solid rgba(0, 0, 0, 0); 
     padding: 5px; 
     background-color: rgba(0, 0, 0, 0);
-}
+} */
 
 /* .event_select{
     background-color: #FFFFFF;

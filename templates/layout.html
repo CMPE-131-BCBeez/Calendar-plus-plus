@@ -2,15 +2,14 @@
 <lang="en">
 
   <head>
-    <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="{{url_for('static', filename='api_access.js')}}"></script>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     {% block head %}
     <title>{% block title %}{% endblock %} - Calendar++</title>
     {% endblock %}
-
+   
   </head>
 
   <!--Handle flashing-->
@@ -52,11 +51,10 @@
                 Style Settings<!--Go to the sign in page-->
               </a>
             </div>
-
-          
         {% endblock %}
       {% endblock %}
       <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+      <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     </div>
   </div>
 </body>

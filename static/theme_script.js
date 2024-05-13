@@ -70,7 +70,7 @@ let form  = document.querySelectorAll('.form');
 
 let black_buttons = document.querySelectorAll('.BlackButton');
 
-let pagenation_buttons = document.querySelectorAll('#prev_month, #next_month, #prev_day, #next_day');
+let pagenation_buttons = document.querySelectorAll('#prev_month, #next_month, #prev_month, #next_month,#prev_week, #next_week,#prev_day, #next_day');
 
 let white_buttons = document.querySelectorAll('.WhiteButton');
 
@@ -93,6 +93,8 @@ let dropdown_content = document.querySelectorAll('.dropdown-content');
 let setting_content = document.querySelectorAll('.setting_content');
 
 let flashes = document.querySelectorAll('flashes');
+
+
 
 function change_theme(is_dark_mode){
     let body = document.body;

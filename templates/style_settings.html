@@ -5,14 +5,18 @@
 
 <div class="button_header">
 
-    {% block navbar %}
-    {{ super() }}
-    {% endblock %}
+    <div class="right_head_buttons">
+        {% block navbar %}
+        {{ super() }}
+        {% endblock %}
+      </div>
     
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
 </div>
+
+
 
 <h1>
     Style Settings
