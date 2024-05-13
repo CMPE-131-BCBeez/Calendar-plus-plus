@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 {% block title %} Style Setting++ {% endblock %}
 
@@ -5,20 +6,26 @@
 
 <div class="button_header">
 
-    {% block navbar %}
-    {{ super() }}
-    {% endblock %}
+    <div class="right_head_buttons">
+        {% block navbar %}
+        {{ super() }}
+        {% endblock %}
+      </div>
     
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
 </div>
 
-<h1>
-    Style Settings
-</h1>
 
-<div class="container">
+<div class="nomal_hader_container">
+    <h1>
+        Style Settings
+    </h1>
+</div>
+
+
+<div class="settings_container">
         <div class="dark_mode_container">
             <p>Dark Mode:</p>
         <label class="switch">

@@ -4,6 +4,7 @@
 {% block body %}
 
 
+
 <script type="module" src="../static/weekly_calendar_script.js"></script>
 
 <body>
@@ -21,8 +22,24 @@
           <h2>Weekly Calendar</h2>
           <button id="nextWeek" id="prev_week">></button>
     </div>
-  </div>
+</div>
+
+<table id="weekly_calendar_header" class="weekly_calendar">
+  <thead class="weekly_day">
+    <tr>
+      <th class="time_col_header">Time</th>
+      <th id="sunday"></th>
+      <th id="monday"></th>
+      <th id="tuesday"></th>
+      <th id="wednesday"></th>
+      <th id="thursday"></th>
+      <th id="friday"></th>
+      <th id="saturday"></th>
+    </tr>
+  </thead>
+</table>
   <div class="overflow_container_weekly">
+
     <table id="calendar" class="weekly_calendar">
       <thead>
         <tr>

@@ -1,87 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="module" async src="{{url_for('static', filename='api_access.js')}}"></script>
-  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
-  <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" async src="{{url_for('static', filename='api_access.js')}}"></script>
+    {% block head %}
+    <title>{% block title %}{% endblock %} - Calendar++</title>
+    {% endblock %}
+   
+  </head>
 
-  {% block head %}
-  <title>{% block title %}{% endblock %} - Calendar++</title>
-  {% endblock %}
-
-</head>
-
-<!--Handle flashing-->
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul class=flashes>
-  {% for message in messages %}
-  <li>{{ message }}</li>
-  {% endfor %}
+  <!--Handle flashing-->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul class="flashes">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
 </ul>
 {% endif %}
 {% endwith %}
-
+  
 <body class="light_mode">
-
-  <div class="wallpaper" style="background-image: url('../static/image/default-background.png')">
+  <div class="wallpaper" style="background-image: url('../static/image/default-background.jpg')">
     <div class="transparent">
       {% block body %}
-      {% block navbar %}
-      <button onclick="dropDown()" class="dropbtn BlackButton">Settings</button>
-      <div id="settings" class="dropdown-content">
-        <a href="/data_management" class="setting_content">
-          Manage my data<!--Go to the sign in page-->
-        </a>
-        <a href="/security_settings" class="setting_content">
-          Security Settings<!--Go to the sign in page-->
-        </a>
-        <a href="/social_settings" class="setting_content">
-          Social Settings<!--Go to the sign in page-->
-        </a>
-        <a href="/style_settings" class="setting_content">
-          Style Settings<!--Go to the sign in page-->
-        </a>
-      </div>
+        {% block navbar %}
 
-      <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
-      <div id="settings" class="dropdown-content">
-        <a href="../template/new_event" class="WhiteButton">
-          Security Settings<!--Go to the sign in page-->
-        </a>
-      </div>
-      {% endblock %}
+        <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
+            <!-- <div id="settings" class="dropdown-content">
+              <a href="../template/new_event" class="WhiteButton">
+                Security Settings<!--Go to the sign in page-->
+              <!-- </a>
+            </div> -->
+
+          <button onclick="dropDown()" class="dropbtn BlackButton">Settings</button>
+            <div id="settings" class="dropdown-content">
+              <a href="/data_management" class="setting_content">
+                Manage my data<!--Go to the sign in page-->
+              </a>
+              <a href="/security_settings" class="setting_content">
+                 Security Settings<!--Go to the sign in page-->
+              </a>
+              <a href="/style_settings" class="setting_content">
+                Style Settings<!--Go to the sign in page-->
+              </a>
+            </div>
+        {% endblock %}
       {% endblock %}
       <script src="{{url_for('static', filename='theme_script.js')}}"></script>
+      <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
     </div>
   </div>
 </body>
 
-
 <script>
-  /* When the user clicks on the button,
-  toggle between hiding and showing the dropdown content */
-  function dropDown() {
-    document.getElementById("settings").classList.toggle("show");
-  }
+function toggleDropdown(dropdownId) {
+  var dropdown = document.getElementById(dropdownId);
+    if (dropdown.style.display === "none") {
+      dropdown.style.display = "block";
+    } else {
+      dropdown.style.display = "none";
+     }
+}
 
-  // Close the dropdown menu if the user clicks outside of it
-  window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function dropDown() {
+  document.getElementById("settings").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
     }
   }
+}
 </script>
 
 </html>

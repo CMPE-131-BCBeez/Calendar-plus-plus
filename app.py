@@ -1,4 +1,4 @@
-from flask import Flask, g, Response, request, redirect, session, flash, render_template
+from flask import Flask, g, Response, request, redirect, session, flash, render_template, send_file
 from datetime import datetime
 from pytz import timezone
 from flask_session import Session
@@ -9,6 +9,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from typing import *
 from utils import *
 import json
+import os
+import resend
 from collections import defaultdict
 import weather
 import os
@@ -47,18 +49,9 @@ mail = Mail(app)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 resend.api_key = "re_FvWGLqJc_J1bw8bdwYMCV74gK5eCdEbJ2"
 
-resend.api_key = "re_FvWGLqJc_J1bw8bdwYMCV74gK5eCdEbJ2"
-
 #I have ben trying to get this to work with email but I cannot for the life of me make it work
 #the issue here is that the gmail I made for the class needs an app password but this option does 
 #not appear when I go to settings-security-2step verification
-#app.config['MAIL_SERVER']='smtp.gmail.com'
-#app.config['MAIL_PORT'] = 465
-#app.config['MAIL_USERNAME'] = ['calandarPlusPlus@gmail.com']
-#app.config['MAIL_PASSWORD'] = ['gfzq hpoy dzsr ivsk'] #ThisAintItFr2025
-#app.config['MAIL_USE_TLS'] = False
-#app.config['MAIL_USE_SSL'] = True
-#mail = Mail(app)
 #app.config['MAIL_SERVER']='smtp.gmail.com'
 #app.config['MAIL_PORT'] = 465
 #app.config['MAIL_USERNAME'] = ['calandarPlusPlus@gmail.com']
@@ -160,6 +153,14 @@ def login():
     
     return render_template("login_page.html")
     
+#logout the current user
+@app.route("/logout", methods = ["GET", "POST"])
+@login_required
+def logout():
+    session.clear()
+    return redirect("/login")
+
+
 #implement the homecalendar page which will be the main user calendar
 #this calendar includes all saved and shared events user has
 @app.route("/monthly_calendar", methods = ["GET"])
@@ -178,12 +179,11 @@ def monthly_calendar():
 #     else:
 #         return redirect("/login")
 
+
 @app.route('/weekly_calendar')
 @login_required
 def weekly_calendar():
     return render_template('weekly_calendar.html')
-
-
 
 @app.route('/daily_calendar')
 @login_required
@@ -191,6 +191,12 @@ def daily_calendar():
     return render_template('daily_calendar.html')
  
 
+# may not be needed
+# @app.route("/user_settings", methods = ["GET", "POST"])
+# @login_required
+# def user_settings():
+#     if req9uest.method == "POST":
+#         email
 
 @app.route("/forgot_password", methods = ["GET", "POST"])
 def forgot_password():
@@ -232,22 +238,9 @@ def forgot_password():
                         "subject": "Confirm Your Email Address",
                         "html": f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
                     })  
-                    #msg = Message(subject, sender = sender, recipients=[email], body=body)
-                    #mail.send(msg)
-
-
-
-                    r = resend.Emails.send({
-                        "from": "onboarding@resend.dev",
-                        "to": "calandarplusplus@gmail.com",
-                        "subject": "Confirm Your Email Address",
-                        "html": f"Please click the following link to confirm your email address: /confirm_email? your codecode={confirmation_code}"
-                    })  
                     
                     #finally save it to your database
                     with app.app_context():
-                        cursor = db.cursor()
-                        cursor.execute("""UPDATE Users SET confirmation_code=(?) WHERE email=(?) OR username =(?)""", (confirmation_code, username_or_email, username_or_email))
                         cursor = db.cursor()
                         cursor.execute("""UPDATE Users SET confirmation_code=(?) WHERE email=(?) OR username =(?)""", (confirmation_code, username_or_email, username_or_email))
                         db.commit()
@@ -270,28 +263,24 @@ def new_event():
         #get event data from form
         title = request.form.get("title")
         description = request.form.get("description")
-        start_time = datetime.strptime(request.form.get("start_time"), "%Y-%m-%dT%H:%M")
-        end_time = datetime.strptime(request.form.get("end_time"), "%Y-%m-%dT%H:%M")
-        # print(f"start_time: {start_time}")
-        # print(f"end_time: {end_time}")
+        start_time = request.form.get("start_time")
+        end_time = request.form.get("end_time")
         location = request.form.get("location")
         color = request.form.get("color")
-        event_type = request.form.get("type")
+        type = request.form.get("type")
 
         is_valid, error_message = validate_event(title, start_time, end_time)
         if not is_valid:
             flash(error_message)
             return redirect("/new_event")
-
-        # change start_time and end_time
-
-        #insert event into database
+     
+        #insert event into database 
         with app.app_context():
             cursor = db.cursor()
             #input the data to events
             query = """INSERT INTO Events (title, description, start_time, end_time, location, color, type) VALUES (?, ?, ?, ?, ?, ?, ?)"""
             #we might need to modify this in the future
-            cursor.execute(query, (title, description, start_time, end_time, location, color, event_type))
+            cursor.execute(query, (title, description, start_time, end_time, location, color, type))
             db.commit()
             event_id = cursor.execute("SELECT last_insert_rowid() AS last").fetchone()['last']
             cursor.execute("INSERT INTO UsersEvents (user_id, event_id) VALUES (?, ?)", (session['user_id'], event_id))
@@ -317,14 +306,12 @@ def change_password_settings():
         with app.app_context():
             cursor = db.cursor()
             username = cursor.execute("SELECT username FROM Users WHERE id = ?", (user_id,)).fetchone()['username']
-            username = cursor.execute("SELECT username FROM Users WHERE id = ?", (user_id,)).fetchone()['username']
         current_password_hash = generate_password_hash(username)
         if check_password_hash(current_password_hash, current_password):
             #check if new passwords match
             if new_password == confirm_new_password:
                 new_password_hash = generate_password_hash(new_password, "sha256")
                 with app.app_context():
-                    cursor = db.cursor()
                     cursor = db.cursor()
                     cursor.execute("UPDATE Users SET password_hash=? WHERE username=?", (new_password_hash, username))
                     db.commit()
@@ -347,13 +334,9 @@ def change_password_email():
         new_password = request.form.get("new_password")
         confirm_new_password = request.form.get("confirm_new_password")
         
-        
         #to change password you need to input correct confirmation code
         with app.app_context():
                 cursor = db.cursor()
-                saved_confirmation_code = cursor.execute("""SELECT confirmation_code FROM Users WHERE username=(?) """, (username,)).fetchone()['confirmation_code']
-                flash(f"the content of the cursor is: {saved_confirmation_code}")
-    
                 saved_confirmation_code = cursor.execute("""SELECT confirmation_code FROM Users WHERE username=(?) """, (username,)).fetchone()['confirmation_code']
                 flash(f"the content of the cursor is: {saved_confirmation_code}")
     
@@ -367,10 +350,8 @@ def change_password_email():
                 with app.app_context():
                     cursor = db.cursor
                     cursor.execute("""UPDATE Users SET password_hash=? WHERE username=?""", (new_password_hash, username))
-                    cursor.execute("""UPDATE Users SET password_hash=? WHERE username=?""", (new_password_hash, username))
                     db.commit()
                 flash("password changed successfully!")
-                return redirect("/login")
                 return redirect("/login")
             else:
                 flash("New password and confirm new password must match!\n")
@@ -378,29 +359,163 @@ def change_password_email():
             flash("Incorrect confirmation code, please enter the latest Confirmation Code.")
     return render_template("change_password_email.html")
 
-@app.route("/data_management")
+@app.route("/data_management", methods = ["GET", "POST"])
 @login_required
 def data_management():
-    #This will allow the user to download their data or delete/edit
+    #This will allow the user to download their data or delete/edit  
     return render_template("data_management.html")
 
+@app.route("/change_username", methods = ["GET", "POST"])
+@login_required
+def change_username():
+    if request.method == "POST":
+        new_username = request.form.get("new_username")
+        with app.app_context():
+            cursor = db.cursor()
+            query ="""SELECT confirmation_code FROM Users WHERE username=(?) """
+            cursor.execute(query, (new_username,))
+            user = cursor.fetchone()
+        
+        if not user:
+            # Update the username in the database
+            with app.app_context():
+                cursor = db.cursor()
+                cursor.execute("""UPDATE Users SET username = ? WHERE id = ?""", (new_username, session.get("user_id")))
+                db.commit()
+                flash("Username changed successfully!")
+                return redirect("/data_management")  # Redirect to the same page after username change
+        else:
+            flash("That username already exists, try another one.")
+            return redirect("/data_management")
+        
 @app.route("/security_settings")
 @login_required
 def security_settings():
     user_id = session.get("user_id")
-    flash(f'user: {user_id}')
+    #flash(f'user: {user_id}')
     with app.app_context():
         cursor = db.cursor()
         cursor.execute("""SELECT email FROM BackupEmails WHERE id = ?""", (user_id,))
         backup_emails = cursor.fetchall()
-        flash (f"Backup Emails:{backup_emails}")
+        #flash (f"Backup Emails:{backup_emails}")
     if not backup_emails:
         return render_template("security_settings.html", backup_emails=None)  # Pass None if no emails found
     else:
-        backUp = backup_emails['email']
+        #get the emails as a list now if more than one.
+        backUp = [entry["email"] for entry in backup_emails]
         return render_template("security_settings.html", backup_emails=backUp)  # Pass the list of emails
 
-@app.route("/social_settings")
+#add the backup email fucntionality
+@app.route('/add_backup_email', methods = ["GET","POST"])
+@login_required
+def add_backup_email():
+    #get the data
+    user_id = session.get("user_id")
+    email = request.form.get('backup_email')
+    
+    with app.app_context():
+        try:
+            #try to add the email
+            cursor = db.cursor()
+            cursor.execute("INSERT INTO BackupEmails (email,user_id) VALUES (?,?)", (email, user_id))
+            db.commit()
+            flash("Email added successfully.")
+        except Exception as e:
+            # Roll back transaction if an error occurs
+            db.rollback()
+            flash("An error occurred while adding the backup email.")
+        
+    return redirect("/security_settings")
+
+#delete user's calendars
+@app.route("/delete_user_calendars", methods = ["GET", "POST"])
+@login_required
+def delete_user_data():
+    if request.method == "POST":
+        user_id = session.get("user_id")
+        password = request.form.get("password")
+
+        #Retreive hashed password from database but we can move this to
+        #the database funtions so that the devices dont get the hashed passwords
+        with app.app_context():
+            cursor = db.cursor()
+            cursor.execute("SELECT id, username, password_hash FROM Users WHERE username=?", (user_id,))
+            user = cursor.fetchone()
+            
+        #Check if user exists and verify password
+        if user and check_password_hash(user["password_hash"], password):
+            #right password so we will go ahead and delete all the data we have related to this user_id
+            with app.app_context():
+                cursor = db.cursor()
+                try:
+                    cursor.execute("BEGIN TRANSACTION")
+
+                    # Delete user data from various tables
+                    query = """
+                    DELETE FROM Calendars WHERE id = ?;
+                    DELETE FROM Events WHERE id = ?;
+                    """
+                    cursor.execute(query, (user_id, user_id,))
+
+                    # Commit the transaction
+                    db.commit()
+
+                except Exception as e:
+                    # Rollback the transaction if an error occurs
+                    cursor.execute("ROLLBACK")
+                    flash("An error occurred while deleting your account. Please try again.")
+    
+            flash("Calendars Deleted.")
+            return redirect("/data_management")
+
+        #if login fails then redirect to the same login page
+        else:
+            flash("Invalid password")
+    #load html           
+    return redirect("/data_management")
+
+@app.route("/download_data", methods = ["GET", "POST"])
+@login_required
+def download_data():
+    user_id = session.get("user_id")
+    #retrieve user data
+    with app.app_context():
+        cursor = db.cursor()
+        try:
+            cursor.execute("BEGIN TRANSACTION")
+
+            # Delete user data from various tables
+            query = """
+            SELECT * FROM BackupEmails WHERE id = ?;
+            SELECT * FROM Calendars WHERE id = ?;
+            SELECT * FROM Events WHERE id = ?;
+            SELECT * FROM StyleSettings WHERE id = ?;
+            SELECT * FROM UsersEvents WHERE id = ?;
+            """
+            cursor.execute(query, (user_id, user_id, user_id, user_id, user_id,))
+            user_data = cursor.fetchall()
+        except Exception as e:
+            # Rollback the transaction if an error occurs
+            cursor.execute("ROLLBACK")
+            flash("An error occurred while retreiving your data, try again.")
+            return redirect("/data_management")
+    
+    # Write the data to a temporary file on the server
+    with tempfile.NamedTemporaryFile(mode="w", delete=False) as users_data:
+        for row in user_data:
+            users_data.write(str(row) + "\n")
+
+    # Send the file to the user for download
+    try:
+        return send_file(users_data.name, as_attachment=True, attachment_filename="user_data.txt")
+
+    finally:
+        # Clean up the temporary file after the download
+        users_data.close()
+        os.remove(users_data.name)
+        return redirect("/data_management")
+
+@app.route("/social_settings", methods = ["GET"])
 @login_required
 def social_setting():
     #this will allow the users to share whole schedules/calendars
@@ -409,12 +524,68 @@ def social_setting():
 
     return render_template("social_settings.html")
 
-@app.route("/style_settings")
+@app.route("/style_settings", methods = ["GET"])
 @login_required
 def style_settings():
-
-
     return render_template("style_settings.html")
+
+
+@app.route("/delete_account", methods=["GET", "POST"])
+@login_required
+def delete_account():
+    if request.method == "POST":
+        user_id = session.get("user_id")
+        password = request.form.get("current_password")
+        users_reason = request.form.get("description")
+
+        #Retreive hashed password from database but we can move this to
+        #the database funtions so that the devices dont get the hashed passwords
+        with app.app_context():
+            cursor = db.cursor()
+            cursor.execute("SELECT id, username, password_hash FROM Users WHERE username=?", (user_id,))
+            user = cursor.fetchone()
+            
+        #Check if user exists and verify password
+        if user and check_password_hash(user["password_hash"], password):
+            #right password so we will go ahead and delete all the data we have related to this user_id
+            with app.app_context():
+                cursor = db.cursor()
+                try:
+                    cursor.execute("BEGIN TRANSACTION")
+
+                    # Delete user data from various tables
+                    query = """
+                    DELETE FROM Users WHERE id = ?;
+                    DELETE FROM BackupEmails WHERE id = ?;
+                    DELETE FROM Calendars WHERE id = ?;
+                    DELETE FROM Events WHERE id = ?;
+                    DELETE FROM StyleSettings WHERE id = ?;
+                    DELETE FROM UsersEvents WHERE id = ?;
+                    """
+                    cursor.execute(query, (user_id, user_id, user_id, user_id, user_id, user_id))
+
+                    # Commit the transaction
+                    db.commit()
+
+                    # Insert reason into EndTies table
+                    cursor.execute("INSERT INTO EndTies (reasons) VALUES (?)", (users_reason,))
+                    db.commit()
+                except Exception as e:
+                    # Rollback the transaction if an error occurs
+                    cursor.execute("ROLLBACK")
+                    flash("An error occurred while deleting your account. Please try again.")
+    
+            flash("Sorry to see you go!")
+            # Clear session and redirect to the login page
+            session.clear()
+            flash("Your account has been deleted successfully.")
+            return redirect("/login")
+
+        #if login fails then redirect to the same login page
+        else:
+            flash("Invalid password")
+    #load html           
+    return render_template("delete_account.html")
 
 
 
@@ -454,7 +625,8 @@ def event_api():
         records = cursor.fetchall()
     
     if not records:
-        return {}, 404
+        {}, 404
+    
     
 
     output_dict = defaultdict(lambda: [])

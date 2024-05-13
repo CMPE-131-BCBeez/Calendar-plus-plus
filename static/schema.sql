@@ -37,6 +37,13 @@ CREATE TABLE IF NOT EXISTS Events (
     FOREIGN KEY (calendar_id) REFERENCES Calendars(id)
 );
 
+CREATE TABLE IF NOT EXISTS StyleSettings (
+    user_id INTEGER,
+    wall_paper IMAGE,
+    dark_mode BOOL,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
 CREATE TABLE IF NOT EXISTS UsersEvents (
     user_id INTEGER,
     event_id INTEGER,
@@ -44,11 +51,7 @@ CREATE TABLE IF NOT EXISTS UsersEvents (
     FOREIGN KEY (event_id) REFERENCES Events(id)
 );
 
-CREATE TABLE IF NOT EXISTS Test (
-    id INTEGER PRIMARY KEY,
-    name TEXT
-);
-
-CREATE TABLE IF NOT EXISTS UserSettings(
-    darkmode 
+CREATE TABLE IF NOT EXISTS EndTies (
+    usersLeft INTEGER PRIMARY KEY,
+    reasons TEXT
 );

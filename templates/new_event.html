@@ -3,14 +3,16 @@
 
 {% block body %}
 <div class="button_header">
-
-    {% block navbar %}
-    {{ super() }}
-    {% endblock %}
-
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
+       
+    <button type="button" id="today_button_month" class="BlackButton">Jump To This Month</button>
+    <div class="right_head_buttons">
+      {% block navbar %}
+      {{ super() }}
+      {% endblock %}
+    </div>
 </div>
 
 <h1 class="event_h1">
@@ -35,20 +37,46 @@
         <input type="text" id="location" name="location" class="input-field"><br>
 
         <label for="color">Color:</label><br>
-        <input type="color" id="color" name="color" value="#000000"><br>
-
-        <label for="type">Type:</label><br>
-        <select class="event_select" id="type" name="type" class="event_select">
-            <option value="EVENT" class="event_select">Event</option>
-            <option value="REMINDER" class="event_select">Reminder</option>
-            <option value="BIRTHDAY" class="event_select"> Birthday</option>
-        </select>
-        <br>
-
+        <div class="color_button_cotainer"> 
+            <button type="button" class="black_button_for_event" onclick=" set_color_button('#000000')"></button>
+            <button type="button" class="red_button_for_event" onclick=" set_color_button('#820000')"></button>
+            <button type="button" class="green_button_for_event" onclick=" set_color_button('#008200')"></button>
+            <button type="button" class="blue_button_for_event" onclick=" set_color_button('#000082')"></button>
+            <button type="button" class="yellow_button_for_event" onclick=" set_color_button('#828200')"></button>
+        <input type="hidden" id="select_color" name="color">
+        </div>
+        
+    <label for="type">Type:</label><br>
+    <select class="event_select" id="type" name="type" class="event_select">
+        <option value="EVENT"  class="event_select">Event</option>
+        <option value="REMINDER"  class="event_select">Reminder</option>
+        <option value="BIRTHDAY"  class="event_select"> Birthday</option>
+    </select>
+    <br>
         <input type="submit" value="Create Event" class="BlackButton">
     </form>
 </div>
 
+<script>
+    let now = new Date();
+    function start_default_time(){
+        return now.toISOString().slice(0,16);
+    }
+
+    function end_default_time(){
+        let one_hour_plus = new Date(now.getTime() + (60 * 60 * 1000));
+        return one_hour_plus.toISOString().slice(0,16);
+    }
+
+    document.getElementById("start_time").value = start_default_time(); 
+    document.getElementById("end_time").value = end_default_time();
+
+    function set_color_button(color){
+        document.getElemetById("select_color").value = 'color';
+    }
+
+
+</script>
 
 
 {% endblock %}

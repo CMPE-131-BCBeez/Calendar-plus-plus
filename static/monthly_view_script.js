@@ -45,12 +45,12 @@ let two_weeks_ahead;
 
 try {
   let prev_mon_ts = new Date(timestamp_for_first_date_on_calendar * 1000);
-  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 1)
-  prev_mon_ts /= 1000
+  prev_mon_ts.setMonth(prev_mon_ts.getMonth() - 1);
+  prev_mon_ts /= 1000;
 
   let next_mon_ts = new Date(timestamp_for_last_date_on_calendar * 1000);
-  next_mon_ts.setMonth(next_mon_ts.getMonth() + 1)
-  next_mon_ts /= 1000
+  next_mon_ts.setMonth(next_mon_ts.getMonth() + 1);
+  next_mon_ts /= 1000;
 
   two_weeks_ahead = new Date(today.getFullYear(), today.getMonth(), today.getDate())
   two_weeks_ahead.setDate(two_weeks_ahead.getDate() + 10)
@@ -88,17 +88,17 @@ try {
 }
 
 function get_event_array(ts_micro) {
-  let ceil_scaled_ts = Math.ceil(ts_micro / 1000)
-  let floor_scaled_ts = Math.floor(ts_micro / 1000)
+  let ceil_scaled_ts = Math.ceil(ts_micro / 1000);
+  let floor_scaled_ts = Math.floor(ts_micro / 1000);
 
   if (floor_scaled_ts in monthly_events) {
-    return monthly_events[floor_scaled_ts]
+    return monthly_events[floor_scaled_ts];
 
   } else if (ceil_scaled_ts in monthly_events) {
-    return monthly_events[ceil_scaled_ts]
+    return monthly_events[ceil_scaled_ts];
   }
 
-  return null
+  return null;
 }
 
 function generate_calendar(year, month) {
@@ -136,17 +136,34 @@ function generate_calendar(year, month) {
   let render_event = (ts_key) => {
     let events = get_event_array(ts_key)
     monthly_calendar += "<div>";
-    monthly_calendar += '<ul>';
+    monthly_calendar += '<ul class="event_for_monthly_ul">';
     if (events) {
       for (let e of events) {
-        let start_date = new Date(e['start_time'] * 1000)
-        let end_date = new Date(e['end_time'] * 1000)
-        let event_list_item = '<li style="' + 'color:' + e['color'] + ';">' + start_date.getHours() + " - " + end_date.getHours()
+        // console.log(`Rendering Event: ${e['title']} at date ${new Date(e['start_time'])}`)
+        let start_date = new Date(e['start_time'] * 1000);
+        let start_hour = start_date.getHours();
+        if(start_hour < 10){
+          start_hour = '0' + start_hour;
+        }
+        let end_date = new Date(e['end_time'] * 1000);
+        let start_min = start_date.getMinutes();
+        if(start_min < 10){
+          start_min = '0' + start_min;
+        }
+        // let end_hour = end_date.getHours();
+        // if(end_hour < 10){
+        //   end_hour = '0' + end_hour;
+        // }
+        // let end_min = end_date.getMinutes();
+        // if(end_min < 10){
+        //   end_min = '0' + end_min;
+        // }
+        let event_list_item = '<li class="event_for_monthly_li" style="' + 'color:' + e['color'] + ';">' + start_hour + ":" + start_min;
+        // + " - " + end_hour + ":" + end_min;
         if (start_date.getDate() != end_date.getDate()) {
           event_list_item += " (on " + (end_date.getMonth() + 1) + "/" + end_date.getDate() + ")";
         }
-
-        event_list_item += ": " + e['title'] + '</li>';
+        event_list_item += " " + e['title'] + '</li>';
         monthly_calendar += event_list_item
       }
     }
