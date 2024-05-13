@@ -388,7 +388,28 @@ def security_settings():
     else:
         backUp = backup_emails['email']
         return render_template("security_settings.html", backup_emails=backUp)  # Pass the list of emails
-   
+
+@app.route('/add_backup_email', methods = ["GET","POST"])
+@login_required
+def add_backup_email():
+    #get the data
+    user_id = session.get("user_id")
+    email = request.form.get('backup_email')
+    
+    with app.app_context():
+        try:
+            #try to add the email
+            cursor = db.cursor()
+            cursor.execute("INSERT INTO BackupEmails (email,user_id) VALUES (?,?)", (email, user_id))
+            db.commit()
+            flash("Email added successfully.")
+        except Exception as e:
+            # Roll back transaction if an error occurs
+            db.rollback()
+            flash("An error occurred while adding the backup email.")
+        
+    return redirect("/security_settings")
+
 @app.route("/social_settings")
 @login_required
 def social_setting():
@@ -428,15 +449,18 @@ def delete_account():
                     cursor.execute("BEGIN TRANSACTION")
 
                     # Delete user data from various tables
-                    cursor.execute("DELETE FROM Users WHERE id = ?", (user_id,))
-                    cursor.execute("DELETE FROM BackupEmails WHERE id = ?", (user_id,))
-                    cursor.execute("DELETE FROM Calendars WHERE id = ?", (user_id,))
-                    cursor.execute("DELETE FROM Events WHERE id = ?", (user_id,))
-                    cursor.execute("DELETE FROM StyleSettings WHERE id = ?", (user_id,))
-                    cursor.execute("DELETE FROM UsersEvents WHERE id = ?", (user_id,))
+                    query = """
+                    DELETE FROM Users WHERE id = ?;
+                    DELETE FROM BackupEmails WHERE id = ?;
+                    DELETE FROM Calendars WHERE id = ?;
+                    DELETE FROM Events WHERE id = ?;
+                    DELETE FROM StyleSettings WHERE id = ?;
+                    DELETE FROM UsersEvents WHERE id = ?;
+                    """
+                    cursor.execute(query, (user_id, user_id, user_id, user_id, user_id, user_id))
 
                     # Commit the transaction
-                    cursor.execute("COMMIT")
+                    db.commit()
 
                     # Insert reason into EndTies table
                     cursor.execute("INSERT INTO EndTies (reasons) VALUES (?)", (users_reason,))
@@ -498,7 +522,6 @@ def event_api():
     if not records:
         return json.dumps({}), 404
     
-
     output_dict = defaultdict(lambda: [])
     
     for r in records:
@@ -506,10 +529,6 @@ def event_api():
         r['start_time'] = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%dT%H:%M")))
         r['end_time'] = int(datetime.timestamp(datetime.strptime(r['end_time'], "%Y-%m-%dT%H:%M")))
         output_dict[date_ts].append(r)
-    
-
-    
-        
     
     return json.dumps(output_dict)
 
