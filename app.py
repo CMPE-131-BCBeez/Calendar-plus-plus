@@ -377,14 +377,14 @@ def data_management():
 @login_required
 def security_settings():
     user_id = session.get("user_id")
-    flash(f'user: {user_id}')
+    #flash(f'user: {user_id}')
     with app.app_context():
         cursor = db.cursor()
         cursor.execute("""SELECT email FROM BackupEmails WHERE id = ?""", (user_id,))
         backup_emails = cursor.fetchall()
-        flash (f"Backup Emails:{backup_emails}")
+        #flash (f"Backup Emails:{backup_emails}")
     if not backup_emails:
-        return render_template("security_settings.html", backup_emails='noEmails')  # Pass None if no emails found
+        return render_template("security_settings.html", backup_emails=None)  # Pass None if no emails found
     else:
         backUp = backup_emails['email']
         return render_template("security_settings.html", backup_emails=backUp)  # Pass the list of emails

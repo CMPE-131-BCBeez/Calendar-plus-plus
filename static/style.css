@@ -181,13 +181,22 @@ h1 {
     align-items: center;    
 }
 
-h2{
-    font-size: 35px; 
+h3 {
+    font-size: 20px;
+    margin: 0 auto;
+    margin-bottom: 20px;    
+    margin-top: 20px; 
+    text-align: left; 
+    width: 100%;
+    display: flex;      
+    justify-content: center;   
+    align-items: center;   
 }
 
 h2{
     font-size: 35px; 
 }
+
 
 .top_h1 {
     margin: 0 auto;

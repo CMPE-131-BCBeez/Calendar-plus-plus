@@ -40,10 +40,10 @@
     <ul>
         {% if backup_emails %}
             {% for email in backup_emails %}
-                <li>{{ email }}</li>
+                <h3>{{ email }}</h3>
             {% endfor %}
         {% else %}
-            <li>No backup emails found.</li>
+            <h3>No backup emails found.</h3>
         {% endif %}
     </ul>
     
