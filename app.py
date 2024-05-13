@@ -153,7 +153,7 @@ def login():
     return render_template("login_page.html")
     
 #logout the current user
-@app.route("logout", methods = ["GET", "POST"])
+@app.route("/logout", methods = ["GET", "POST"])
 @login_required
 def logout():
     session.clear()
