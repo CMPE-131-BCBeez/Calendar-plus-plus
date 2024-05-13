@@ -578,9 +578,14 @@ li::before {
 }
 
 .weekly_calendar td {
+
+    border: 1px solid black;
+    /* padding: 8px; */
+
     text-align: center;
     color:#FFFFFF;
 }
+
 
 /* .weekly_calendar  tr:first-child {
     background-color: rgba(0, 0, 0, 0);
@@ -592,6 +597,12 @@ li::before {
 .weekly_header{
     height:10vh;
     width:100%;
+  
+.weekly_calendar td {
+    position: relative;
+    width: 100px;
+    height: 44px;
+
 }
 
 /* .dayInfo {
@@ -858,6 +869,7 @@ input[type="file"] {
     justify-content: space-between; 
 }
 
+
 .save_it{
     display:flex;
     justify-content: right;   
@@ -879,3 +891,21 @@ input[type="file"] {
     flex-direction: column;
     margin: 20px;
 }
+
+
+.dynamic-rectangle {
+    position: absolute;
+    overflow-x: auto;
+    background-color: rgba(255, 0, 0, 0.5);
+    /* Red with 50% opacity */
+    border: 1px solid black;
+    /* Additional styling properties as needed */
+    color: white;
+    /* Text color */
+    font-size: 20px;
+    /* Font size */
+    padding: 4px;
+    /* Padding around the text */
+    box-sizing: border-box;
+}
+

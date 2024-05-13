@@ -181,10 +181,12 @@ def monthly_calendar():
 
 
 @app.route('/weekly_calendar')
+@login_required
 def weekly_calendar():
     return render_template('weekly_calendar.html')
 
 @app.route('/daily_calendar')
+@login_required
 def daily_calendar():
     return render_template('daily_calendar.html')
  
