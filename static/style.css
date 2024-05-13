@@ -256,12 +256,8 @@ h1 {
 
 }
 
-h2{
-    font-size: 35px; 
-}
-
-h2{
-    font-size: 35px; 
+h2 {
+    font-size: 35px;
 }
 
 .top_h1 {
@@ -625,7 +621,7 @@ transform: translate(-50%, -50%); */
 }
 
 .navButton {
-    background-color: black;
+    /* background-color: black; */
     border: none;
     color: white;
     padding: 10px 24px;
@@ -849,8 +845,3 @@ input[type="file"] {
     justify-content: right;   
     align-items: center;  
 }
-
-
-
-
-

@@ -10,4 +10,9 @@ Werkzeug==3.0.1
 pytz
 flask_mail
 flask_sendmail
+openmeteo-requests
+requests-cache 
+retry-requests 
+numpy 
+pandas
 resend
