@@ -9,6 +9,9 @@
         <a href="/security_settings" class="WhiteButton">
             Security settings<!--Go to the sign in page-->
         </a>
+        <a href="/style_setting" class="WhiteButton">
+            Style Setting<!--Go to the sign in page-->
+        </a>
     </div>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
@@ -32,10 +35,10 @@
     </div>
 
     
-    <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Verify Password</button>
+    <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Delete Your Calendars</button>
     <div id="passwordDropdown" class="dropdown-content" style="display: none;">
-        <form action="/verify_password" method="POST">
-            <label for="password">Password:</label><br>
+        <form action="/delete_user_calendars" method="POST">
+            <label for="password">Verify Password:</label><br>
             <input type="password" id="password" name="password" required><br>
             <input type="submit" value="Verify Password">
         </form>

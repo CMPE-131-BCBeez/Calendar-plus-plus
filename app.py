@@ -359,7 +359,12 @@ def change_password_email():
 @app.route("/data_management", methods = ["GET", "POST"])
 @login_required
 def data_management():
-    #This will allow the user to download their data or delete/edit
+    #This will allow the user to download their data or delete/edit  
+    return render_template("data_management.html")
+
+@app.route("/change_username", ["GET", "POST"])
+@login_required
+def change_username():
     if request.method == "POST":
         new_username = request.form.get("new_username")
         with app.app_context():
@@ -378,9 +383,8 @@ def data_management():
                 return redirect("/data_management")  # Redirect to the same page after username change
         else:
             flash("That username already exists, try another one.")
-            return redirect("/data_management")  
-    return render_template("data_management.html")
-
+            return redirect("/data_management")
+        
 @app.route("/security_settings")
 @login_required
 def security_settings():
@@ -398,6 +402,7 @@ def security_settings():
         backUp = [entry["email"] for entry in backup_emails]
         return render_template("security_settings.html", backup_emails=backUp)  # Pass the list of emails
 
+#add the backup email fucntionality
 @app.route('/add_backup_email', methods = ["GET","POST"])
 @login_required
 def add_backup_email():
@@ -419,7 +424,66 @@ def add_backup_email():
         
     return redirect("/security_settings")
 
-@app.route("/social_settings")
+#delete user's calendars
+@app.route("/delete_user_calendars", methods = ["GET", "POST"])
+@login_required
+def delete_user_data():
+    if request.method == "POST":
+        user_id = session.get("user_id")
+        password = request.form.get("current_password")
+        users_reason = request.form.get("description")
+
+        #Retreive hashed password from database but we can move this to
+        #the database funtions so that the devices dont get the hashed passwords
+        with app.app_context():
+            cursor = db.cursor()
+            cursor.execute("SELECT id, username, password_hash FROM Users WHERE username=?", (user_id,))
+            user = cursor.fetchone()
+            
+        #Check if user exists and verify password
+        if user and check_password_hash(user["password_hash"], password):
+            #right password so we will go ahead and delete all the data we have related to this user_id
+            with app.app_context():
+                cursor = db.cursor()
+                try:
+                    cursor.execute("BEGIN TRANSACTION")
+
+                    # Delete user data from various tables
+                    query = """
+                    DELETE FROM Users WHERE id = ?;
+                    DELETE FROM BackupEmails WHERE id = ?;
+                    DELETE FROM Calendars WHERE id = ?;
+                    DELETE FROM Events WHERE id = ?;
+                    DELETE FROM StyleSettings WHERE id = ?;
+                    DELETE FROM UsersEvents WHERE id = ?;
+                    """
+                    cursor.execute(query, (user_id, user_id, user_id, user_id, user_id, user_id))
+
+                    # Commit the transaction
+                    db.commit()
+
+                    # Insert reason into EndTies table
+                    cursor.execute("INSERT INTO EndTies (reasons) VALUES (?)", (users_reason,))
+                    db.commit()
+                except Exception as e:
+                    # Rollback the transaction if an error occurs
+                    cursor.execute("ROLLBACK")
+                    flash("An error occurred while deleting your account. Please try again.")
+    
+            flash("Sorry to see you go!")
+            # Clear session and redirect to the login page
+            session.clear()
+            flash("Your account has been deleted successfully.")
+            return redirect("/login")
+
+        #if login fails then redirect to the same login page
+        else:
+            flash("Invalid password")
+    #load html           
+    return render_template("delete_account.html")
+
+
+@app.route("/social_settings", methods = ["GET"])
 @login_required
 def social_setting():
     #this will allow the users to share whole schedules/calendars
@@ -428,7 +492,7 @@ def social_setting():
 
     return render_template("social_settings.html")
 
-@app.route("/style_settings")
+@app.route("/style_settings", methods = ["GET"])
 @login_required
 def style_settings():
     return render_template("style_settings.html")

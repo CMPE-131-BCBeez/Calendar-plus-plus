@@ -8,8 +8,12 @@
     <div id="settings" class="dropdown-content">
         <a href="/data_management" class="WhiteButton">
             Data Management<!--Go to the sign in page-->
-        </a>s
+        </a>
+        <a href="/style_setting" class="WhiteButton">
+            Style Setting<!--Go to the sign in page-->
+        </a>
     </div>
+
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
   
@@ -57,18 +61,10 @@
         </form>
     </div>
 
-    <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Verify Password</button>
-    <div id="passwordDropdown" class="dropdown-content" style="display: none;">
-        <form action="/verify_password" method="POST">
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" required><br>
-            <input type="submit" value="Verify Password">
-        </form>
-    </div>
-
     <button type="button" id="daily" class="BlackButton" onclick="location.href='/change_password_settings'">Change Password</button>
     <button type="button" id="event" class="BlackButton" onclick="location.href='/new_event'">Add Event</button>
     <button type="button" id="today_button" class="BlackButton">Delete Account</button>
+    <button type="button" id="event" class="BlackButton" onclick="location.href='/logout'">Logout</button>
     </div>
     
 
