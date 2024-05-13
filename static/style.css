@@ -48,10 +48,10 @@
   }
   
   /* Dropdown button on hover & focus */
-  /* .dropbtn:hover, .dropbtn:focus {
+   .dropbtn:hover, .dropbtn:focus {
     background-color: #2980B9;
   }
-   */
+   
   /* The container <div> - needed to position the dropdown content */
   .dropdown {
     position: relative;
@@ -76,10 +76,10 @@
   }
   
   /* Change color of dropdown links on hover */
-  /* .dropdown-content a:hover {
+  .dropdown-content a:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
-   */
+  
   /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
   .show {display:block;}
 
@@ -116,11 +116,6 @@ form textarea {
     background-size: cover;
     position: fixed;
     z-index: 0;
-}
-
-.flashes{
-    position:relative;
-    z-index: 9999;
 }
 
 .transparent{
@@ -253,12 +248,35 @@ h1 {
     top:0;
     right:0;
     left:0;
+}
 
+h3 {
+    font-size: 20px;
+    margin: 0 auto;
+    margin-bottom: 20px;    
+    margin-top: 20px; 
+    text-align: left; 
+    width: 100%;
+    display: flex;      
+    justify-content: center;   
+    align-items: center;   
+}
+h4 {
+    font-size: 30px;
+    margin: 0 auto;
+    margin-bottom: 20px;    
+    margin-top: 20px; 
+    text-align: left; 
+    width: 100%;
+    display: flex;      
+    justify-content: center;   
+    align-items: center; 
 }
 
 h2 {
     font-size: 35px;
 }
+
 
 .top_h1 {
     margin: 0 auto;
@@ -844,4 +862,20 @@ input[type="file"] {
     display:flex;
     justify-content: right;   
     align-items: center;  
+}
+
+.flashes {
+    position: relative;
+    top: 30px; /* Adjust the distance from the top */
+    right: 20px; /* Adjust the distance from the right */
+    z-index: 9999; /* Ensure it's above other elements */
+    /* Additional styling as needed */  
+}
+
+.vertial_button_container{
+    display:flex;
+    justify-content: center;   
+    align-items: center;  
+    flex-direction: column;
+    margin: 20px;
 }

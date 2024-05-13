@@ -9,46 +9,43 @@
         <a href="/security_settings" class="WhiteButton">
             Security settings<!--Go to the sign in page-->
         </a>
+        <a href="/style_setting" class="WhiteButton">
+            Style Setting<!--Go to the sign in page-->
+        </a>
     </div>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
-
+  
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
-
+         
 </div>
 
 <h1 class="top_h1">
     Data Management
 </h1>
-<div class="container">
+<!--This is a vertical container to align the contents-->
+<div class="vertial_button_container">
     <button onclick="toggleDropdown('usernameDropdown')" class="dropbtn">Change Username</button>
     <div id="usernameDropdown" class="dropdown-content" style="display: none;">
-        <form action="/data_management" method="POST">
+        <form action="/change_username" method="POST">
             <label for="new_username">New Username:</label><br>
             <input type="text" id="new_username" name="new_username" required><br>
             <input type="submit" value="Change Username">
         </form>
     </div>
 
-    <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Verify Password</button>
+    
+    <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Delete Your Calendars</button>
     <div id="passwordDropdown" class="dropdown-content" style="display: none;">
-        <form action="/verify_password" method="POST">
-            <label for="password">Password:</label><br>
+        <form action="/delete_user_calendars" method="POST">
+            <label for="password">Verify Password:</label><br>
             <input type="password" id="password" name="password" required><br>
             <input type="submit" value="Verify Password">
         </form>
     </div>
-    <!--<form action="/data_management" method="POST">
-        <label for="new_username">New Username:</label><br>
-        <input type="text" id="new_username" name="new_username" required><br>
-        <input type="submit" value="Change Username">
-    </form>-->
-    <a href="/delete_account" class="WhiteButton">
-        Delete my account<!--delete account-->
-    </a><br>
 
-    <a href="/forgot_password" class="WhiteButton">
-        Forgot Password<!--Go to the reset pasword page-->
-    </a>
+    <button type="button" id="daily" class="BlackButton" onclick="location.href='/download_data'">download user data</button>
+    <button type="button" id="event" class="BlackButton" onclick="location.href='/logout'">Logout</button>
+
 </div>
 {% endblock %}

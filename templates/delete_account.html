@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %} Delete Acc++ {% endblock %}
+
+{% block body %}
+
+<h1 class="small_h1">
+    Delete Account
+</h1>
+<div class="event_add_container">
+    <form action="/delete_account" method="POST">
+
+    <label for="current_password">Enter Current Password:</label><br>
+    <input type="password" id="current_password" name="current_password" class="input-field" required><br>
+
+    <label for="description">Tell us why you are leaving:</label><br>
+    <textarea type = "text" id="description" name="description" class="input-field"></textarea><br>
+    
+    <input type="submit" value="Create Event" class="BlackButton">
+    </form>
+
+    <a href="/data_management" class="WhiteButton">
+        Remembered My Password, Login!<!--Go to the sign in page-->
+    </a><br>
+</div>
+
+
+{% endblock %}
