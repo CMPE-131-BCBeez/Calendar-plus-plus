@@ -874,8 +874,8 @@ input[type="file"] {
 
 .vertial_button_container{
     display:flex;
-    justify-content: center;   
-    align-items: center;  
+    justify-content: left;   
+    align-items: left;  
     flex-direction: column;
     margin: 20px;
 }

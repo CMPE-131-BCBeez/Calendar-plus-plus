@@ -3,29 +3,28 @@
 
 {% block body %}
 
-<div class="button_header">
-    <button onclick="dropDown()" class="dropbtn">Settings</button>
-    <div id="settings" class="dropdown-content">
-        <a href="/data_management" class="WhiteButton">
-            Data Management<!--Go to the sign in page-->
-        </a>
-        <a href="/style_setting" class="WhiteButton">
-            Style Setting<!--Go to the sign in page-->
-        </a>
-    </div>
 
+<div class="button_header">
+
+    <div class="right_head_buttons">
+        {% block navbar %}
+        {{ super() }}
+        {% endblock %}
+      </div>
+    
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
-  
-    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
-         
 </div>
 
-<h1>
-    Security settings
-</h1>
-<body class="light_mode">
+<div class="nomal_hader_container">
+    <h1>
+        Security settings
+    </h1>
+</div>
 
+<div class="settings_container">
+    
     <!--<button type="button" id="settings" class="BlackButton" onclick="location.href='/settings'">Settings</button>-->
     <!--
     <button onclick="dropDown()" class="dropbtn">Settings</button>
@@ -66,8 +65,8 @@
     <button type="button" id="today_button" class="BlackButton">Delete Account</button>
     <button type="button" id="event" class="BlackButton" onclick="location.href='/logout'">Logout</button>
     </div>
+</div>
+
+
     
-
-</body>
-
 {% endblock %}

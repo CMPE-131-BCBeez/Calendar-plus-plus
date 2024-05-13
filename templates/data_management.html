@@ -3,49 +3,53 @@
 
 {% block body %}
 
+
 <div class="button_header">
-    <button onclick="dropDown()" class="dropbtn">Settings</button>
-    <div id="settings" class="dropdown-content">
-        <a href="/security_settings" class="WhiteButton">
-            Security settings<!--Go to the sign in page-->
-        </a>
-        <a href="/style_setting" class="WhiteButton">
-            Style Setting<!--Go to the sign in page-->
-        </a>
-    </div>
+
+    <div class="right_head_buttons">
+        {% block navbar %}
+        {{ super() }}
+        {% endblock %}
+      </div>
+    
+    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
     <button type="button" id="weekly" class="BlackButton" onclick="location.href='/weekly_calendar'">Weekly</button>
-  
-    <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
-         
 </div>
 
-<h1 class="top_h1">
-    Data Management
-</h1>
-<!--This is a vertical container to align the contents-->
-<div class="vertial_button_container">
-    <button onclick="toggleDropdown('usernameDropdown')" class="dropbtn">Change Username</button>
-    <div id="usernameDropdown" class="dropdown-content" style="display: none;">
-        <form action="/change_username" method="POST">
-            <label for="new_username">New Username:</label><br>
-            <input type="text" id="new_username" name="new_username" required><br>
-            <input type="submit" value="Change Username">
-        </form>
-    </div>
-
-    
-    <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Delete Your Calendars</button>
-    <div id="passwordDropdown" class="dropdown-content" style="display: none;">
-        <form action="/delete_user_calendars" method="POST">
-            <label for="password">Verify Password:</label><br>
-            <input type="password" id="password" name="password" required><br>
-            <input type="submit" value="Verify Password">
-        </form>
-    </div>
-
-    <button type="button" id="daily" class="BlackButton" onclick="location.href='/download_data'">download user data</button>
-    <button type="button" id="event" class="BlackButton" onclick="location.href='/logout'">Logout</button>
-
+<div class="nomal_hader_container">
+    <h1>
+        Data Management
+    </h1>
 </div>
+
+
+<div class="settings_container">
+    <!--This is a vertical container to align the contents-->
+    <div class="vertial_button_container">
+        <button onclick="toggleDropdown('usernameDropdown')" class="dropbtn">Change Username</button>
+        <div id="usernameDropdown" class="dropdown-content" style="display: none;">
+            <form action="/change_username" method="POST">
+                <label for="new_username">New Username:</label><br>
+                <input type="text" id="new_username" name="new_username" required><br>
+                <input type="submit" value="Change Username">
+            </form>
+        </div>
+
+        
+        <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn">Delete Your Calendars</button>
+        <div id="passwordDropdown" class="dropdown-content" style="display: none;">
+            <form action="/delete_user_calendars" method="POST">
+                <label for="password">Verify Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
+                <input type="submit" value="Verify Password">
+            </form>
+        </div>
+
+        <button type="button" id="daily" class="BlackButton" onclick="location.href='/download_data'">download user data</button>
+        <button type="button" id="event" class="BlackButton" onclick="location.href='/logout'">Logout</button>
+
+    </div>
+</div>
+
 {% endblock %}
