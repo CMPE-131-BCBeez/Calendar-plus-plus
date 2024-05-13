@@ -431,7 +431,6 @@ def delete_user_data():
     if request.method == "POST":
         user_id = session.get("user_id")
         password = request.form.get("current_password")
-        users_reason = request.form.get("description")
 
         #Retreive hashed password from database but we can move this to
         #the database funtions so that the devices dont get the hashed passwords
@@ -450,37 +449,27 @@ def delete_user_data():
 
                     # Delete user data from various tables
                     query = """
-                    DELETE FROM Users WHERE id = ?;
-                    DELETE FROM BackupEmails WHERE id = ?;
                     DELETE FROM Calendars WHERE id = ?;
                     DELETE FROM Events WHERE id = ?;
-                    DELETE FROM StyleSettings WHERE id = ?;
-                    DELETE FROM UsersEvents WHERE id = ?;
                     """
-                    cursor.execute(query, (user_id, user_id, user_id, user_id, user_id, user_id))
+                    cursor.execute(query, (user_id, user_id,))
 
                     # Commit the transaction
                     db.commit()
 
-                    # Insert reason into EndTies table
-                    cursor.execute("INSERT INTO EndTies (reasons) VALUES (?)", (users_reason,))
-                    db.commit()
                 except Exception as e:
                     # Rollback the transaction if an error occurs
                     cursor.execute("ROLLBACK")
                     flash("An error occurred while deleting your account. Please try again.")
     
-            flash("Sorry to see you go!")
-            # Clear session and redirect to the login page
-            session.clear()
-            flash("Your account has been deleted successfully.")
-            return redirect("/login")
+            flash("Calendars Deleted.")
+            return redirect("/data_management")
 
         #if login fails then redirect to the same login page
         else:
             flash("Invalid password")
     #load html           
-    return render_template("delete_account.html")
+    return redirect("/data_management")
 
 
 @app.route("/social_settings", methods = ["GET"])
