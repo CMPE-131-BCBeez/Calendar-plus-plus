@@ -623,16 +623,16 @@ def event_api():
         records = cursor.fetchall()
     
     if not records:
-        return json.dumps({}), 404
+        {}, 404
     
     
 
     output_dict = defaultdict(lambda: [])
     
     for r in records:
-        date_ts = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%dT%H:%M").replace(hour=0, minute=0, second=0)))
-        r['start_time'] = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%dT%H:%M")))
-        r['end_time'] = int(datetime.timestamp(datetime.strptime(r['end_time'], "%Y-%m-%dT%H:%M")))
+        date_ts = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%d %H:%M:%S").replace(hour=0, minute=0, second=0)))
+        r['start_time'] = int(datetime.timestamp(datetime.strptime(r['start_time'], "%Y-%m-%d %H:%M:%S")))
+        r['end_time'] = int(datetime.timestamp(datetime.strptime(r['end_time'], "%Y-%m-%d %H:%M:%S")))
         output_dict[date_ts].append(r)
     
 
