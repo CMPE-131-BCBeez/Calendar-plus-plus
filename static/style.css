@@ -597,6 +597,7 @@ li::before {
 .weekly_header{
     height:10vh;
     width:100%;
+}
   
 .weekly_calendar td {
     position: relative;
