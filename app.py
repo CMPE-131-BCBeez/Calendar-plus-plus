@@ -477,24 +477,25 @@ def download_data():
     user_id = session.get("user_id")
     #retrieve user data
     with app.app_context():
-                cursor = db.cursor()
-                try:
-                    cursor.execute("BEGIN TRANSACTION")
+        cursor = db.cursor()
+        try:
+            cursor.execute("BEGIN TRANSACTION")
 
-                    # Delete user data from various tables
-                    query = """
-                    SELECT * FROM BackupEmails WHERE id = ?;
-                    SELECT * FROM Calendars WHERE id = ?;
-                    SELECT * FROM Events WHERE id = ?;
-                    SELECT * FROM StyleSettings WHERE id = ?;
-                    SELECT * FROM UsersEvents WHERE id = ?;
-                    """
-                    cursor.execute(query, (user_id, user_id, user_id, user_id, user_id,))
-                    user_data = cursor.fetchall()
-                except Exception as e:
-                    # Rollback the transaction if an error occurs
-                    cursor.execute("ROLLBACK")
-                    flash("An error occurred while deleting your account. Please try again.")
+            # Delete user data from various tables
+            query = """
+            SELECT * FROM BackupEmails WHERE id = ?;
+            SELECT * FROM Calendars WHERE id = ?;
+            SELECT * FROM Events WHERE id = ?;
+            SELECT * FROM StyleSettings WHERE id = ?;
+            SELECT * FROM UsersEvents WHERE id = ?;
+            """
+            cursor.execute(query, (user_id, user_id, user_id, user_id, user_id,))
+            user_data = cursor.fetchall()
+        except Exception as e:
+            # Rollback the transaction if an error occurs
+            cursor.execute("ROLLBACK")
+            flash("An error occurred while retreiving your data, try again.")
+            return redirect("/data_management")
     
     # Write the data to a temporary file on the server
     with tempfile.NamedTemporaryFile(mode="w", delete=False) as users_data:
@@ -504,9 +505,11 @@ def download_data():
     # Send the file to the user for download
     try:
         return send_file(users_data.name, as_attachment=True, attachment_filename="user_data.txt")
+
     finally:
         # Clean up the temporary file after the download
         users_data.close()
+        os.remove(users_data.name)
         return redirect("/data_management")
 
 @app.route("/social_settings", methods = ["GET"])
