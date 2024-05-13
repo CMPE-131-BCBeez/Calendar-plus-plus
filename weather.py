@@ -19,7 +19,7 @@ def getWeather(latitude: float, longitude: float, start_time: datetime, end_time
     params = {
         "latitude": latitude,
         "longitude": longitude,
-        "current": ["temperature_2m", "is_day", "weather_code", "relative_humidity_2m"],
+        "current": ["temperature_2m", "is_day", "weather_code", "relative_humidity_2m", "wind_speed_10m"],
         "hourly": ["temperature_2m", "weather_code"],
         "daily": ["weather_code", "temperature_2m_max"],
         "temperature_unit": "fahrenheit",
@@ -39,16 +39,14 @@ def getWeather(latitude: float, longitude: float, start_time: datetime, end_time
     # Current values. The order of variables needs to be the same as requested.
     current = response.Current()
     current_temperature_2m = current.Variables(0).Value()
-    current_is_day = current.Variables(1).Value()
-    current_weather_code = current.Variables(2).Value()
-    current_humidity = current.Variables(3).Value()
+    current_relative_humidity_2m = current.Variables(1).Value()
+    current_is_day = current.Variables(2).Value()
+    current_weather_code = current.Variables(3).Value()
+    current_wind_speed_10m = current.Variables(4).Value()
 
-    # print(f"Current time {type(current.Time())}")
-    # print(f"Current temperature_2m {current_temperature_2m}")
-    # print(f"Current is_day {current_is_day}")
-    # print(f"Current weather_code {current_weather_code}")
+    print(current_relative_humidity_2m)
     current_dict = {"current": {"timestamp": current.Time(), "temperature_2m": current_temperature_2m, 
-                          "s_day": current_is_day, "weather_code": current_weather_code, "relative_humidity_2m": current_humidity}}
+                          "s_day": current_is_day, "weather_code": current_weather_code, "relative_humidity_2m": current_relative_humidity_2m, "wind_speed_10m": current_wind_speed_10m}}
     if mode == "current":
         return current_dict
 

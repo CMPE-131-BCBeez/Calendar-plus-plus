@@ -423,12 +423,15 @@ h2 {
 .weekly_calendar th,
 .weekly_calendar td {
     border: 1px solid black;
-    padding: 8px;
+    /* padding: 8px; */
+
     text-align: center;
 }
 
 .weekly_calendar td {
+    position: relative;
     width: 100px;
+    height: 44px;
 }
 
 .weekly_calendar tr:first-child th {
@@ -685,4 +688,21 @@ input:checked+.slider:before {
     display: flex;
     justify-content: right;
     align-items: center;
+}
+
+
+.dynamic-rectangle {
+    position: absolute;
+    overflow-x: auto;
+    background-color: rgba(255, 0, 0, 0.5);
+    /* Red with 50% opacity */
+    border: 1px solid black;
+    /* Additional styling properties as needed */
+    color: white;
+    /* Text color */
+    font-size: 20px;
+    /* Font size */
+    padding: 4px;
+    /* Padding around the text */
+    box-sizing: border-box;
 }
