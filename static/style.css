@@ -686,3 +686,21 @@ input:checked+.slider:before {
     justify-content: right;
     align-items: center;
 }
+
+
+.dynamic-rectangle {
+    position: absolute;
+    background-color: rgba(255, 0, 0, 0.5);
+    /* Red with 50% opacity */
+    border: 1px solid black;
+    /* Additional styling properties as needed */
+}
+
+.rectangle-text {
+    color: white;
+    /* Text color */
+    font-size: 12px;
+    /* Font size */
+    padding: 4px;
+    /* Padding around the text */
+}

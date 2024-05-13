@@ -2,6 +2,7 @@
 {% block title %} Daily++ {% endblock %}
 
 {% block body %}
+
 <div class="button_header">
 
     {% block navbar %}
@@ -19,18 +20,17 @@
     <div class="daily_item_event">
         <h1 class="small_h1">
             Today's Weather
-            Today's Weather
         </h1>
+        <br>
+        <iframe id="dailyWeather" src="../static/weather.html" width="500" height="500" frameborder="0"></iframe>
         <div class="event_add_container">
-
-
         </div>
     </div>
 
     <div class="daily_container">
         <div id="pagination_daily">
             <button id="prev_day">
-                << /button>
+                < </button>
                     <h2 id="year_month_day_header"></h2>
                     <button id="next_day">></button>
         </div>
@@ -41,7 +41,7 @@
     </div>
 </div>
 
-<script src="{{url_for('static', filename='daily_view_script.js')}}"></script>
+<script type="module" src="{{url_for('static', filename='daily_view_script.js')}}"></script>
 <script src="{{url_for('static', filename='theme_script.js')}}"></script>
 
 {% endblock %}
