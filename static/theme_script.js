@@ -199,11 +199,6 @@ function change_theme(is_dark_mode){
             element.style.borderBottom = '1px solid ' + white;
         });
 
-        setting_content.forEach(function(element){
-            element.style.color  = white;
-            element.style.borderBottom = '1px solid ' + white;
-        });
-
         flashes.forEach(function(element){
             element.style.color = black;
         });
