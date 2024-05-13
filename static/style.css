@@ -24,7 +24,6 @@
 .light_mode{
     color:#000000;
     background-color: #FFFFFF;
-    background-color: #FFFFFF;
 }
 
 .dark_mode{
@@ -182,60 +181,50 @@ form textarea {
 
 .color_button_cotainer{
     display:flex;
-    justify-content: center;   
+    justify-content: space-between; 
     align-items: center;   
-    width:100%; 
+    margin-bottom:20px;   
 }
 
 .black_button_for_event{
     background-color: #000000;
-    width: calc(100%/5);
+    width: calc(90%/5);
     height:25px;
     border-radius: 5px;
     border: 2px solid #FFFFFF; 
-    margin: 0px; 
     cursor: pointer; 
-    padding:0px;
 }
 .red_button_for_event{
     background-color: #820000;
-    width: calc(100%/5);
+    width: calc(90%/5);
     height:25px;
     border-radius: 5px;
     border: 2px solid #FFFFFF; 
-    margin: 0px; 
     cursor: pointer; 
-    padding:0px;
 }
 .green_button_for_event{
     background-color: #008200;
-    width: calc(100%/5);
+    width: calc(90%/5);
     height:25px;
     border-radius: 5px;
     border: 2px solid #FFFFFF; 
-    margin: 0px; 
     cursor: pointer; 
-    padding:0px;
 }
 .blue_button_for_event{
     background-color: #000082;
-    width: calc(100%/5);
+    width: calc(90%/5);
     height:25px;
     border-radius: 5px;
     border: 2px solid #FFFFFF; 
-    margin: 0px; 
     cursor: pointer; 
-    padding:0px;
 }
 .yellow_button_for_event{
     background-color: #828200;
-    width: calc(100%/5);
+    width: calc(90%/5);
     height:25px;
     border-radius: 5px;
     border: 2px solid #FFFFFF; 
-    margin: 0px; 
     cursor: pointer; 
-    padding:0px;
 }
 
 .setting_content{
@@ -322,6 +311,10 @@ h2{
     margin-bottom: 20px;   
     background-color: rgba(255, 255, 255, 0);  
 }
+
+.input-field #discription{  
+    height:5%;
+}
  
 /*this will be used when the input-field is focused(clicked or selected)*/
 .input-field:focus {    
@@ -379,7 +372,7 @@ h2{
     width: 100%;
     font-size: 15px; 
     height: calc(100% / 6);  
-    background-color: rgba(255, 255, 255, 0.5) !important;
+    background-color: rgba(255, 255, 255, 0.5);
     border: 2px solid #000000; 
 }
 
@@ -439,9 +432,9 @@ h2{
 
 .event_select {
     font-family: "CaviarDreams_Bold", sans-serif;   
-    background-color: rgba(255, 255, 255, 0); 
-    border-bottom: 1px solid black; 
-    color: #000000; 
+    background-color: rgba(0, 0, 0, 1); 
+    color: #FFFFFF; 
+    border:solid 2px #FFFFFF;
     padding: 0px 2px; 
     text-align: center; 
     text-decoration: none;  

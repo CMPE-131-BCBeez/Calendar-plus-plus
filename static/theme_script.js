@@ -17,7 +17,6 @@ function change_theme_by_cookie(){
     }
 }
 
-// document.addEventListener("DOMContentLoaded", function() {
     function dark_mode(){
     if (window.location.pathname === "/style_settings") {
         let dark_mode_switch = document.getElementById('mode_switch_button');
@@ -98,6 +97,8 @@ let time_col_body = document.querySelectorAll('time_col_body');
 
 let day_col = document.querySelectorAll('day_col');
 
+let event_select = document.querySelectorAll('event_select');
+
 
 function change_theme(is_dark_mode){
     let body = document.body;
@@ -153,11 +154,13 @@ function change_theme(is_dark_mode){
         calendar_basic.forEach(function(element) {
             element.style.backgroundColor = half_black;
             element.style.border = '1px solid' + white; 
+            console.log("changing color!")
         });
 
         calendar_basic_today.forEach(function(element) {
             element.style.backgroundColor = half_black;
             element.style.border = '1px solid' + white; 
+            console.log("changing color!")
         });
 
         today_cell.forEach(function(element){
@@ -216,6 +219,12 @@ function change_theme(is_dark_mode){
             element.style.backgroundColor = half_black;
             element.style.border = '2px solid' + white;
         });
+
+        event_select.forEach(function(element){
+            element.style.color = white;
+            element.style.backgroundColor = half_black;
+            element.style.border = '2px solid' + white;
+        });
     } 
     else {
         body.classList.remove('dark_mode');
@@ -264,10 +273,14 @@ function change_theme(is_dark_mode){
 
         calendar_basic.forEach(function(element) {
             element.style.backgroundColor = half_white;
+            element.style.border = '1px solid' + black; 
+            console.log("changing color!")
         });
 
         calendar_basic_today.forEach(function(element) {
             element.style.backgroundColor = half_white;
+            element.style.border = '1px solid' + black; 
+             console.log("changing color!")
         });
 
         today_cell.forEach(function(element){
@@ -313,6 +326,12 @@ function change_theme(is_dark_mode){
         day_col.forEach(function(element){
             element.style.color = black;
             element.style.backgroundColor = half_white
+            element.style.border = '2px solid' + black;
+        });
+
+        event_select.forEach(function(element){
+            element.style.color = black;
+            element.style.backgroundColor = half_white;
             element.style.border = '2px solid' + black;
         });
     }
