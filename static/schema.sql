@@ -10,6 +10,19 @@ CREATE TABLE IF NOT EXISTS Users (
     last_name VARCHAR(40) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS Events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    calendar_id INT,
+    title VARCHAR(50) NOT NULL,
+    description TEXT,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME NOT NULL,
+    location VARCHAR(50),
+    color VARCHAR(15),
+    type VARCHAR(8) CHECK (type IN ('EVENT', 'REMINDER', 'BIRTHDAY')) NOT NULL,
+    FOREIGN KEY (calendar_id) REFERENCES Calendars(id)
+);
+
 CREATE TABLE IF NOT EXISTS BackupEmails (
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
@@ -22,19 +35,6 @@ CREATE TABLE IF NOT EXISTS Calendars(
     user_id INT,
     name VARCHAR(50) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
-);
-
-CREATE TABLE IF NOT EXISTS Events (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    calendar_id INT,
-    title VARCHAR(50) NOT NULL,
-    description TEXT,
-    start_time DATETIME NOT NULL,
-    end_time DATETIME NOT NULL,
-    location VARCHAR(50),
-    color VARCHAR(15),
-    type VARCHAR(8) CHECK (type IN ('EVENT', 'REMINDER', 'BIRTHDAY')) NOT NULL,
-    FOREIGN KEY (calendar_id) REFERENCES Calendars(id)
 );
 
 CREATE TABLE IF NOT EXISTS StyleSettings (
