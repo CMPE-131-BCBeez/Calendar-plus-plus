@@ -69,7 +69,7 @@ let form  = document.querySelectorAll('.form');
 
 let black_buttons = document.querySelectorAll('.BlackButton');
 
-let pagenation_buttons = document.querySelectorAll('#prev_month, #next_month, #prev_month, #next_month,#prev_week, #next_week,#prev_day, #next_day');
+let pagenation_buttons = document.querySelectorAll('#prev_month, #next_month, #prev_month, #next_month,#prev_week, #prevWeek, #nextWeek,#next_week,#prev_day, #next_day');
 
 let white_buttons = document.querySelectorAll('.WhiteButton');
 
@@ -99,6 +99,7 @@ let day_col = document.querySelectorAll('day_col');
 
 let event_select = document.querySelectorAll('event_select');
 
+let settings_WhiteButtons = document.querySelectorAll('settings_WhiteButton');
 
 function change_theme(is_dark_mode){
     let body = document.body;
@@ -199,6 +200,11 @@ function change_theme(is_dark_mode){
             element.style.borderBottom = '1px solid ' + white;
         });
 
+        setting_content.forEach(function(element){
+            element.style.color  = white;
+            element.style.borderBottom = '1px solid ' + white;
+        });
+
         flashes.forEach(function(element){
             element.style.color = black;
         });
@@ -220,6 +226,11 @@ function change_theme(is_dark_mode){
             element.style.backgroundColor = half_black;
             element.style.border = '2px solid' + white;
         });
+
+        settings_WhiteButtons.forEach(function(element){
+            element.style.color = white;
+            element.style.borderBottom = '1px solid' + white;  
+        });  
     } 
     else {
         body.classList.remove('dark_mode');
@@ -301,6 +312,12 @@ function change_theme(is_dark_mode){
 
         dropdown_content.forEach(function(element){
             element.style.backgroundColor  = white;
+            element.addEventListener('a', function() {
+                element.style.color = black; 
+            });
+            element.addEventListener('a:hover ', function() {
+                element.style.color =  'rgba(255, 255, 255, 0.2)'; 
+            });
         });
 
         setting_content.forEach(function(element){
@@ -329,6 +346,11 @@ function change_theme(is_dark_mode){
             element.style.backgroundColor = half_white;
             element.style.border = '2px solid' + black;
         });
+
+        settings_WhiteButtons.forEach(function(element){
+            element.style.color = black;
+            element.style.borderBottom = '1px solid' + black;  
+        });  
     }
 }
 

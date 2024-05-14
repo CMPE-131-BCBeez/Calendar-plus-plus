@@ -26,28 +26,28 @@
 
 <div class="settings_container">
     <!--This is a vertical container to align the contents-->
-    <div class="vertial_button_container">
-        <button onclick="toggleDropdown('usernameDropdown')" class="dropbtn BlackButton">Change Username</button>
-        <div id="usernameDropdown" class="dropdown-content" style="display: none;">
-            <form action="/change_username" method="POST">
-                <label for="new_username">New Username:</label><br>
-                <input type="text" id="new_username" name="new_username" required><br>
-                <input type="submit" value="Change Username">
-            </form>
-        </div>
+    <div class="vertial_button_container">  
+                <button onclick="toggleDropdown('usernameDropdown')" class="dropbtn settings_WhiteButton">Change Username</button>
+                <div id="usernameDropdown" class="dropdown-content" style="display: none;">
+                    <form action="/change_username" method="POST">
+                        <label for="new_username">New Username:</label><br>
+                        <input type="text" id="new_username" name="new_username" required><br>
+                        <input type="submit" value="Change Username">
+                    </form>
+                </div>
 
-        
-        <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn BlackButton">Delete Your Calendars</button>
-        <div id="passwordDropdown" class="dropdown-content" style="display: none;">
-            <form action="/delete_user_calendars" method="POST">
-                <label for="password">Verify Password:</label><br>
-                <input type="password" id="password" name="password" required><br>
-                <input type="submit" value="Verify Password">
-            </form>
-        </div>
+                <button onclick="toggleDropdown('passwordDropdown')" class="dropbtn settings_WhiteButton">Delete Your Calendars</button>
+                <div id="passwordDropdown" class="dropdown-content" style="display: none;">
+                    <form action="/delete_user_calendars" method="POST">
+                        <label for="password">Verify Password:</label><br>
+                        <input type="password" id="password" name="password" required><br>
+                        <input type="submit" value="Verify Password">
+                    </form>
+                </div>
 
-        <button type="button" id="daily" class="BlackButton" onclick="location.href='/download_data'">download user data</button>
-        <button type="button" id="event" class="BlackButton" onclick="location.href='/logout'">Logout</button>
+                <button type="button" id="daily" class="settings_WhiteButton" onclick="location.href='/download_data'">Download User Data</button>
+
+            <button type="button" id="event" class="settings_WhiteButton" onclick="location.href='/logout'">Logout</button>
 
     </div>
 </div>

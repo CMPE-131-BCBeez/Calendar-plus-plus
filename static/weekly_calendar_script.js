@@ -66,26 +66,34 @@ function display_events() {
 
 }
 
-function generateWeeklyCalendar(startDate) {
-    let daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    let table = document.getElementById('calendar');
-
-    let rows = table.getElementsByTagName('tr');
-    for (let i = rows.length - 1; i > 0; i--) {
-        table.removeChild(rows[i]);
-    }
-
-    let sundayDate = new Date(startDate);
+function generate_weekly_header(startDate){
+    var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let table = document.getElementById('weekly_calendar_header');
+    var sundayDate = new Date(startDate);
     sundayDate.setDate(sundayDate.getDate() - sundayDate.getDay());
-
-    for (let i = 0; i < 7; i++) {
-        let date = new Date(sundayDate);
-        date.setDate(date.getDate() + i);
-        let day = daysOfWeek[i];
-        let dateText = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        let th = document.getElementById(daysOfWeek[i].toLowerCase());
-        th.innerHTML = '<div class="dayInfo"><div class="dayName">' + day + '</div><div class="dateNumber">' + dateText + '</div></div>';
+  
+    var rows = table.getElementsByTagName('tr');
+    for (var i = rows.length - 1; i > 0; i--) {
+      table.removeChild(rows[i]);
     }
+  
+    for (var i = 0; i < 7; i++) {
+      var date = new Date(sundayDate);
+      date.setDate(date.getDate() + i);
+      var day = daysOfWeek[i];
+      var dateText = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      if(date.getDate() < 10){
+        dateText = '  ' + dateText;
+      }
+      var th = document.getElementById(daysOfWeek[i].toLowerCase());
+      th.innerHTML = '<div class="dayInfo"><div class="dayName">' + day + '</div><div class="dateNumber">' + dateText + '</div></div>';
+    }
+  }
+
+function generateWeeklyCalendar(startDate) {
+    var sundayDate = new Date(startDate);
+    sundayDate.setDate(sundayDate.getDate() - sundayDate.getDay());
+    let calendar_table = document.getElementById('calendar');
 
     let ts = new Date(sundayDate.getFullYear(), sundayDate.getMonth(), sundayDate.getDate(), 0, 0, 0)
     for (let hour = 0; hour < 24; hour++) {
@@ -93,6 +101,7 @@ function generateWeeklyCalendar(startDate) {
         let hourCell = document.createElement('td');
         hourCell.textContent = hour + ':00';
         row.appendChild(hourCell);
+        hourCell.classList.add('time_col_body');
         ts.setHours(hour)
 
         for (let day = 0; day < 7; day++) {
@@ -102,10 +111,11 @@ function generateWeeklyCalendar(startDate) {
                 selectCell(this);
             });
             row.appendChild(cell);
+            cell.classList.add('day_col'); 
             ts.setDate(ts.getDate() + 1)
         }
         ts.setDate(ts.getDate() - 7)
-        table.appendChild(row);
+        calendar_table.appendChild(row);
     }
 }
 
@@ -119,24 +129,28 @@ function selectCell(cell) {
 
 function nextWeek() {
     startDate.setDate(startDate.getDate() + 7);
+    generate_weekly_header(startDate);
     generateWeeklyCalendar(startDate);
     //location.reload()
 }
 
 function previousWeek() {
     startDate.setDate(startDate.getDate() - 7);
+    generate_weekly_header(startDate);
     generateWeeklyCalendar(startDate);
     //location.reload()
 }
 
 function this_week() {
     startDate = new Date();
+    generate_weekly_header(startDate);
     generateWeeklyCalendar(startDate);
     //location.reload()
 }
 
 window.onload = function () {
     console.log("loading")
+    generate_weekly_header(startDate);
     generateWeeklyCalendar(startDate);
     //display_events()
 };
@@ -146,6 +160,7 @@ document.getElementById("weekly").addEventListener("click", this_week);
 document.getElementById("prevWeek").addEventListener("click", previousWeek);
 document.getElementById("nextWeek").addEventListener("click", nextWeek);
 
+generate_weekly_header(startDate);
 generateWeeklyCalendar(startDate)
 display_events()
 

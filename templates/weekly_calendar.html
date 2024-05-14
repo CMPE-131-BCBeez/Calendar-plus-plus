@@ -8,20 +8,22 @@
 <script type="module" src="../static/weekly_calendar_script.js"></script>
 
 <body>
-  <div class="button_header">
-    {% block navbar %}
-    {{ super() }}
-    {% endblock %}
+  <div class="button_header"> 
     <button type="button" id="monthly" class="BlackButton" onclick="location.href='/monthly_calendar'">Monthly</button>
 
     <button type="button" id="weekly" class="BlackButton">Jump To This Week</button>
-
-    <div id="pagination_weekly">
-      <button id="prevWeek" id="next_week">
-        < </button>
-          <h2>Weekly Calendar</h2>
-          <button id="nextWeek" id="prev_week">></button>
+    <div class="right_head_buttons">
+      {% block navbar %}
+      {{ super() }}
+      {% endblock %}
     </div>
+  
+    <div id="pagination_weekly">
+      <button id="prevWeek" id="next_week">< </button>
+      <h2>Weekly Calendar</h2>
+      <button id="nextWeek" id="prev_week">></button>
+    </div>
+  </div>
 </div>
 
 <table id="weekly_calendar_header" class="weekly_calendar">
@@ -39,22 +41,9 @@
   </thead>
 </table>
   <div class="overflow_container_weekly">
-
     <table id="calendar" class="weekly_calendar">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th id="sunday"></th>
-          <th id="monday"></th>
-          <th id="tuesday"></th>
-          <th id="wednesday"></th>
-          <th id="thursday"></th>
-          <th id="friday"></th>
-          <th id="saturday"></th>
-        </tr>
-      </thead>
     </table>
-    <!-- </div> -->
+    </div>
 
     {% endblock %}
 

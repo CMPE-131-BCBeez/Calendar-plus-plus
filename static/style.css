@@ -45,13 +45,18 @@
     margin-bottom: 10px; 
     cursor: pointer; 
     border-radius: 5px; 
-  }
+    transition: box-shadow 0.3s; 
+}
+
+.dropbtn:active {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+}
   
   /* Dropdown button on hover & focus */
-   .dropbtn:hover, .dropbtn:focus {
+   /* .dropbtn:hover, .dropbtn:focus {
     background-color: #2980B9;
   }
-   
+    */
   /* The container <div> - needed to position the dropdown content */
   .dropdown {
     position: relative;
@@ -64,7 +69,7 @@
     position: absolute;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 999;
   }
   
   /* Links inside the dropdown */
@@ -73,15 +78,21 @@
     padding: 12px;
     text-decoration: none;
     display: block;
+    z-index: 999;
   }
   
   /* Change color of dropdown links on hover */
   .dropdown-content a:hover {
     background-color: rgba(255, 255, 255, 0.2);
+    z-index: 999;
 }
   
   /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-  .show {display:block;}
+  .show {
+    display:block;
+    z-index: 999;
+}
+
 
 /*the body and form tag style*/
 body, form{   
@@ -126,6 +137,7 @@ form textarea {
     right:0;
     left:0;
     overflow: hidden;
+    z-index: -1;
 }
 
 .nomal_hader_container{
@@ -265,7 +277,7 @@ h4 {
     font-size: 30px;
     margin: 0 auto;
     margin-bottom: 20px;    
-    margin-top: 20px; 
+    margin-top: 0px; 
     text-align: left; 
     width: 100%;
     display: flex;      
@@ -352,7 +364,7 @@ h2 {
     margin-left: 30px;
     margin-right: 30px;
     height:8vh;
-    z-index:-9999;
+    z-index:9999;
 }
 
 .daily_button_header{
@@ -500,6 +512,7 @@ li::before {
 
 #prev_month, #next_month,
 #prev_week, #next_week, 
+#prevWeek, #nextWeek,
 #prev_day, #next_day{ 
     font-family: "CaviarDreams_Bold", sans-serif;     
     background-color: rgba(0, 0, 0, 0.0); 
@@ -538,6 +551,7 @@ li::before {
 
 #weekly_calendar_header{
     margin-left:2vw;
+    margin-top:13vh;
 }
 
 #year_month_day_header{
@@ -564,7 +578,7 @@ li::before {
 
 .overflow_container_weekly {
     overflow-y: auto; 
-    max-height: 80vh; 
+    max-height: 77vh; 
     display: block; 
 }
 
@@ -601,10 +615,18 @@ li::before {
   
 .weekly_calendar td {
     position: relative;
-    width: 100px;
+    /* width: 100px; */
     height: 44px;
-
 }
+
+.weekly_calendar td {
+    position: relative;
+    /* width: 100px; */
+    height: 44px;
+}
+
+
+
 
 /* .dayInfo {
 position: absolute;
@@ -615,6 +637,7 @@ transform: translate(-50%, -50%); */
 .time_col_header{
     font-family: "CaviarDreams_BoldItalic", sans-serif;
     width:30px;
+    padding:10px;
     font-size: 20px;
 }
 
@@ -632,6 +655,10 @@ transform: translate(-50%, -50%); */
     font-size: 20px;
     background-color: rgba(255, 255, 255, 0.5);
     border:1px solid black;
+}
+
+.weekly_day{
+    width:calc(100%/7);
 }
 
 .dayName {
@@ -782,10 +809,16 @@ input[type="file"] {
     margin-bottom: 10px; 
     cursor: pointer; 
     border-radius: 5px; 
+    transition: box-shadow 0.3s; 
+}
+
+.BlackButton:active {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
 .WhiteButton{
     font-family: "CaviarDreams_Bold", sans-serif;   
+    border:none;
     background-color: rgba(0, 0, 0, 0); 
     border-bottom: 1px solid black; 
     color: #000000; 
@@ -796,7 +829,33 @@ input[type="file"] {
     font-size: 16px; 
     margin-bottom: 10px; 
     cursor: pointer; 
+    transition: box-shadow 0.3s; 
 }
+
+.WhiteButton:active {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+}
+
+.settings_WhiteButton{
+    font-family: "CaviarDreams_Bold", sans-serif;   
+    background-color: rgba(0, 0, 0, 0); 
+    border:none;
+    border-bottom: 1px solid black; 
+    color: #000000; 
+    padding: 0px 2px; 
+    text-align: center; 
+    text-decoration: none;  
+    display: inline-block;  
+    font-size: 20px; 
+    margin-bottom: 50px; 
+    cursor: pointer; 
+    transition: box-shadow 0.3s; 
+}
+
+.settings_WhiteButton:active {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+}
+
 
 .setting_icon {
     background-image: url('../static/image/setting_icon_dark.png'); 
@@ -861,7 +920,7 @@ input[type="file"] {
     background-color: #000000;
   }
 
-.dark_mode_container{
+.settings_contentainer{
     display:flex;
     justify-content: left;   
     align-items: center;    
@@ -888,9 +947,10 @@ input[type="file"] {
 .vertial_button_container{
     display:flex;
     justify-content: left;   
-    align-items: left;  
+    align-items: center;  
     flex-direction: column;
     margin: 20px;
+    width:auto;
 }
 
 
