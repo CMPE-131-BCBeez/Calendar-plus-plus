@@ -1,10 +1,10 @@
 import pytest
 
-from app import create_app, db
+from app import app, db
 
 @pytest.fixture
 def app():
-    app = create_app("sqlite://")
+    app = app("sqlite://")
     with app.app_context():
         db.create_all()
         
